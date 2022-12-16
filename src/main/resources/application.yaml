@@ -1,0 +1,25 @@
+server:
+  port: 8888
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://${DB_HOST:localhost}:5432/${DB_NAME:pgk}
+    username: root
+    password: root
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: create
+      dialect: org.hibernate.dialect.PostgreSQL9Dialect
+    properties:
+      hibernate.jdbc.lob.non_contextual_creation: true
+      hibernate.globally_quoted_identifiers: true
+  mail:
+    host: smtp.rambler.ru
+    username:
+    password:
+    port: 465
+    protocol: smtps
+jwt:
+  accessToken: "qBTmv4oXFFR2GwjexDJ4t6fsIUIUhhXqlktXjXdkcyygs8nPVEwMfo29VDRRepYDVV5IkIxBMzr7OEHXEHd37w=="
+  refreshToken: "qBTmv4oXFFR2GwjexDJ4t6fsIUIUhhXqlktXjXdkcyygs8nPVEwMfo29VDRRepYDVV5IkIxBMzr7OEHXEHd37w=="
