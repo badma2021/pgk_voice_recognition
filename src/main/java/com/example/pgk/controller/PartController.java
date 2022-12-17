@@ -36,6 +36,8 @@ public class PartController {
     public ResponseEntity<String> create(@RequestPart("partDto") PartDTO partDto,@RequestParam("file") MultipartFile file){
         try {
             partService.save(file);
+            partDto.setAudioRecordPath(file.getOriginalFilename());
+
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);
         }
