@@ -80,10 +80,6 @@ public class PartService {
     }
 
     public String createPart(PartDTO[] partDtos, String filename) {
-//
-//        Part part = dtoUtils.partDtoToEntity(partDtos);
-//        part.setUser(userRepository.getById(partDto.getUserId()));
-//        partRepository.save(part);
 
         List<Part> parts= IntStream
                 .rangeClosed(0, partDtos.length - 1)
@@ -100,7 +96,7 @@ public class PartService {
                 .collect(Collectors.toList());
         logger.info("before saveAll");
         partRepository.saveAllAndFlush(parts);
-        return "деталь учтена";
+        return "запись учтена";
     }
     @PostConstruct
     public void init() {
