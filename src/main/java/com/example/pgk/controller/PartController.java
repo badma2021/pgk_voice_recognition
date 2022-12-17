@@ -24,7 +24,7 @@ public class PartController {
     private final PartService partService;
 
     @GetMapping("/getall")
-    public ResponseEntity<List<Part>> getAllParts() {
+    public ResponseEntity<PartDTO[]> getAllParts() {
         return new ResponseEntity<>(partService.getAllParts(), HttpStatus.OK);
     }
 

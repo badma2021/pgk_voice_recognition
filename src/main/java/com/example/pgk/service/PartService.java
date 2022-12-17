@@ -21,8 +21,24 @@ public class PartService {
         this.dtoUtils = dtoUtils;
     }
 
-    public List<Part> getAllParts() {
-        return partRepository.findAll();
+    public PartDTO[]  getAllParts() {
+        List<Part>parts= partRepository.findAll();
+        final PartDTO[] partDTOs = new PartDTO[parts.size()];
+        int indexPart = 0;
+        for(Part p : parts){
+            final PartDTO p1 = new PartDTO();
+            p1.setPartNumber(p.getPartNumber());
+            p1.setProductionYear(p.getProductionYear());
+            p1.setPartName(p.getPartName());
+            p1.setAudioRecordPath(p.getAudioRecordPath());
+            p1.setCreatedAt(p.getCreatedAt());
+            p1.setComment(p.getComment());
+            p1.setUserId(p.getId());
+            p1.setFactoryNumber(p.getFactoryNumber());
+            partDTOs[indexPart] = p1;
+            indexPart++;
+        }
+        return partDTOs;
     }
     public PartDTO[] getAllPartsAndProductionYear(int year) {
         List<Part>parts=partRepository.findAllByYear(year);
