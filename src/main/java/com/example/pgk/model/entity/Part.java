@@ -49,4 +49,16 @@ public class Part {
     private User user;
     public Part() {
     }
+
+    public Part(String partName, Long partNumber, String productionYear, String factoryNumber, String comment,
+                String audioRecordPath, LocalDateTime createdAt, User user) {
+        this.partName = partName;
+        this.partNumber = partNumber;
+        this.productionYear = productionYear;
+        this.factoryNumber = factoryNumber;
+        this.comment = comment;
+        this.audioRecordPath = audioRecordPath;
+        this.createdAt = createdAt;
+        this.user = user;
+    }
 }

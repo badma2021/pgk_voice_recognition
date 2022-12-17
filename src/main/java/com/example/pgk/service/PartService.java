@@ -6,6 +6,8 @@ import com.example.pgk.model.dto.PartDTO;
 import com.example.pgk.model.dto.RoleDTO;
 import com.example.pgk.model.entity.Part;
 import com.example.pgk.utils.DtoUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -16,10 +18,14 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 @Service
 public class PartService {
+    private static final Logger logger = LoggerFactory.getLogger(PartService.class);
     @Resource
     private PartRepository partRepository;
     @Resource
@@ -73,11 +79,27 @@ public class PartService {
         return partDTOs;
     }
 
-    public String createPart(PartDTO partDto) {
+    public String createPart(PartDTO[] partDtos, String filename) {
+//
+//        Part part = dtoUtils.partDtoToEntity(partDtos);
+//        part.setUser(userRepository.getById(partDto.getUserId()));
+//        partRepository.save(part);
 
-        Part part = dtoUtils.partDtoToEntity(partDto);
-        part.setUser(userRepository.getById(partDto.getUserId()));
-        partRepository.save(part);
+        List<Part> parts= IntStream
+                .rangeClosed(0, partDtos.length - 1)
+                .mapToObj(j -> new Part(
+                        partDtos[j].getPartName(),
+                        partDtos[j].getPartNumber(),
+                        partDtos[j].getProductionYear(),
+                        partDtos[j].getFactoryNumber(),
+                        partDtos[j].getComment(),
+                        filename,
+                        LocalDateTime.now(),
+                        userRepository.getById(partDtos[j].getUserId())
+                ))
+                .collect(Collectors.toList());
+        logger.info("before saveAll");
+        partRepository.saveAllAndFlush(parts);
         return "деталь учтена";
     }
     @PostConstruct

@@ -33,15 +33,16 @@ public class PartController {
     }
 
     @PostMapping(value = "/create")
-    public ResponseEntity<String> create(@RequestPart("partDto") PartDTO partDto,@RequestParam("file") MultipartFile file){
+    public ResponseEntity<String> create(@RequestPart("partDto") PartDTO[] partDtos,@RequestParam("file") MultipartFile file){
+        String fileName=null;
         try {
             partService.save(file);
-            partDto.setAudioRecordPath(file.getOriginalFilename());
+            fileName= file.getOriginalFilename();
 
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);
         }
-        return new ResponseEntity<>(partService.createPart(partDto), HttpStatus.OK);
+        return new ResponseEntity<>(partService.createPart(partDtos, fileName), HttpStatus.OK);
     }
 
 //    @PostMapping(value = "/create")
