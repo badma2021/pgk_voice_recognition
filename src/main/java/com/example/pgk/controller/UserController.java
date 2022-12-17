@@ -1,8 +1,8 @@
 package com.example.pgk.controller;
 
-import com.example.pgk.model.entity.Part;
+import com.example.pgk.model.dto.UserDTO;
 import com.example.pgk.model.entity.User;
-import com.example.pgk.service.PartService;
+import com.example.pgk.service.UserService;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,13 +16,13 @@ import java.util.List;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/api/v1/part")
-public class PartController {
-    private static final Logger logger = LoggerFactory.getLogger(PartController.class);
-    private final PartService partService;
+@RequestMapping("/api/v1")
+public class UserController {
 
-    @GetMapping("/getall")
-    public ResponseEntity<List<Part>> getAllUsers() {
-        return new ResponseEntity<>(partService.getAllParts(), HttpStatus.OK);
+    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
+    private final UserService userService;
+    @GetMapping("/users")
+    public ResponseEntity<List<User>> getAllUsers() {
+        return new ResponseEntity<>(userService.getAllUsers(), HttpStatus.OK);
     }
 }

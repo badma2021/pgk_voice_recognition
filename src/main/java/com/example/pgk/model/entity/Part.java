@@ -1,6 +1,7 @@
 package com.example.pgk.model.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -14,7 +15,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 //@ToString(of = {"id", "email", "username", "password"})
 @ToString
-@Table(name = "audiorecord")
+@Table(name = "part")
 public class Part {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,7 +33,7 @@ public class Part {
     @ToString.Exclude
     private String productionYear;
     @ToString.Exclude
-    private int factoryNumber;
+    private String factoryNumber;
 
     @ToString.Exclude
     private String comment;
@@ -41,6 +42,8 @@ public class Part {
     private String audioRecordPath;
     @ToString.Exclude
     private LocalDateTime createdAt;
+
+
     @ManyToOne
     @ToString.Exclude
     private User user;

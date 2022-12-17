@@ -1,4 +1,6 @@
 package com.example.pgk.initDB;
+import com.example.pgk.dao.PartRepository;
+import com.example.pgk.model.entity.Part;
 import com.example.pgk.security.PassEncoder;
 import com.example.pgk.dao.RoleRepositoryJpql;
 import com.example.pgk.repository.UserRepositoryImpl;
@@ -7,24 +9,25 @@ import com.example.pgk.model.entity.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
+import java.time.LocalDateTime;
 import java.util.Set;
 
 @Component
 public class InitDB {
     private final UserRepositoryImpl userRepository;
     private final RoleRepositoryJpql roleRepositoryJpql;
+    private final PartRepository partRepository;
     private final PassEncoder passwordEncoder;
-
 
     @Autowired
     public InitDB(UserRepositoryImpl userRepository,
-                  RoleRepositoryJpql roleRepositoryJpql,PassEncoder passwordEncoder) {
+                  RoleRepositoryJpql roleRepositoryJpql, PartRepository partRepository, PassEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.roleRepositoryJpql = roleRepositoryJpql;
+        this.partRepository = partRepository;
         this.passwordEncoder = passwordEncoder;
 
     }
-
     @PostConstruct
     public void initializationDB() {
 
@@ -54,76 +57,34 @@ public class InitDB {
                 .password(passwordEncoder.passwordEncoder().encode("5"))
                 .username("marina")
                 .build();
-        // user1.setUserGroups(Set.of(group1));
+
         userRepository.save(user1);
         userRepository.save(user2);
         userRepository.save(user3);
 ///////////////////////////////////////////////////////////
-//        Competence competence1 = Competence.builder()
-//                .title("UX/UI")
-//                .build();
-//        Competence competence2 = Competence.builder()
-//                .title("Agile")
-//                .build();
-//
-//        Competence competence3 = Competence.builder()
-//                .title("PHP")
-//                .build();
-//
-//        Competence competence4 = Competence.builder()
-//                .title("Data Science")
-//                .build();
-//        competenceRepository.save(competence1);
-//        competenceRepository.save(competence2);
-//        competenceRepository.save(competence4);
-//        competenceRepository.save(competence3);
-///////////////////////////////////////////////////////////
-//        UserCompetence userCompetence1 = UserCompetence.builder()
-//                .user(user1)
-//                .competence(competence1)
-//                .ordered(1)
-//                .tested_at(LocalDateTime.of(2020, 3, 22, 13, 30))
-//                .is_expert(false)
-//                .build();
-//
-//        UserCompetence userCompetence2 = UserCompetence.builder()
-//                .user(user2)
-//                .competence(competence2)
-//                .ordered(4)
-//                .tested_at(LocalDateTime.of(2021, 3, 22, 13, 30))
-//                .is_expert(true)
-//                .build();
-//
-//        UserCompetence userCompetence3 = UserCompetence.builder()
-//                .user(user3)
-//                .competence(competence3)
-//                .ordered(5)
-//                .tested_at(now())
-//                .is_expert(true)
-//                .build();
-//
-//        UserCompetence userCompetence4 = UserCompetence.builder()
-//                .user(user3)
-//                .competence(competence4)
-//                .ordered(2)
-//                .tested_at(LocalDateTime.of(2022, 3, 22, 13, 30))
-//                .is_expert(false)
-//                .build();
-//        userCompetenceRepository.save(userCompetence3);
-//        userCompetenceRepository.save(userCompetence1);
-//        userCompetenceRepository.save(userCompetence4);
-//        userCompetenceRepository.save(userCompetence2);
-//
-//
-////////////////////////////////////////////////////////
-//        Reaction reaction1 = com.fastwin.newidea.model.entity.Reaction.builder()
-//                .type(ReactionType.LIKE)
-//                .build();
-//        Reaction reaction2 = com.fastwin.newidea.model.entity.Reaction.builder()
-//                .type(ReactionType.FAVOURITE)
-//                .build();
-//        reactionRepository.save(reaction1);
-//        reactionRepository.save(reaction2);
+Part part1= Part.builder()
+        .partName("Колесная пара")
+        .partNumber(1L)
+        .productionYear("2015.0")
+        .factoryNumber("222")
+        .comment("шайба, без буксы")
+        .audioRecordPath("/home/badma/Документы/Hackaton2022/pgk")
+        .createdAt(LocalDateTime.of(2022, 9, 22, 13, 30))
+        .user(user1)
+        .build();
 
+        Part part2= Part.builder()
+                .partName("рама боковая")
+                .partNumber(2L)
+                .productionYear("2017.0")
+                .factoryNumber("китай")
+                .comment("")
+                .audioRecordPath("/home/badma/Документы/Hackaton2022/pgk")
+                .createdAt(LocalDateTime.of(2022, 9, 21, 13, 30))
+                .user(user2)
+                .build();
+
+        partRepository.save(part1);
+        partRepository.save(part2);
     }
 }

@@ -1,6 +1,7 @@
 package com.example.pgk.model.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -33,6 +34,7 @@ public class User {
     @Column
     @ToString.Exclude
     private String username;
+
     @ToString.Exclude
     private String password;
     @ToString.Exclude
@@ -47,7 +49,7 @@ public class User {
     private LocalDateTime createdAt;
     @ToString.Exclude
     private LocalDateTime lastModified;
-
+    @JsonIgnore
     @ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.PERSIST)
     @JoinTable(name = "user_and_role",joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
