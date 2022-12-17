@@ -1,5 +1,6 @@
 package com.example.pgk.controller;
 
+import com.example.pgk.model.dto.PartDTO;
 import com.example.pgk.model.entity.Part;
 import com.example.pgk.model.entity.User;
 import com.example.pgk.service.PartService;
@@ -28,7 +29,7 @@ public class PartController {
     }
 
     @GetMapping("/getallbyyear")
-    public ResponseEntity<List<Part>> getAllPartsByYear(@RequestParam(name = "year") int year) {
+    public ResponseEntity<PartDTO[]> getAllPartsByYear(@RequestParam(name = "year") int year) {
         return new ResponseEntity<>(partService.getAllPartsAndProductionYear(year), HttpStatus.OK);
     }
 }
