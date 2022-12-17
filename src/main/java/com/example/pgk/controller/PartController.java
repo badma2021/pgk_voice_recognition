@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.security.Principal;
 import java.util.List;
@@ -32,7 +33,12 @@ public class PartController {
     }
 
     @PostMapping(value = "/create")
-    public ResponseEntity<String> create(@RequestBody PartDTO partDto){
+    public ResponseEntity<String> create(@RequestPart("partDto") PartDTO partDto,@RequestParam("file") MultipartFile file){
+        try {
+            partService.save(file);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);
+        }
         return new ResponseEntity<>(partService.createPart(partDto), HttpStatus.OK);
     }
 
