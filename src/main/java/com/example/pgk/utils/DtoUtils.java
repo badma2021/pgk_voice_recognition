@@ -1,8 +1,10 @@
 package com.example.pgk.utils;
 
 import com.example.pgk.exception.NotValidRequestException;
+import com.example.pgk.model.dto.PartDTO;
 import com.example.pgk.model.dto.RoleDTO;
 import com.example.pgk.model.entity.Role;
+import com.example.pgk.model.entity.Part;
 import org.springframework.stereotype.Service;
 
 import java.util.Set;
@@ -21,6 +23,18 @@ public class DtoUtils {
             index++;
         }
         return roleDTOS;
+    }
+
+    public Part partDtoToEntity(PartDTO partDto){
+        Part part=new Part();
+        part.setPartNumber(partDto.getPartNumber());
+        part.setProductionYear(partDto.getProductionYear());
+        part.setPartName(partDto.getPartName());
+        part.setAudioRecordPath(partDto.getAudioRecordPath());
+        part.setCreatedAt(partDto.getCreatedAt());
+        part.setComment(partDto.getComment());
+        part.setFactoryNumber(partDto.getFactoryNumber());
+        return part;
     }
 
 

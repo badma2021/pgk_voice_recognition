@@ -1,6 +1,7 @@
 package com.example.pgk.service;
 
 import com.example.pgk.dao.PartRepository;
+import com.example.pgk.dao.UserRepository;
 import com.example.pgk.model.dto.PartDTO;
 import com.example.pgk.model.dto.RoleDTO;
 import com.example.pgk.model.entity.Part;
@@ -14,6 +15,8 @@ import java.util.List;
 public class PartService {
     @Resource
     private PartRepository partRepository;
+    @Resource
+    private UserRepository userRepository;
     private final DtoUtils dtoUtils;
 
     public PartService(PartRepository partRepository, DtoUtils dtoUtils) {
@@ -21,11 +24,11 @@ public class PartService {
         this.dtoUtils = dtoUtils;
     }
 
-    public PartDTO[]  getAllParts() {
-        List<Part>parts= partRepository.findAll();
+    public PartDTO[] getAllParts() {
+        List<Part> parts = partRepository.findAll();
         final PartDTO[] partDTOs = new PartDTO[parts.size()];
         int indexPart = 0;
-        for(Part p : parts){
+        for (Part p : parts) {
             final PartDTO p1 = new PartDTO();
             p1.setPartNumber(p.getPartNumber());
             p1.setProductionYear(p.getProductionYear());
@@ -40,11 +43,12 @@ public class PartService {
         }
         return partDTOs;
     }
-    public PartDTO[] getAllPartsAndProductionYear(int year) {
-        List<Part>parts=partRepository.findAllByYear(year);
+
+    public PartDTO[] getAllPartsByYear(int year) {
+        List<Part> parts = partRepository.findAllByYear(year);
         final PartDTO[] partDTOs = new PartDTO[parts.size()];
         int indexPart = 0;
-        for(Part p : parts){
+        for (Part p : parts) {
             final PartDTO p1 = new PartDTO();
             p1.setPartNumber(p.getPartNumber());
             p1.setProductionYear(p.getProductionYear());
@@ -58,5 +62,13 @@ public class PartService {
             indexPart++;
         }
         return partDTOs;
+    }
+
+    public String createPart(PartDTO partDto) {
+
+        Part part = dtoUtils.partDtoToEntity(partDto);
+        part.setUser(userRepository.getById(partDto.getUserId()));
+        partRepository.save(part);
+        return "деталь учтена";
     }
 }

@@ -9,11 +9,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -30,6 +28,16 @@ public class PartController {
 
     @GetMapping("/getallbyyear")
     public ResponseEntity<PartDTO[]> getAllPartsByYear(@RequestParam(name = "year") int year) {
-        return new ResponseEntity<>(partService.getAllPartsAndProductionYear(year), HttpStatus.OK);
+        return new ResponseEntity<>(partService.getAllPartsByYear(year), HttpStatus.OK);
     }
+
+    @PostMapping(value = "/create")
+    public ResponseEntity<String> create(@RequestBody PartDTO partDto){
+        return new ResponseEntity<>(partService.createPart(partDto), HttpStatus.OK);
+    }
+
+//    @PostMapping(value = "/create")
+//    public ResponseEntity<String> create(@RequestBody PartDTO partDto, Principal principal){
+//        return new ResponseEntity<>(partService.createPart(partDto), HttpStatus.OK);
+//    }
 }
