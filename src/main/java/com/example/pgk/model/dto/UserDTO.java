@@ -19,12 +19,7 @@ public class UserDTO {
     private RoleDTO[] roles;
     private String firstName;
     private String lastName;
-    private String avatar;
-    private String status;
-
     private LocalDate birthday;
-    private int user_id;
-    private int project_id;
 
     public UserDTO(String email, RoleDTO[] roles) {
         this.email = email;

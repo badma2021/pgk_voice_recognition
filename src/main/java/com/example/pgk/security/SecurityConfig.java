@@ -1,5 +1,6 @@
 package com.example.pgk.security;
 
+import com.example.pgk.config.JwtFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;

@@ -1,5 +1,7 @@
-package com.example.pgk.security;
+package com.example.pgk.config;
 
+import com.example.pgk.security.JwtAuth;
+import com.example.pgk.security.JwtUtils;
 import io.jsonwebtoken.Claims;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
@@ -22,6 +24,7 @@ public class JwtFilter implements Filter {
             throws IOException, ServletException {
         final HttpServletRequest request = (HttpServletRequest) servletRequest;
         final String token = gerBearerToken(request);
+        System.out.println("request: "+servletRequest.getInputStream());
         System.out.println("path");
         System.out.println(request.getRequestURI());
         System.out.println(token);
