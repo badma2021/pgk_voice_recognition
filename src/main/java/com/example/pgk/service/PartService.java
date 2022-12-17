@@ -3,7 +3,6 @@ package com.example.pgk.service;
 import com.example.pgk.dao.PartRepository;
 import com.example.pgk.dao.UserRepository;
 import com.example.pgk.model.dto.PartDTO;
-import com.example.pgk.model.dto.RoleDTO;
 import com.example.pgk.model.entity.Part;
 import com.example.pgk.utils.DtoUtils;
 import org.slf4j.Logger;
@@ -80,7 +79,7 @@ public class PartService {
     }
 
     public String createPart(PartDTO[] partDtos, String filename) {
-
+        LocalDateTime date=LocalDateTime.now().withNano(0);
         List<Part> parts= IntStream
                 .rangeClosed(0, partDtos.length - 1)
                 .mapToObj(j -> new Part(
@@ -89,8 +88,9 @@ public class PartService {
                         partDtos[j].getProductionYear(),
                         partDtos[j].getFactoryNumber(),
                         partDtos[j].getComment(),
-                        filename,
-                        LocalDateTime.now(),
+                        filename+"_"+partDtos[j].getPartName()+"_"+partDtos[j].getPartNumber()+"_"+partDtos[j].
+                                getProductionYear()+"_"+partDtos[j].getFactoryNumber()+"_"+date,
+                        date,
                         userRepository.getById(partDtos[j].getUserId())
                 ))
                 .collect(Collectors.toList());
