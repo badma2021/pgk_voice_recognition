@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -22,7 +23,12 @@ public class PartController {
     private final PartService partService;
 
     @GetMapping("/getall")
-    public ResponseEntity<List<Part>> getAllUsers() {
+    public ResponseEntity<List<Part>> getAllParts() {
         return new ResponseEntity<>(partService.getAllParts(), HttpStatus.OK);
+    }
+
+    @GetMapping("/getallbyyear")
+    public ResponseEntity<List<Part>> getAllPartsByYear(@RequestParam(name = "year") int year) {
+        return new ResponseEntity<>(partService.getAllPartsAndProductionYear(year), HttpStatus.OK);
     }
 }

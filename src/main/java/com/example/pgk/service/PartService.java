@@ -19,4 +19,7 @@ public class PartService {
     public List<Part> getAllParts() {
         return partRepository.findAll();
     }
+    public List<Part> getAllPartsAndProductionYear(int year) {
+        return partRepository.findAllByYear(year);
+    }
 }

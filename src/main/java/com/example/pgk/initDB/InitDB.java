@@ -80,7 +80,7 @@ Part part1= Part.builder()
                 .factoryNumber("китай")
                 .comment("")
                 .audioRecordPath("/home/badma/Документы/Hackaton2022/pgk")
-                .createdAt(LocalDateTime.of(2022, 9, 21, 13, 30))
+                .createdAt(LocalDateTime.of(2021, 9, 21, 13, 30))
                 .user(user2)
                 .build();
 
