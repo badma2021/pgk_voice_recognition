@@ -39,7 +39,7 @@ public class Part {
     private String comment;
 
     @ToString.Exclude
-    private String audioRecordPath;
+    private String audioRecordName;
     @ToString.Exclude
     private LocalDateTime createdAt;
 
@@ -51,13 +51,13 @@ public class Part {
     }
 
     public Part(String partName, Long partNumber, String productionYear, String factoryNumber, String comment,
-                String audioRecordPath, LocalDateTime createdAt, User user) {
+                String audioRecordName, LocalDateTime createdAt, User user) {
         this.partName = partName;
         this.partNumber = partNumber;
         this.productionYear = productionYear;
         this.factoryNumber = factoryNumber;
         this.comment = comment;
-        this.audioRecordPath = audioRecordPath;
+        this.audioRecordName = audioRecordName;
         this.createdAt = createdAt;
         this.user = user;
     }

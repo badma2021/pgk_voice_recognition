@@ -30,7 +30,7 @@ public class DtoUtils {
         part.setPartNumber(partDto.getPartNumber());
         part.setProductionYear(partDto.getProductionYear());
         part.setPartName(partDto.getPartName());
-        part.setAudioRecordPath(partDto.getAudioRecordPath());
+        part.setAudioRecordName(partDto.getAudioRecordName());
         part.setCreatedAt(partDto.getCreatedAt());
         part.setComment(partDto.getComment());
         part.setFactoryNumber(partDto.getFactoryNumber());

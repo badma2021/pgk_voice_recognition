@@ -21,7 +21,7 @@ public class PartDTO implements Serializable {
     private String productionYear;
     private String factoryNumber;
     private String comment;
-    private String audioRecordPath;
+    private String audioRecordName;
     private LocalDateTime createdAt;
     private Long userId;
 }

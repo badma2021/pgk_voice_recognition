@@ -12,7 +12,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.security.Principal;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -35,14 +38,17 @@ public class PartController {
     @PostMapping(value = "/create")
     public ResponseEntity<String> create(@RequestPart("partDto") PartDTO[] partDtos,@RequestParam("file") MultipartFile file){
         String fileName=null;
+        LocalDateTime date=LocalDateTime.now().withNano(0);
+        Long userId=partDtos[1].getUserId();
         try {
-            partService.save(file);
+
+            partService.save(file, date, userId);
             fileName= file.getOriginalFilename();
 
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);
         }
-        return new ResponseEntity<>(partService.createPart(partDtos, fileName), HttpStatus.OK);
+        return new ResponseEntity<>(partService.createPart(partDtos, fileName, date, userId), HttpStatus.OK);
     }
 
 //    @PostMapping(value = "/create")

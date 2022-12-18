@@ -13,10 +13,12 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -47,7 +49,7 @@ public class PartService {
             p1.setPartNumber(p.getPartNumber());
             p1.setProductionYear(p.getProductionYear());
             p1.setPartName(p.getPartName());
-            p1.setAudioRecordPath(p.getAudioRecordPath());
+            p1.setAudioRecordName(p.getAudioRecordName());
             p1.setCreatedAt(p.getCreatedAt());
             p1.setComment(p.getComment());
             p1.setUserId(p.getId());
@@ -67,7 +69,7 @@ public class PartService {
             p1.setPartNumber(p.getPartNumber());
             p1.setProductionYear(p.getProductionYear());
             p1.setPartName(p.getPartName());
-            p1.setAudioRecordPath(p.getAudioRecordPath());
+            p1.setAudioRecordName(p.getAudioRecordName());
             p1.setCreatedAt(p.getCreatedAt());
             p1.setComment(p.getComment());
             p1.setUserId(p.getId());
@@ -78,8 +80,7 @@ public class PartService {
         return partDTOs;
     }
 
-    public String createPart(PartDTO[] partDtos, String filename) {
-        LocalDateTime date=LocalDateTime.now().withNano(0);
+    public String createPart(PartDTO[] partDtos, String filename, LocalDateTime date, Long userId) {
         List<Part> parts= IntStream
                 .rangeClosed(0, partDtos.length - 1)
                 .mapToObj(j -> new Part(
@@ -88,10 +89,9 @@ public class PartService {
                         partDtos[j].getProductionYear(),
                         partDtos[j].getFactoryNumber(),
                         partDtos[j].getComment(),
-                        filename+"_"+partDtos[j].getPartName()+"_"+partDtos[j].getPartNumber()+"_"+partDtos[j].
-                                getProductionYear()+"_"+partDtos[j].getFactoryNumber()+"_"+date,
+                        userId+"_"+date+"_"+filename,
                         date,
-                        userRepository.getById(partDtos[j].getUserId())
+                        userRepository.getById(userId)
                 ))
                 .collect(Collectors.toList());
         logger.info("before saveAll");
@@ -107,13 +107,15 @@ public class PartService {
         }
     }
 
-    public void save(MultipartFile file) {
+    public void save(MultipartFile file, LocalDateTime date, Long userId) {
+
+
         try {
             Path root = Paths.get(uploadPath);
             if (!Files.exists(root)) {
                 init();
             }
-            Files.copy(file.getInputStream(), root.resolve(file.getOriginalFilename()));
+            Files.copy(file.getInputStream(), root.resolve(userId+"_"+date+"_"+file.getOriginalFilename()));
         } catch (Exception e) {
             throw new RuntimeException("Could not store the file. Error: " + e.getMessage());
         }
