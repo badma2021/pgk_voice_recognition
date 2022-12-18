@@ -4,17 +4,21 @@ import com.example.pgk.model.dto.PartDTO;
 import com.example.pgk.model.entity.Part;
 import com.example.pgk.model.entity.User;
 import com.example.pgk.service.PartService;
+import com.example.pgk.utils.GenerateCSVReport;
+import org.springframework.http.HttpHeaders;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import com.example.pgk.utils.GenerateExcelReport;
 
-import java.nio.file.Files;
-import java.nio.file.StandardCopyOption;
-import java.security.Principal;
+import javax.servlet.http.HttpServletResponse;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -51,6 +55,24 @@ public class PartController {
         return new ResponseEntity<>(partService.createPart(partDtos, fileName, date, userId), HttpStatus.OK);
     }
 
+
+    @GetMapping(value = "/getalltoexcel")
+    public ResponseEntity<InputStreamResource> excelCustomersReport() throws IOException {
+        PartDTO[] users = partService.getAllParts();
+        ByteArrayInputStream in = GenerateExcelReport.usersToExcel(users);
+        // return IO ByteArray(in);
+        HttpHeaders headers = new HttpHeaders();
+        // set filename in header
+        headers.add("Content-Disposition", "attachment; filename=parts.xlsx");
+        return ResponseEntity.ok().headers(headers).body(new InputStreamResource(in));
+    }
+
+    @GetMapping(value = "/getalltocsv")
+    public void csvUsers(HttpServletResponse response) throws IOException {
+        PartDTO[] parts = partService.getAllParts();
+        GenerateCSVReport.writeUsers(response.getWriter(), parts);
+        response.setHeader("Content-Disposition", "attachment; filename=AllUsersCSVReport.csv");
+    }
 //    @PostMapping(value = "/create")
 //    public ResponseEntity<String> create(@RequestBody PartDTO partDto, Principal principal){
 //        return new ResponseEntity<>(partService.createPart(partDto), HttpStatus.OK);
