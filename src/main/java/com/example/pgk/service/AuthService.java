@@ -63,8 +63,8 @@ public class AuthService {
         userDTO.setId(Integer.parseInt(String.valueOf(user.getId())));
         userDTO.setRoles(dtoUtils.RoleToRoleDTOArray(user.getRoles()));
         final String refreshToken = jwtUtils.generateRefreshToken(userDTO);
-        System.out.println(userDTO);
-       // redisRepository.save(user.getEmail(),String.valueOf(refreshToken.hashCode()));
+        System.out.println(refreshToken);
+        redisRepository.save(user.getEmail(),String.valueOf(refreshToken.hashCode()));
         return new JwtDTO(jwtUtils.generateAccessToken(userDTO), refreshToken);
     }
     public JwtDTO updateTokensAndValid(final String refresh){

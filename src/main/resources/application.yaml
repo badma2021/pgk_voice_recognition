@@ -1,5 +1,5 @@
 server:
-  port: 8888
+  port: 8181
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver
@@ -24,6 +24,9 @@ spring:
     multipart:
       max-file-size: 100MB
       max-request-size: 100MB
+  redis:
+    host: localhost
+    port: 6379
 jwt:
   accessToken: "qBTmv4oXFFR2GwjexDJ4t6fsIUIUhhXqlktXjXdkcyygs8nPVEwMfo29VDRRepYDVV5IkIxBMzr7OEHXEHd37w=="
   refreshToken: "qBTmv4oXFFR2GwjexDJ4t6fsIUIUhhXqlktXjXdkcyygs8nPVEwMfo29VDRRepYDVV5IkIxBMzr7OEHXEHd37w=="

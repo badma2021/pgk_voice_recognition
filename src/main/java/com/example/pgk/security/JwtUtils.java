@@ -2,6 +2,7 @@ package com.example.pgk.security;
 
 
 
+import com.example.pgk.controller.PartController;
 import com.example.pgk.exception.IncorrectJwtTokenException;
 import com.example.pgk.exception.NotValidJwtTokenException;
 import com.example.pgk.exception.NotValidRequestException;
@@ -11,6 +12,8 @@ import com.google.gson.Gson;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +27,7 @@ import java.util.Date;
 
 @Service
 public class JwtUtils {
+    private static final Logger logger = LoggerFactory.getLogger(JwtUtils.class);
     private final SecretKey jwtAccessToken;
     private final SecretKey jwtRefreshToken;
     private final Gson gson = new Gson();
@@ -46,9 +50,16 @@ public class JwtUtils {
                 .compact();
     }
     public String generateRefreshToken(final UserDTO userDTO){
+        logger.info("hello from generateRefreshToken");
         final LocalDateTime time = LocalDateTime.now();
         final Instant refreshInst = time.plusDays(5).atZone(ZoneId.systemDefault()).toInstant();
         final Date refreshTime = Date.from(refreshInst);
+        logger.info("time: {}",time);
+        logger.info("refreshTime: {}",refreshTime);
+        logger.info("userDTO: {}",userDTO.toString());
+        logger.info("jwtRefreshToken: {}",jwtRefreshToken);
+        logger.info("userDTO.roles: {}",userDTO.getRoles());
+
         return Jwts.builder()
                 .setSubject(userDTO.getEmail())
                 .setExpiration(refreshTime)

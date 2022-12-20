@@ -32,7 +32,7 @@ public class AuthController {
         cookie.setHttpOnly(true);
         cookie.setSecure(true);
         response.addCookie(cookie);
-        jwtDTO.setRefreshToken(null);
+        //jwtDTO.setRefreshToken(null);
         return new ResponseEntity<>(jwtDTO, HttpStatus.OK);
     }
     @PostMapping(value = "/register")
