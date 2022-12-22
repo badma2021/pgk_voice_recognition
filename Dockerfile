@@ -7,5 +7,5 @@ ENV DB_HOST=localhost
 ENV DB_NAME=pgk
 ENV DB_USER=root
 ENV DB_PASSWORD=root
-EXPOSE 8888
+EXPOSE 8080
 ENTRYPOINT ["java","-jar","app.jar"]
