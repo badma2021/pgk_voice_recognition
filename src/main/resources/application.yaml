@@ -1,19 +1,16 @@
 server:
-  port: 8181
+  port: 8888
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://${DB_HOST:localhost}:5432/${DB_NAME:pgk}
+    url: jdbc:postgresql://postgres_db:5432/pgk
     username: root
     password: root
+
   jpa:
     show-sql: true
     hibernate:
       ddl-auto: create-drop
-      dialect: org.hibernate.dialect.PostgreSQL9Dialect
-    properties:
-      hibernate.jdbc.lob.non_contextual_creation: true
-      hibernate.globally_quoted_identifiers: true
   mail:
     host: smtp.rambler.ru
     username:
