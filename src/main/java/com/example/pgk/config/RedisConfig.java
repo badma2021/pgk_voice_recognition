@@ -9,26 +9,26 @@ import org.springframework.data.redis.core.RedisTemplate;
 
 @Configuration
 public class RedisConfig {
-//    @Value("${spring.redis.host}")
-//    private String redisHost;
-//    @Value("${spring.redis.port}")
-//    private Integer redisPort;
+    @Value("${spring.redis.host}")
+    private String redisHost;
+    @Value("${spring.redis.port}")
+    private Integer redisPort;
 
     @Bean
     @Primary
     JedisConnectionFactory jedisConnectionFactory() throws Exception {
         JedisConnectionFactory factory = new JedisConnectionFactory();
-//        factory.setHostName(redisHost);
-//        System.out.println(redisHost);
-//        factory.setPort(redisPort);
-////if (redisPass != null) {
-////factory.setPassword(redisPass);
-//        factory.setUsePool(true);
-//
-//
-//        return factory;
+        factory.setHostName(redisHost);
+        System.out.println(redisHost);
+        factory.setPort(redisPort);
+//if (redisPass != null) {
+//factory.setPassword(redisPass);
+        factory.setUsePool(true);
 
-        return new JedisConnectionFactory();
+
+        return factory;
+
+        //return new JedisConnectionFactory();
     }
 
     @Bean
