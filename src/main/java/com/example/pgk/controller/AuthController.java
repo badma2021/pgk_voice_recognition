@@ -6,10 +6,7 @@ import com.example.pgk.model.dto.UserDTO;
 import com.example.pgk.service.AuthService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -38,6 +35,11 @@ public class AuthController {
     @PostMapping(value = "/register")
     public ResponseEntity<String> register(@RequestBody UserDTO userDTO){
         return new ResponseEntity<>(authService.registerUserAndValid(userDTO),HttpStatus.OK);
+    }
+
+    @GetMapping(path = "register/confirm")
+    public String confirm(@RequestParam("token") String token) {
+        return authService.confirmToken(token);
     }
     @PostMapping(value = "/gettokens")
     public ResponseEntity<JwtDTO> getTokens(HttpServletRequest request){

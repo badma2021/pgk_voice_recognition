@@ -24,8 +24,6 @@ public class RedisConfig {
 //if (redisPass != null) {
 //factory.setPassword(redisPass);
         factory.setUsePool(true);
-
-
         return factory;
 
         //return new JedisConnectionFactory();

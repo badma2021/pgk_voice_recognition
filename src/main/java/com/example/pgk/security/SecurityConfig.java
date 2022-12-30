@@ -23,30 +23,6 @@ public class SecurityConfig {
         this.jwtFilter = jwtFilter;
     }
 
-    /*@Bean
-    SecurityFilterChain springWebFilterChain(HttpSecurity http,
-                                             JwtTokenProvider tokenProvider) throws Exception {
-        return http
-                *//*.httpBasic(AbstractHttpConfigurer::disable)*//*
-                .httpBasic().disable()
-                .csrf(AbstractHttpConfigurer::disable)
-                .sessionManagement(c -> c.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                *//*.exceptionHandling(c -> c.authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)))*//*
-                .authorizeRequests(c -> c
-                        .antMatchers("/api/v1/login", "/api/v1/signup").permitAll()
-                                .antMatchers("/api/auth/login","/api/auth/register",
-                                        "/api/auth/gettokens").permitAll()
-                                .antMatchers("/api/auth/test/admin").hasAuthority("ROLE_ADMIN")
-                                .anyRequest().authenticated()
-                        //  .antMatchers(HttpMethod.GET, "/vehicles/**").permitAll()
-                        // .antMatchers(HttpMethod.DELETE, "/vehicles/**").hasRole("ADMIN")
-                        // .antMatchers(HttpMethod.GET, "/v1/vehicles/**").permitAll()
-                        *//*.anyRequest().authenticated()*//*
-
-                )
-                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
-                .build();
-    }*/
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception{
         return httpSecurity
@@ -67,36 +43,6 @@ public class SecurityConfig {
                 ).build();
     }
 
-    /*@Bean
-    UserDetailsService customUserDetailsService(UserRepository users) {
-        logger.info("customUserDetailsService");
-        return (username) -> users.getUserByEmail(username)
-                .orElseThrow(() -> new UsernameNotFoundException("Username: " + username + " not found"));
-    }*/
-
-    /*@Bean
-    AuthenticationManager customAuthenticationManager(UserDetailsService userDetailsService, PasswordEncoder encoder) {
-        logger.info("customAuthenticationManager");
-        return authentication -> {
-            String username = authentication.getPrincipal() + "";
-            String password = authentication.getCredentials() + "";
-            logger.info("encoder: {}", encoder);
-            logger.info("customAuthenticationManager: userDetailsService.loadUserByUsername(username)");
-            UserDetails user = userDetailsService.loadUserByUsername(username);
-
-            if (!encoder.matches(password, user.getPassword())) {
-                logger.info("customAuthenticationManager: !encoder.matches(password, user.getPassword()))");
-                throw new BadCredentialsException("Bad credentials");
-            }
-
-            if (!user.isEnabled()) {
-                logger.info("customAuthenticationManager: !user.isEnabled()");
-                throw new DisabledException("User account is not active");
-            }
-            logger.info("new UsernamePasswordAuthenticationToken");
-            return new UsernamePasswordAuthenticationToken(username, null, user.getAuthorities());
-        };
-    }*/
 
     @Bean
     public PasswordEncoder passwordEncoder() {
