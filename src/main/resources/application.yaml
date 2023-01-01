@@ -13,8 +13,8 @@ spring:
       ddl-auto: create-drop
   mail:
     host: smtp.rambler.ru
-    username:
-    password:
+    username: badma_a1qa@rambler.ru
+    password: A1qa2022!
     port: 465
     protocol: smtps
   servlet:

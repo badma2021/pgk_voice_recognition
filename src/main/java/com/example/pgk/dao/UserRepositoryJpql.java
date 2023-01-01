@@ -12,4 +12,5 @@ public interface UserRepositoryJpql {
     List<User> getAllUserAndRole();
     void appendUserAndUAP(Long user_id,Long uap_id);
     User getUserById(Long user_id);
+    void enableUser(String email);
 }

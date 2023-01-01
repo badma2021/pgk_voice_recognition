@@ -2,6 +2,8 @@ package com.example.pgk.repository;
 
 import com.example.pgk.dao.UserRepositoryJpql;
 import com.example.pgk.model.entity.User;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -87,4 +89,13 @@ public class UserRepositoryImpl implements UserRepositoryJpql {
             return null;
         }
     }
+
+    @Override
+    @Transactional
+    public void enableUser(String email){
+        System.out.println("hi from enableUser");
+        em.createNativeQuery("UPDATE users SET enabled = TRUE WHERE email = ?1")
+                .setParameter(1,email)
+                .executeUpdate();
+    };
 }

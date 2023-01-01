@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Repository
-interface ConfirmationTokenRepository extends
+public interface ConfirmationTokenRepository extends
         JpaRepository<ConfirmationToken,Long> {
 
     Optional<ConfirmationToken> findByToken(String token);

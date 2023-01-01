@@ -50,10 +50,12 @@ public class User {
     @ToString.Exclude
     private LocalDateTime lastModified;
     @JsonIgnore
-    @ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.PERSIST)
-    @JoinTable(name = "user_and_role",joinColumns = @JoinColumn(name = "user_id"),
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @JoinTable(name = "user_and_role", joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
+    @ToString.Exclude
+    private boolean enabled;
 
     public User() {
 
