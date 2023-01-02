@@ -1,6 +1,7 @@
 package com.example.pgk.dao;
 
 import com.example.pgk.model.entity.User;
+import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
@@ -13,4 +14,7 @@ public interface UserRepositoryJpql {
     void appendUserAndUAP(Long user_id,Long uap_id);
     User getUserById(Long user_id);
     void enableUser(String email);
+
+    boolean getEnabled(String email);
+
 }

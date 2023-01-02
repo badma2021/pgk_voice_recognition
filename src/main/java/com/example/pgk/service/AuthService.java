@@ -67,6 +67,10 @@ public class AuthService {
             log.info("email not found");
             throw new UserNotFoundException("Not correct email or password");
         }
+        if (!userRepositoryJpql.getEnabled(userDTO.getEmail())) {
+            log.info("email not confirmed");
+            throw new UserNotFoundException("email is not confirmed");
+        }
         if (!encoder.matches(userDTO.getPassword(), user.getPassword())) {
             log.info("password not same");
             throw new UserNotFoundException("Not correct email or password");

@@ -16,6 +16,7 @@ import java.util.List;
 public class UserRepositoryImpl implements UserRepositoryJpql {
     @PersistenceContext
     private EntityManager em;
+
     @Override
     @Transactional
     public void save(User user) {
@@ -34,10 +35,10 @@ public class UserRepositoryImpl implements UserRepositoryJpql {
         try {
             final User user = em.createQuery("SELECT u FROM User u LEFT JOIN FETCH u.roles AS ur " +
                             "WHERE LOWER(u.email) = ?1 ", User.class)
-                    .setParameter(1,email)
+                    .setParameter(1, email)
                     .getSingleResult();
             return user;
-        } catch (NoResultException n){
+        } catch (NoResultException n) {
             return null;
         }
     }
@@ -47,10 +48,10 @@ public class UserRepositoryImpl implements UserRepositoryJpql {
     public User getUserByEmail(String email) {
         try {
             final User user = em.createQuery("SELECT u FROM User u WHERE LOWER(u.email) = ?1", User.class)
-                    .setParameter(1,email.toLowerCase())
+                    .setParameter(1, email.toLowerCase())
                     .getSingleResult();
             return user;
-        } catch (NoResultException e){
+        } catch (NoResultException e) {
             return null;
         }
     }
@@ -62,7 +63,7 @@ public class UserRepositoryImpl implements UserRepositoryJpql {
             final List<User> users = em.createQuery("SELECT u FROM User u LEFT JOIN FETCH u.roles", User.class)
                     .getResultList();
             return users;
-        } catch (NoResultException n){
+        } catch (NoResultException n) {
             return null;
         }
     }
@@ -71,31 +72,46 @@ public class UserRepositoryImpl implements UserRepositoryJpql {
     @Transactional
     public void appendUserAndUAP(Long user_id, Long uap_id) {
         em.createNativeQuery("UPDATE user_and_project SET user_id = ?1 WHERE id = ?2")
-                .setParameter(1,user_id)
-                .setParameter(2,uap_id)
+                .setParameter(1, user_id)
+                .setParameter(2, uap_id)
                 .executeUpdate();
     }
 
     @Override
     @Transactional(readOnly = true)
     public User getUserById(Long user_id) {
-        try{
+        try {
             final User user = em.createQuery("SELECT u FROM User u LEFT JOIN FETCH u.roles " +
-                            "WHERE u.id = ?1",User.class)
-                    .setParameter(1,user_id)
+                            "WHERE u.id = ?1", User.class)
+                    .setParameter(1, user_id)
                     .getSingleResult();
             return user;
-        } catch (NoResultException n){
+        } catch (NoResultException n) {
             return null;
         }
     }
 
     @Override
     @Transactional
-    public void enableUser(String email){
-        System.out.println("hi from enableUser");
+    public void enableUser(String email) {
         em.createNativeQuery("UPDATE users SET enabled = TRUE WHERE email = ?1")
-                .setParameter(1,email)
+                .setParameter(1, email)
                 .executeUpdate();
-    };
+    }
+
+
+    @Override
+    @Transactional(readOnly = true)
+    public boolean getEnabled(String email) {
+        try {
+
+            boolean t = em.createQuery("SELECT u.enabled FROM User u WHERE u.email = ?1",Boolean.class)
+                    .setParameter(1, email).getSingleResult();
+
+            return t;
+
+        } catch (NoResultException n) {
+            return false;
+        }
+    }
 }
