@@ -38,6 +38,7 @@ public class InitDB {
                 .email("ivan@mail.ru")
                 .password(passwordEncoder.passwordEncoder().encode("Ivan080navI"))
                 .username("ivan")
+                .enabled(true)
                 .roles(Set.of(new Role("ROLE_USER")))
                 .build();
         User user2 = User.builder()
@@ -47,6 +48,7 @@ public class InitDB {
                 .email("roman@mail.ru")
                 .password(passwordEncoder.passwordEncoder().encode("2"))
                 .username("roman")
+                .enabled(true)
                 .roles(Set.of(new Role("ROLE_ADMIN")))
                 .build();
         User user3 = User.builder()
@@ -56,6 +58,7 @@ public class InitDB {
                 .email("marina@mail.ru")
                 .password(passwordEncoder.passwordEncoder().encode("5"))
                 .username("marina")
+                .enabled(true)
                 .build();
 
         userRepository.save(user1);
