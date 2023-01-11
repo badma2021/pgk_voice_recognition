@@ -6,7 +6,7 @@ services:
     ports:
       - "5431:5432"
     environment:
-      POSTGRES_DB: "pgk"
+      POSTGRES_DB: "wereL"
       POSTGRES_USER: "root"
       POSTGRES_PASSWORD: "root"
 
@@ -24,7 +24,7 @@ services:
     ports:
       - "8888:8888"
     environment:
-      SPRING_DATASOURCE_URL_DB: jdbc:postgresql://postgres_db:5432/pgk
+      SPRING_DATASOURCE_URL_DB: jdbc:postgresql://postgres_db:5432/wereL
       SPRING_DATASOURCE_USERNAME_DB: root
       SPRING_DATASOURCE_PASSWORD_DB: root
     depends_on:

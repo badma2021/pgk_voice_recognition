@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.example</groupId>
-    <artifactId>pgk</artifactId>
+    <artifactId>wereL</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>pgk</name>
-    <description>pgk</description>
+    <name>wereL</name>
+    <description>wereL</description>
     <properties>
         <java.version>11</java.version>
         <jjwt.version>0.11.5</jjwt.version>

@@ -1,0 +1,61 @@
+package com.example.wereL.model.entity;
+
+
+import lombok.*;
+
+import javax.persistence.*;
+import java.time.LocalDateTime;
+
+@Getter
+@Setter
+//@RequiredArgsConstructor
+@Builder
+@AllArgsConstructor
+//@ToString(of = {"id", "email", "username", "password"})
+@ToString
+public class Part {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false, unique = true)
+    @ToString.Exclude
+    private Long id;
+
+    @Column(name = "partname", unique = true)
+    @ToString.Exclude
+    private String partName;
+
+    @Column
+    @ToString.Exclude
+    private Long partNumber;
+    @ToString.Exclude
+    private String productionYear;
+    @ToString.Exclude
+    private String factoryNumber;
+
+    @ToString.Exclude
+    private String comment;
+
+    @ToString.Exclude
+    private String audioRecordName;
+    @ToString.Exclude
+    private LocalDateTime createdAt;
+
+
+    @ManyToOne
+    @ToString.Exclude
+    private User user;
+    public Part() {
+    }
+
+    public Part(String partName, Long partNumber, String productionYear, String factoryNumber, String comment,
+                String audioRecordName, LocalDateTime createdAt, User user) {
+        this.partName = partName;
+        this.partNumber = partNumber;
+        this.productionYear = productionYear;
+        this.factoryNumber = factoryNumber;
+        this.comment = comment;
+        this.audioRecordName = audioRecordName;
+        this.createdAt = createdAt;
+        this.user = user;
+    }
+}
