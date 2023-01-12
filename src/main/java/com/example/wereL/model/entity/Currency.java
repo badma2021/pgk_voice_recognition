@@ -14,27 +14,18 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 //@ToString(of = {"id", "email", "username", "password"})
 @ToString
-@Table(name = "expense")
-public class Expense {
+@Table(name = "currency")
+public class Currency {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false, unique = true)
     @ToString.Exclude
     private Long id;
-
-    public Expense() {
-    }
+    private String currencyName;
+    private BigDecimal exchangeRateToRuble;
     @ToString.Exclude
     private LocalDateTime createdAt;
-    @ManyToOne
-    private ExpenseTitle expenseTitle;
-    private BigDecimal amount;
+    public Currency() {
 
-    private String comment;
-    @ManyToOne
-    @ToString.Exclude
-    private User user;
-    @ManyToOne
-    @ToString.Exclude
-    private Currency currency;
+    }
 }

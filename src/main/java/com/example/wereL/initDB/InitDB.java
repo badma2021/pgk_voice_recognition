@@ -1,10 +1,7 @@
 package com.example.wereL.initDB;
-import com.example.wereL.dao.CategoryRepository;
-import com.example.wereL.dao.ExpenseRepository;
-import com.example.wereL.dao.ExpenseTitleRepository;
+import com.example.wereL.dao.*;
 import com.example.wereL.model.entity.*;
 import com.example.wereL.security.PassEncoder;
-import com.example.wereL.dao.RoleRepositoryJpql;
 import com.example.wereL.repository.UserRepositoryImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -19,6 +16,7 @@ public class InitDB {
     private final RoleRepositoryJpql roleRepositoryJpql;
     private final CategoryRepository categoryRepository;
     private final ExpenseRepository expenseRepository;
+    private final CurrencyRepository currencyRepository;
     private final ExpenseTitleRepository expenseTitleRepository;
 
     private final PassEncoder passwordEncoder;
@@ -26,11 +24,12 @@ public class InitDB {
     @Autowired
     public InitDB(UserRepositoryImpl userRepository,
                   RoleRepositoryJpql roleRepositoryJpql, CategoryRepository categoryRepository,
-                  ExpenseRepository expenseRepository, ExpenseTitleRepository expenseTitleRepository, PassEncoder passwordEncoder) {
+                  ExpenseRepository expenseRepository, CurrencyRepository currencyRepository, ExpenseTitleRepository expenseTitleRepository, PassEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.roleRepositoryJpql = roleRepositoryJpql;
         this.categoryRepository = categoryRepository;
         this.expenseRepository = expenseRepository;
+        this.currencyRepository = currencyRepository;
         this.expenseTitleRepository = expenseTitleRepository;
         this.passwordEncoder = passwordEncoder;
 
@@ -81,6 +80,25 @@ public class InitDB {
         categoryRepository.save(cat1);
         categoryRepository.save(cat2);
 ///////////////////////////////////////////////////////////
+        Currency cur1= Currency.builder()
+                .currencyName("RUB")
+                .build();
+        Currency cur2= Currency.builder()
+                .currencyName("RSD")
+                .createdAt(LocalDateTime.of(2023, 1, 12, 13, 30))
+                .exchangeRateToRuble(new BigDecimal(0.64))
+                .build();
+        Currency cur3= Currency.builder()
+                .currencyName("EUR")
+                .build();
+        Currency cur4= Currency.builder()
+                .currencyName("USD")
+                .build();
+        currencyRepository.save(cur1);
+        currencyRepository.save(cur2);
+        currencyRepository.save(cur3);
+        currencyRepository.save(cur4);
+        ///////////////////////////////////////////////////////////
         ExpenseTitle expt1= ExpenseTitle.builder()
                 .expenseName("bread")
                 .category(cat1)
@@ -102,18 +120,24 @@ public class InitDB {
                 .expenseTitle(expt1)
                 .createdAt(LocalDateTime.of(2023, 1, 12, 13, 30))
                 .comment("")
+                .user(user1)
+                .currency(cur1)
                 .build();
         Expense exp2= Expense.builder()
                 .amount(new BigDecimal(90.50))
                 .expenseTitle(expt2)
                 .createdAt(LocalDateTime.of(2023, 1, 12, 13, 30))
                 .comment("")
+                .user(user1)
+                .currency(cur1)
                 .build();
         Expense exp3= Expense.builder()
                 .amount(new BigDecimal(240.50))
                 .expenseTitle(expt3)
                 .createdAt(LocalDateTime.of(2023, 1, 12, 13, 30))
                 .comment("")
+                .user(user1)
+                .currency(cur1)
                 .build();
         expenseRepository.save(exp1);
         expenseRepository.save(exp2);
