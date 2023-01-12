@@ -1,27 +1,37 @@
 package com.example.wereL.initDB;
+import com.example.wereL.dao.CategoryRepository;
+import com.example.wereL.dao.ExpenseRepository;
+import com.example.wereL.dao.ExpenseTitleRepository;
+import com.example.wereL.model.entity.*;
 import com.example.wereL.security.PassEncoder;
 import com.example.wereL.dao.RoleRepositoryJpql;
 import com.example.wereL.repository.UserRepositoryImpl;
-import com.example.wereL.model.entity.User;
-import com.example.wereL.model.entity.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.Set;
 
 @Component
 public class InitDB {
     private final UserRepositoryImpl userRepository;
     private final RoleRepositoryJpql roleRepositoryJpql;
+    private final CategoryRepository categoryRepository;
+    private final ExpenseRepository expenseRepository;
+    private final ExpenseTitleRepository expenseTitleRepository;
 
     private final PassEncoder passwordEncoder;
 
     @Autowired
     public InitDB(UserRepositoryImpl userRepository,
-                  RoleRepositoryJpql roleRepositoryJpql, PassEncoder passwordEncoder) {
+                  RoleRepositoryJpql roleRepositoryJpql, CategoryRepository categoryRepository,
+                  ExpenseRepository expenseRepository, ExpenseTitleRepository expenseTitleRepository, PassEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.roleRepositoryJpql = roleRepositoryJpql;
-
+        this.categoryRepository = categoryRepository;
+        this.expenseRepository = expenseRepository;
+        this.expenseTitleRepository = expenseTitleRepository;
         this.passwordEncoder = passwordEncoder;
 
     }
@@ -62,5 +72,51 @@ public class InitDB {
         userRepository.save(user2);
         userRepository.save(user3);
 ///////////////////////////////////////////////////////////
+        Category cat1= Category.builder()
+                .categoryName("food")
+                .build();
+        Category cat2= Category.builder()
+                .categoryName("household")
+                .build();
+        categoryRepository.save(cat1);
+        categoryRepository.save(cat2);
+///////////////////////////////////////////////////////////
+        ExpenseTitle expt1= ExpenseTitle.builder()
+                .expenseName("bread")
+                .category(cat1)
+                .build();
+        ExpenseTitle expt2= ExpenseTitle.builder()
+                .expenseName("milk")
+                .category(cat1)
+                .build();
+        ExpenseTitle expt3= ExpenseTitle.builder()
+                .expenseName("toothpaste")
+                .category(cat2)
+                .build();
+        expenseTitleRepository.save(expt1);
+        expenseTitleRepository.save(expt2);
+        expenseTitleRepository.save(expt3);
+///////////////////////////////////////////////////////////////
+        Expense exp1= Expense.builder()
+                .amount(new BigDecimal(40.50))
+                .expenseTitle(expt1)
+                .createdAt(LocalDateTime.of(2023, 1, 12, 13, 30))
+                .comment("")
+                .build();
+        Expense exp2= Expense.builder()
+                .amount(new BigDecimal(90.50))
+                .expenseTitle(expt2)
+                .createdAt(LocalDateTime.of(2023, 1, 12, 13, 30))
+                .comment("")
+                .build();
+        Expense exp3= Expense.builder()
+                .amount(new BigDecimal(240.50))
+                .expenseTitle(expt3)
+                .createdAt(LocalDateTime.of(2023, 1, 12, 13, 30))
+                .comment("")
+                .build();
+        expenseRepository.save(exp1);
+        expenseRepository.save(exp2);
+        expenseRepository.save(exp3);
     }
 }
