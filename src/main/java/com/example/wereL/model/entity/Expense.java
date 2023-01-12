@@ -24,6 +24,7 @@ public class Expense {
 
     public Expense() {
     }
+
     @ToString.Exclude
     private LocalDateTime createdAt;
     @ManyToOne
@@ -34,7 +35,9 @@ public class Expense {
     @ManyToOne
     @ToString.Exclude
     private User user;
-    @ManyToOne
+
     @ToString.Exclude
-    private Currency currency;
+    private String currency;
+    @ToString.Exclude
+    private BigDecimal exchangeRateToRuble;
 }
