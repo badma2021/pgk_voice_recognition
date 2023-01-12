@@ -40,4 +40,15 @@ public class Expense {
     private String currency;
     @ToString.Exclude
     private BigDecimal exchangeRateToRuble;
+
+    public Expense(LocalDateTime createdAt, ExpenseTitle expenseTitle, BigDecimal amount, String comment, User user,
+                   String currency, BigDecimal exchangeRateToRuble) {
+        this.createdAt = createdAt;
+        this.expenseTitle = expenseTitle;
+        this.amount = amount;
+        this.comment = comment;
+        this.user = user;
+        this.currency = currency;
+        this.exchangeRateToRuble = exchangeRateToRuble;
+    }
 }
