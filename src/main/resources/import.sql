@@ -1,4 +1,3 @@
-
 INSERT INTO category (category_name) VALUES ('business lunch');
 INSERT INTO category (category_name) VALUES ('food');
 INSERT INTO category (category_name) VALUES ('fast&food&restaurant');
