@@ -11,7 +11,7 @@ export class ApiService {
   baseUrl: string = 'http://localhost:8888/users/';
 
   login(loginPayload) : Observable<ApiResponse> {
-    return this.http.post<ApiResponse>('http://localhost:8888/' + 'token/generate-token', loginPayload);
+    return this.http.post<ApiResponse>('http://localhost:8888/api/v1' + '/login', loginPayload);
   }
 
   getUsers() : Observable<ApiResponse> {

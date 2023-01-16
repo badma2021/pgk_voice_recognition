@@ -1,9 +1,9 @@
 .error{
-  color: #FF0000;
+  color: hsl(348, 83%, 47%);
 }
 .login-container {
   display: flex;
   flex-direction: column;
-  background-color: blanchedalmond;
+  background-color: hsl(180, 5%, 85%);
   margin: 2em auto auto;
 }
