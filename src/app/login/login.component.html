@@ -4,12 +4,12 @@
     <h2 style="margin: auto">Login </h2>
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
       <div class="form-group">
-        <label for="username">UserName:</label>
-        <input type="text" class="form-control" formControlName="username" id="username" autocomplete="off">
-        <div class="error" *ngIf="loginForm.controls['username'].hasError('required') && loginForm.controls['username'].touched">Username is required</div>
+        <label for="email">email:</label>
+        <input type="text" class="form-control" formControlName="email" id="email" autocomplete="off">
+        <div class="error" *ngIf="loginForm.controls['email'].hasError('required') && loginForm.controls['email'].touched">Username is required</div>
       </div>
       <div class="form-group">
-        <label for="pwd">Password:</label>
+        <label for="pwd">password:</label>
         <input type="password" class="form-control" formControlName="password" id="pwd" autocomplete="off">
         <div class="error" *ngIf="loginForm.controls['password'].hasError('required') && loginForm.controls['password'].touched">Password is required</div>
       </div>

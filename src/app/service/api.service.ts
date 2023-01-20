@@ -11,6 +11,7 @@ export class ApiService {
   baseUrl: string = 'http://localhost:8888/users/';
 
   login(loginPayload) : Observable<ApiResponse> {
+    console.log("before login")
     return this.http.post<ApiResponse>('http://localhost:8888/api/v1' + '/login', loginPayload);
   }
 
