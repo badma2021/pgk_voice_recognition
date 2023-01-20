@@ -9,6 +9,7 @@ import org.springframework.util.StringUtils;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Component
@@ -28,6 +29,12 @@ public class JwtFilter implements Filter {
         System.out.println("path");
         System.out.println(request.getRequestURI());
         System.out.println(token);
+        final HttpServletResponse response = (HttpServletResponse) servletResponse;
+        System.out.println("response");
+//        response.setHeader("Access-Control-Allow-Origin", "*");
+//        response.setHeader("Access-Control-Allow-Methods", "POST, PUT, GET, OPTIONS, DELETE");
+//        response.setHeader("Access-Control-Allow-Headers", "Authorization, Content-Type");
+//        response.setHeader("Access-Control-Max-Age", "3600");
         if(token != null && jwtUtils.validateAccessToken(token)){
             final Claims claims = jwtUtils.getAccessClaims(token);
             final JwtAuth jwtAuth = jwtUtils.generate(claims);

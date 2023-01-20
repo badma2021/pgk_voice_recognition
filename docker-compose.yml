@@ -35,7 +35,7 @@ services:
       context: /home/badma/angular8-demo # Use an image built from the specified dockerfile in the `angular-11-social-login` directory.
       dockerfile: Dockerfile
     ports:
-      - "8081:80" # Map the exposed port 80 on the container to port 8081 on the host machine
+      - "4200:80" # Map the exposed port 80 on the container to port 8081 on the host machine
     restart: always
     depends_on:
       - api_service
