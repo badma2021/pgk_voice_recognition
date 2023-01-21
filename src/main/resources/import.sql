@@ -261,6 +261,11 @@ INSERT INTO users(birthday,created_at,email,enabled,first_name,last_modified,las
 INSERT INTO users(birthday,created_at,email,enabled,first_name,last_modified,last_name,password, phone,username) VALUES (null,null,'marina@mail.ru','t','Marina',null,'Fedotova  ','$2a$05$jdRuwVSd/3Qlp6qzJQARRuKaDkKJPW8rzE2AJ94hncgR2s1IUSRwq','774','marina');
 
 
+INSERT INTO role(date_create, date_update, name) VALUES (CURRENT_TIMESTAMP,CURRENT_TIMESTAMP,'ROLE_USER');
+
+INSERT INTO user_and_role(user_id, role_id) VALUES (1,1);
+INSERT INTO user_and_role(user_id, role_id) VALUES (2,1);
+INSERT INTO user_and_role(user_id, role_id) VALUES (3,1);
 
 INSERT INTO expense(amount,comment,created_at,currency,exchange_rate_to_ruble,expense_title_id,user_id) VALUES ('43.15','','2021-01-01 00:00:00','RUB','1','3',1);
 INSERT INTO expense(amount,comment,created_at,currency,exchange_rate_to_ruble,expense_title_id,user_id) VALUES ('67.78','','2021-01-01 00:00:00','RUB','1','53',1);
