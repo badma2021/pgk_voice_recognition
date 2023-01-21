@@ -13,24 +13,46 @@
       novalidate
     >
       <div class="form-group">
-        <label for="username">Username</label>
+        <label for="firstName">firstName</label>
         <input
           type="text"
           class="form-control"
-          name="username"
-          [(ngModel)]="form.username"
+          name="firstName"
+          [(ngModel)]="form.firstName"
           required
           minlength="3"
           maxlength="20"
-          #username="ngModel"
+          #firstName="ngModel"
         />
-        <div class="alert-danger" *ngIf="username.errors && f.submitted">
-          <div *ngIf="username.errors.required">Username is required</div>
-          <div *ngIf="username.errors.minlength">
-            Username must be at least 3 characters
+        <div class="alert-danger" *ngIf="firstName.errors && f.submitted">
+          <div *ngIf="firstName.errors.required">firstName is required</div>
+          <div *ngIf="firstName.errors.minlength">
+            firstName must be at least 3 characters
           </div>
-          <div *ngIf="username.errors.maxlength">
-            Username must be at most 20 characters
+          <div *ngIf="firstName.errors.maxlength">
+            firstName must be at most 20 characters
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="lastName">lastName</label>
+        <input
+          type="text"
+          class="form-control"
+          name="lastName"
+          [(ngModel)]="form.lastName"
+          required
+          minlength="3"
+          maxlength="20"
+          #lastName="ngModel"
+        />
+        <div class="alert-danger" *ngIf="lastName.errors && f.submitted">
+          <div *ngIf="lastName.errors.required">lastName is required</div>
+          <div *ngIf="lastName.errors.minlength">
+            lastName must be at least 3 characters
+          </div>
+          <div *ngIf="lastName.errors.maxlength">
+            lastName must be at most 20 characters
           </div>
         </div>
       </div>
