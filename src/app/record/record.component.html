@@ -1,0 +1,101 @@
+<div class="col-md-12">
+  <div class="card card-container">
+    <form
+      name="form"
+      (ngSubmit)="f.form.valid && onSubmit()"
+      #f="ngForm"
+      novalidate
+    >
+      <div class="form-group">
+        <label for="createdAt">createdAt</label>
+        <input
+          type="text"
+          class="form-control"
+          name="createdAt"
+          [(ngModel)]="form.createdAt"
+          #createdAt="ngModel"
+        />
+      </div>
+      <div class="form-group">
+        <label for="expenseTitleId">expenseTitleId</label>
+        <input
+          type="text"
+          class="form-control"
+          name="expenseTitleId"
+          [(ngModel)]="form.expenseTitleId"
+          #expenseTitleId="ngModel"
+        />
+      </div>
+      <div class="form-group">
+        <label for="amount">amount</label>
+        <input
+          type="amount"
+          class="form-control"
+          name="amount"
+          [(ngModel)]="form.amount"
+          required
+          amount
+          #amount="ngModel"
+        />
+        <div class="alert-danger" *ngIf="amount.errors && f.submitted">
+          <div *ngIf="amount.errors.required">amount is required</div>
+          <div *ngIf="amount.errors.amount">
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="comments">comments</label>
+        <input
+          type="comments"
+          class="form-control"
+          name="comments"
+          [(ngModel)]="form.comments"
+          required
+          minlength="6"
+          #comments="ngModel"
+        />
+      </div>
+      <div class="form-group">
+        <label for="currencyName">currencyName</label>
+        <input
+          type="currencyName"
+          class="form-control"
+          name="currencyName"
+          [(ngModel)]="form.currencyName"
+          required
+          currencyName
+          #currencyName="ngModel"
+        />
+        <div class="alert-danger" *ngIf="currencyName.errors && f.submitted">
+          <div *ngIf="currencyName.errors.required">currencyName is required</div>
+          <div *ngIf="currencyName.errors.currencyName">
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="exchangeRateToRuble">exchangeRateToRuble</label>
+        <input
+          type="exchangeRateToRuble"
+          class="form-control"
+          name="exchangeRateToRuble"
+          [(ngModel)]="form.exchangeRateToRuble"
+          required
+          exchangeRateToRuble
+          #exchangeRateToRuble="ngModel"
+        />
+        <div class="alert-danger" *ngIf="exchangeRateToRuble.errors && f.submitted">
+          <div *ngIf="exchangeRateToRuble.errors.required">exchangeRateToRuble is required</div>
+          <div *ngIf="exchangeRateToRuble.errors.exchangeRateToRuble">
+
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <button class="btn btn-primary btn-block">Store</button>
+      </div>
+
+    </form>
+
+  </div>
+</div>
+
