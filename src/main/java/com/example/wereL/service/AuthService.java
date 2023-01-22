@@ -76,11 +76,12 @@ public class AuthService {
             throw new UserNotFoundException("Not correct email or password");
         }
         userDTO.setId(Integer.parseInt(String.valueOf(user.getId())));
-        userDTO.setRoles(dtoUtils.RoleToRoleDTOArray(user.getRoles()));
+        userDTO.setRoles(dtoUtils.roleToRoleDTOArray(user.getRoles()));
         final String refreshToken = jwtUtils.generateRefreshToken(userDTO);
         System.out.println(refreshToken);
         redisRepository.save(user.getEmail(), String.valueOf(refreshToken.hashCode()));
-        return new JwtDTO(jwtUtils.generateAccessToken(userDTO), refreshToken);
+        return new JwtDTO(jwtUtils.generateAccessToken(userDTO), refreshToken, user.getEmail(), user.getUsername(),
+                dtoUtils.roleSetToRoleList(user.getRoles()));
     }
 
     public JwtDTO updateTokensAndValid(final String refresh) {
@@ -147,7 +148,7 @@ public class AuthService {
         String link = "http://localhost:8888/api/v1/register/confirm/?token=" + token;
         emailSender.send(
                 userDTO.getEmail(),
-                buildEmail(userDTO.getFirstName(), link) );
+                buildEmail(userDTO.getFirstName(), link));
         return "User Save";
     }
 
@@ -173,6 +174,7 @@ public class AuthService {
                 confirmationToken.getUser().getEmail());
         return "confirmed";
     }
+
     private String buildEmail(String name, String link) {
         return "<div style=\"font-family:Helvetica,Arial,sans-serif;font-size:16px;margin:0;color:#0b0c0c\">\n" +
                 "\n" +

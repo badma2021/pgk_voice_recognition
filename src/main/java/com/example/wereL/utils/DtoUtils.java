@@ -9,12 +9,14 @@ import com.example.wereL.model.entity.Part;
 import com.example.wereL.model.entity.User;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Service
 public class DtoUtils {
-    public RoleDTO[] RoleToRoleDTOArray(final Set<Role> roles) {
+    public RoleDTO[] roleToRoleDTOArray(final Set<Role> roles) {
         if (roles == null) {
             System.out.println("dto");
             throw new NotValidRequestException();
@@ -57,5 +59,16 @@ public class DtoUtils {
         user.setRoles(roles);
         return user;
     }
+    public List<String> roleSetToRoleList(final Set<Role> roles) {
+        if (roles == null) {
+            System.out.println("Lito");
+            throw new NotValidRequestException();
+        }
+        int n = roles.size();
+        final List<String> roleList = new ArrayList<>(n);
+        for (Role x : roles)
+            roleList.add(x.getName());
+        return roleList;
+        }
 
 }
