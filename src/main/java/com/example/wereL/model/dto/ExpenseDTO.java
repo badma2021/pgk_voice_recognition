@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @ToString
-public class ExpenseDTO {
+public class ExpenseDTO{
     private Long id;
     private LocalDateTime createdAt;
     private int expenseTitleId;
