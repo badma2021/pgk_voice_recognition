@@ -16,7 +16,9 @@ export class RecordComponent implements OnInit{
        currencyName: null,
        exchangeRateToRuble: null
   };
-  errorMessage = '';
+    isSuccessful = false;
+    isSignUpFailed = false;
+    errorMessage = '';
 
   constructor(private recordService: RecordService) { }
 
@@ -25,5 +27,16 @@ export class RecordComponent implements OnInit{
 
   onSubmit(): void {
     const { createdAt, expenseTitleId, amount, comments, userId, currencyName, exchangeRateToRuble } = this.form;
+    this.recordService.store(createdAt, expenseTitleId, amount, comments, userId, currencyName, exchangeRateToRuble).subscribe(
+         data => {
+           console.log(data);
+           this.isSuccessful = true;
+           this.isSignUpFailed = false;
+         },
+         err => {
+           this.errorMessage = err.error.message;
+           this.isSignUpFailed = true;
+         }
+    );
   }
 }

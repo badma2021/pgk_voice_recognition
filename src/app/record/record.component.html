@@ -1,6 +1,7 @@
 <div class="col-md-12">
   <div class="card card-container">
     <form
+      *ngIf="!isSuccessful"
       name="form"
       (ngSubmit)="f.form.valid && onSubmit()"
       #f="ngForm"
@@ -94,8 +95,14 @@
         <button class="btn btn-primary btn-block">Store</button>
       </div>
 
+      <div class="alert alert-warning" *ngIf="f.submitted && isSignUpFailed">
+        Signup failed!<br />{{ errorMessage }}
+      </div>
     </form>
 
+    <div class="alert alert-success" *ngIf="isSuccessful">
+      Your registration is successful!
+    </div>
   </div>
 </div>
 
