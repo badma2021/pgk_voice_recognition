@@ -16,7 +16,7 @@ public class JwtDTO {
     private String accessToken;
     private String refreshToken;
     private String email;
-    private String username;
+    private String userId;
     private List<String> roles;
 
     public JwtDTO(String accessToken, String refreshToken) {

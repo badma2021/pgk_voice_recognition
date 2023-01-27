@@ -80,7 +80,7 @@ public class AuthService {
         final String refreshToken = jwtUtils.generateRefreshToken(userDTO);
         System.out.println(refreshToken);
         redisRepository.save(user.getEmail(), String.valueOf(refreshToken.hashCode()));
-        return new JwtDTO(jwtUtils.generateAccessToken(userDTO), refreshToken, user.getEmail(), user.getUsername(),
+        return new JwtDTO(jwtUtils.generateAccessToken(userDTO), refreshToken, user.getEmail(), user.getId().toString(),
                 dtoUtils.roleSetToRoleList(user.getRoles()));
     }
 
