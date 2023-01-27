@@ -12,6 +12,7 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class RecordService {
+
   constructor(private http: HttpClient) { }
 
   store(createdAt: string, expenseTitleId: string, amount: string, comments: string, userId: string, currencyName: string, exchangeRateToRuble: string): Observable<any> {
