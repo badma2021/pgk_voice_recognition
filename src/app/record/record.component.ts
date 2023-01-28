@@ -20,7 +20,7 @@ export class RecordComponent implements OnInit{
   };
     isSuccessful = false;
     isSignUpFailed = false;
-    errorMessage = '';
+    errorMessage = 'error';
 
   constructor(private recordService: RecordService, private tokenStorage: TokenStorageService) { }
 
