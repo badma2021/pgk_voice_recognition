@@ -30,7 +30,7 @@ public class ExpenseService {
                 .mapToObj(j -> new Expense(
                         LocalDateTime.now(),
                         expenseTitleRepository.getById(Long.valueOf(expenseDTO[j].getExpenseTitleId())),
-                        expenseDTO[j].getAmount(),
+                        expenseDTO[j].getAmount().multiply(expenseDTO[j].getExchangeRateToRuble()),
                         expenseDTO[j].getComment(),
                         userRepository.getById(Long.valueOf(expenseDTO[j].getUserId())),
                         expenseDTO[j].getCurrencyName(),
