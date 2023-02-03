@@ -1,0 +1,22 @@
+p {
+  font-family: Lato;
+}
+
+.container {
+  display: flex;
+  flex-direction: row;
+}
+
+.container > * {
+  width: 15%;
+}
+
+mat-icon {
+  text-align: right;
+  margin-top: 15px;
+  cursor: pointer;
+}
+
+.save {
+  float: right;
+}

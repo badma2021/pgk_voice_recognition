@@ -1,0 +1,77 @@
+<form [formGroup]="dynamicForm">
+  <div formArrayName="filters">
+    <div
+      *ngFor="let filter of filtersFormArray.controls; let i = index;">
+
+      <div
+        [formGroupName]="i"
+        class="container">
+
+        <mat-form-field>
+          <mat-select
+            placeholder="Category"
+            formControlName="filterType">
+            <mat-option
+              *ngFor="let filterType of filterTypes"
+              [value]="filterType">
+              {{ filterType }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-select
+            (selectionChange)="selectedAPIChanged(i)"
+            placeholder="Expense"
+            #apiField
+            formControlName="apiType">
+            <mat-option
+              *ngFor="let apiType of apiTypes"
+              [value]="apiType">
+              {{ apiType }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field
+        >
+          <input
+            matInput
+            formControlName="value"
+            placeholder="Value">
+        </mat-form-field>
+        <mat-form-field
+        >
+          <input
+            matInput
+            formControlName="comment"
+            placeholder="Comment">
+        </mat-form-field>
+
+        <mat-icon
+          (click)="removeFilterFromFiltersFormArray(i)">
+          delete
+        </mat-icon>
+
+      </div>
+    </div>
+
+    <button
+      mat-raised-button
+      color="primary"
+      type="button"
+      (click)="addFilterToFiltersFormArray()">
+      Add Filter
+    </button>
+
+    <button
+      class="save"
+      mat-stroked-button
+      color="primary"
+      [disabled]="dynamicForm.invalid || filtersFormArray.controls.length < 1"
+      (click)="save()">
+      Save
+    </button>
+
+  </div>
+</form>
