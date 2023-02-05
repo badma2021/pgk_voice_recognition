@@ -24,11 +24,11 @@
             (selectionChange)="selectedAPIChanged(i)"
             placeholder="Expense"
             #apiField
-            formControlName="apiType">
+            formControlName="expenseTitleId">
             <mat-option
-              *ngFor="let apiType of apiTypes"
-              [value]="apiType">
-              {{ apiType }}
+              *ngFor="let expenseTitleId of expenseTitleIdes"
+              [value]="expenseTitleId">
+              {{ expenseTitleId }}
             </mat-option>
           </mat-select>
         </mat-form-field>
@@ -37,15 +37,39 @@
         >
           <input
             matInput
-            formControlName="value"
-            placeholder="Value">
+            placeholder="Amount"
+            formControlName="amount"
+
+            >
         </mat-form-field>
         <mat-form-field
         >
           <input
             matInput
+            placeholder="Comment"
             formControlName="comment"
-            placeholder="Comment">
+            [value]="comment"
+          >
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-select
+            placeholder="Currency"
+            formControlName="currencyName">
+            <mat-option
+              *ngFor="let currencyName of currencyNames"
+              [value]="currencyName">
+              {{ currencyName }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field
+        >
+          <input
+            matInput
+            formControlName="exchangeRateToRuble"
+            placeholder="Rate">
         </mat-form-field>
 
         <mat-icon

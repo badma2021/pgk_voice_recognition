@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
+import { RecordListService } from '../_services/record-list.service';
+import { TokenStorageService } from '../_services/token-storage.service';
 
 @Component({
   selector: 'app-record-list',
@@ -8,31 +10,40 @@ import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
 })
 export class RecordListComponent {
   filterTypes = [
-    'TRANSFER TM',
-    'APP'
+    'food',
+    'travelling',
+    'ffr'
   ];
 
-  apiTypes = [
-    'Less Than',
-    'Equals',
-    'Greater Than'
+  expenseTitleIdes = [
+    '1',
+    '2',
+    '3'
   ];
+   currencyNames = [
+      'RUB',
+      'RSD',
+      'EUR'
+    ];
+    amount: number=0;
+    comment: string="";
+    exchangeRateToRuble: string="";
 
   seedData = [
-    { filterType: 'TRANSFER TM', apiType: 'Less Than', value: '100' },
+    { filterType: 'TRANSFER TM', expenseTitleId: 'Less Than', amount: '100' },
     { filterType: 'TRANSFER TM' },
-    { filterType: 'TRANSFER TM', apiType: 'Equals', value: '50' },
-    { filterType: 'TRANSFER TM', apiType: 'Equals' },
-    { filterType: 'TRANSFER TM', apiType: 'Greater Than', value: '150' },
-    { filterType: 'APP', apiType: 'Less Than', value: '100' },
-    { filterType: 'APP', apiType: 'Equals', value: '50' },
+    { filterType: 'TRANSFER TM', expenseTitleId: 'Equals', amount: '50' },
+    { filterType: 'TRANSFER TM', expenseTitleId: 'Equals' },
+    { filterType: 'TRANSFER TM', expenseTitleId: 'Greater Than', amount: '150' },
+    { filterType: 'APP', expenseTitleId: 'Less Than', amount: '100' },
+    { filterType: 'APP', expenseTitleId: 'Equals', amount: '50' },
     { filterType: 'APP' },
-    { filterType: 'APP', apiType: 'Greater Than' },
+    { filterType: 'APP', expenseTitleId: 'Greater Than' },
   ];
 
   dynamicForm: FormGroup;
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder, private recordListService: RecordListService, private tokenStorage: TokenStorageService) {}
 
   ngOnInit() {
     this.dynamicForm = this.fb.group({
@@ -46,9 +57,8 @@ export class RecordListComponent {
   seedFiltersFormArray() {
     this.seedData.forEach(seedDatum => {
       const formGroup = this.createFilterGroup();
-      if (seedDatum.apiType) {
-        formGroup.addControl('value', this.getFormControl());
-        formGroup.addControl('comment', this.getFormControl());
+      if (seedDatum.expenseTitleId) {
+        formGroup.addControl('amount', this.getFormControl());
       }
       formGroup.patchValue(seedDatum);
       this.filtersFormArray.push(formGroup);
@@ -57,8 +67,14 @@ export class RecordListComponent {
 
   createFilterGroup() {
     return this.fb.group({
+    createdAt: '',
       filterType: [],
-      apiType: []
+      expenseTitleId: [],
+      currencyName: [],
+      amount: '',
+      comment: '',
+      exchangeRateToRuble: '',
+      userId: this.tokenStorage.getUser().userId
     });
   }
 
@@ -71,7 +87,7 @@ export class RecordListComponent {
   }
 
   selectedAPIChanged(i) {
-    this.getFilterGroupAtIndex(i).addControl('value', this.getFormControl());
+    this.getFilterGroupAtIndex(i).addControl('amount', this.getFormControl());
   }
 
   getFormControl() {
@@ -80,6 +96,14 @@ export class RecordListComponent {
 
   save() {
     console.log(this.dynamicForm.value);
+
+
+        this.recordListService.store(this.createFilterGroup()).subscribe(
+             data => {
+console.log(data);
+             },
+
+        );
   }
 
   get filtersFormArray() {

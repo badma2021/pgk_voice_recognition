@@ -2,7 +2,8 @@ FROM node:16.17.1-alpine as build-step
 RUN mkdir -p /app
 WORKDIR /app
 COPY package.json /app
-RUN npm install
+
+RUN npm install -g npm@9.4.1
 COPY . /app
 RUN npm run build
 
