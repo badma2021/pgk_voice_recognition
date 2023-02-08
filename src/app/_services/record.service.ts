@@ -17,6 +17,7 @@ export class RecordService {
 
   store(createdAt: string, expenseTitleId: string, amount: string, comments: string, userId: string, currencyName: string, exchangeRateToRuble: string): Observable<any> {
   console.log('hi from store')
+
     return this.http.post(AUTH_API + 'store', {
        createdAt,
        expenseTitleId,

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
 import { RecordListService } from '../_services/record-list.service';
 import { TokenStorageService } from '../_services/token-storage.service';
+import { Expense } from "../types/expense";
 
 @Component({
   selector: 'app-record-list',
@@ -68,7 +69,6 @@ export class RecordListComponent {
   createFilterGroup() {
     return this.fb.group({
     createdAt: '',
-      filterType: [],
       expenseTitleId: [],
       currencyName: [],
       amount: '',
@@ -95,15 +95,21 @@ export class RecordListComponent {
   }
 
   save() {
-    console.log(this.dynamicForm.value);
 
 
-        this.recordListService.store(this.createFilterGroup()).subscribe(
-             data => {
-console.log(data);
-             },
 
-        );
+const control = this.dynamicForm.get('filters').value;
+
+
+let expenses: Expense[] = control;
+console.log(expenses);
+        this.recordListService.store(control).subscribe(
+                                               data => {
+                                                 console.log(data);
+
+                                               }
+);
+
   }
 
   get filtersFormArray() {
