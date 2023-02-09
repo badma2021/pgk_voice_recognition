@@ -1,10 +1,13 @@
 package com.example.wereL.service;
 
+import com.example.wereL.dao.CategoryRepository;
 import com.example.wereL.dao.ExpenseRepository;
 import com.example.wereL.dao.ExpenseTitleRepository;
 import com.example.wereL.dao.UserRepository;
 import com.example.wereL.model.dto.ExpenseDTO;
+import com.example.wereL.model.entity.Category;
 import com.example.wereL.model.entity.Expense;
+import com.example.wereL.model.entity.ExpenseTitle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -14,6 +17,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+
 @Service
 public class ExpenseService {
     private static final Logger logger = LoggerFactory.getLogger(ExpenseService.class);
@@ -22,10 +26,13 @@ public class ExpenseService {
     @Resource
     private ExpenseTitleRepository expenseTitleRepository;
     @Resource
+    private CategoryRepository categoryRepository;
+    @Resource
     private UserRepository userRepository;
+
     public String save(ExpenseDTO[] expenseDTO) {
         logger.info("ExpenseService.save starts");
-        List<Expense> exps= IntStream
+        List<Expense> exps = IntStream
                 .rangeClosed(0, expenseDTO.length - 1)
                 .mapToObj(j -> new Expense(
                         LocalDateTime.now(),
@@ -40,5 +47,15 @@ public class ExpenseService {
         logger.info("before saveAll");
         expenseRepository.saveAllAndFlush(exps);
         return "запись учтена";
+    }
+
+    public List<Category> getCategories() {
+        logger.info("ExpenseService.getCategories starts");
+        return categoryRepository.findAll();
+    }
+
+    public List<ExpenseTitle> getExpenseTitleByCategory(Long categoryId) {
+        logger.info("ExpenseService.getCategories starts");
+        return expenseTitleRepository.findExpenseTitleByCategoryId(categoryId);
     }
 }
