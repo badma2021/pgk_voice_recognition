@@ -10,11 +10,12 @@ import { Expense } from "../types/expense";
   styleUrls: [ './record-list.component.css' ]
 })
 export class RecordListComponent {
-  filterTypes = [
-    'food',
-    'travelling',
-    'ffr'
-  ];
+filterTypes ;
+//   filterTypes = [
+//     'food',
+//     'travelling',
+//     'ffr'
+//   ];
 
   expenseTitleIdes = [
     '1',
@@ -47,6 +48,12 @@ export class RecordListComponent {
   constructor(private fb: FormBuilder, private recordListService: RecordListService, private tokenStorage: TokenStorageService) {}
 
   ngOnInit() {
+
+  this.recordListService.getCategories().subscribe(
+
+        data => this.filterTypes = data
+       // console.log(data);
+      );
     this.dynamicForm = this.fb.group({
       filters: this.fb.array([])
     });
@@ -95,21 +102,14 @@ export class RecordListComponent {
   }
 
   save() {
-
-
-
 const control = this.dynamicForm.get('filters').value;
-
-
 let expenses: Expense[] = control;
 console.log(expenses);
         this.recordListService.store(control).subscribe(
-                                               data => {
-                                                 console.log(data);
-
-                                               }
-);
-
+        data => {
+        console.log(data);
+         }
+   );
   }
 
   get filtersFormArray() {

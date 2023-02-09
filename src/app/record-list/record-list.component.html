@@ -13,8 +13,10 @@
             formControlName="filterType">
             <mat-option
               *ngFor="let filterType of filterTypes"
-              [value]="filterType">
-              {{ filterType }}
+              [value]="filterType.id">
+              {{ filterType.categoryName }}
+
+
             </mat-option>
           </mat-select>
         </mat-form-field>

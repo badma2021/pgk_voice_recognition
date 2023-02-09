@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Expense } from "../types/expense";
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
 const AUTH_API = 'http://localhost:8888/api/v1/';
 
@@ -13,27 +14,7 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class RecordListService {
- expenses: Expense[] = [
-      {
-        "createdAt": "",
-        "expenseTitleId": "4",
-        "amount": "899",
-        "comment": "electronic",
-        "userId": "1",
-        "currencyName": "RSD",
-        "exchangeRateToRuble": "0.64"
-      },
-      {
-        "createdAt": "",
-        "expenseTitleId": "3",
-        "amount": "799",
-        "comment": "electronic",
-        "userId": "1",
-        "currencyName": "RSD",
-        "exchangeRateToRuble": "0.64"
-      }
 
-   ]
   constructor(private http: HttpClient) { }
 
   store(expenses): Observable<any> {
@@ -41,5 +22,24 @@ export class RecordListService {
    console.log(expenses)
   return this.http.post(AUTH_API + 'store', JSON.stringify(expenses), httpOptions);
 
+  }
+
+   getCategories() {
+      return this.http.get(AUTH_API + 'category').pipe(
+                  catchError(this.handleError)
+      );
+    }
+
+  private handleError(error: HttpErrorResponse) {
+    if (error.error instanceof ErrorEvent) {
+      // A client-side or network error occurred. Handle it accordingly.
+      console.error('An error occurred:', error.error.message);
+    } else {
+      // The backend returned an unsuccessful response code.
+      // The response body may contain clues as to what went wrong,
+      console.error(`Backend returned code ${error.status}, ` + `body was: ${error.error}`);
+    }
+    // return an observable with a user-facing error message
+    return throwError('Something bad happened. Please try again later.');
   }
 }
