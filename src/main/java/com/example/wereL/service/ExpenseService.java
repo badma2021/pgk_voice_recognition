@@ -55,7 +55,7 @@ public class ExpenseService {
     }
 
     public List<ExpenseTitle> getExpenseTitleByCategory(Long categoryId) {
-        logger.info("ExpenseService.getCategories starts");
+        logger.info("ExpenseService.getExpenseTitleByCategory starts");
         return expenseTitleRepository.findExpenseTitleByCategoryId(categoryId);
     }
 }
