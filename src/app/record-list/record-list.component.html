@@ -10,12 +10,15 @@
         <mat-form-field>
           <mat-select
             placeholder="Category"
-            formControlName="filterType">
+            formControlName="filterType"
+
+           (selectionChange)="onChangeCategory($event.value, i)">
+
             <mat-option
+
               *ngFor="let filterType of filterTypes"
               [value]="filterType.id">
               {{ filterType.categoryName }}
-
 
             </mat-option>
           </mat-select>
@@ -23,14 +26,15 @@
 
         <mat-form-field>
           <mat-select
+
             (selectionChange)="selectedAPIChanged(i)"
             placeholder="Expense"
             #apiField
             formControlName="expenseTitleId">
             <mat-option
-              *ngFor="let expenseTitleId of expenseTitleIdes"
-              [value]="expenseTitleId">
-              {{ expenseTitleId }}
+              *ngFor="let expenseTitleId of expenseTitleIds[i]"
+              [value]="expenseTitleId.id">
+              {{ expenseTitleId.expenseName }}
             </mat-option>
           </mat-select>
         </mat-form-field>

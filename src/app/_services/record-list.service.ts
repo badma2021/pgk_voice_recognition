@@ -30,6 +30,12 @@ export class RecordListService {
       );
     }
 
+      getExpenseTitle(categoryId: number) {
+        return this.http.get(AUTH_API + 'selected_expensetitle?id=' + categoryId).pipe(
+          catchError(this.handleError)
+        );
+      }
+
   private handleError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {
       // A client-side or network error occurred. Handle it accordingly.

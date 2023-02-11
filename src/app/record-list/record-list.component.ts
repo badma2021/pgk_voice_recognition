@@ -11,17 +11,8 @@ import { Expense } from "../types/expense";
 })
 export class RecordListComponent {
 filterTypes ;
-//   filterTypes = [
-//     'food',
-//     'travelling',
-//     'ffr'
-//   ];
 
-  expenseTitleIdes = [
-    '1',
-    '2',
-    '3'
-  ];
+  expenseTitleIds= [];
    currencyNames = [
       'RUB',
       'RSD',
@@ -44,6 +35,7 @@ filterTypes ;
   ];
 
   dynamicForm: FormGroup;
+
 
   constructor(private fb: FormBuilder, private recordListService: RecordListService, private tokenStorage: TokenStorageService) {}
 
@@ -93,9 +85,6 @@ filterTypes ;
     this.filtersFormArray.removeAt(index);
   }
 
-  selectedAPIChanged(i) {
-    this.getFilterGroupAtIndex(i).addControl('amount', this.getFormControl());
-  }
 
   getFormControl() {
     return this.fb.control(null);
@@ -118,5 +107,24 @@ console.log(expenses);
 
   getFilterGroupAtIndex(index) {
     return (<FormGroup>this.filtersFormArray.at(index));
+  }
+
+   onChangeCategory(categoryId: number, index: number) {
+   console.log("hi from onChangeCategory");
+      if (categoryId) {
+        this.recordListService.getExpenseTitle(categoryId).subscribe(
+          data => {
+            this.expenseTitleIds[index] = data;
+  console.log(data);
+          }
+        );
+      } else {
+      console.log("hi from onChangeCategory else");
+        this.expenseTitleIds[index] = null;
+
+      }
+    }
+  selectedAPIChanged(i) {
+    this.getFilterGroupAtIndex(i).addControl('amount', this.getFormControl());
   }
 }
