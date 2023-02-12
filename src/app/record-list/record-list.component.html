@@ -1,4 +1,33 @@
 <form [formGroup]="dynamicForm">
+
+  <mat-form-field>
+    <mat-select
+      formControlName="currencyName"
+      placeholder="Currency"
+      (selectionChange)="onSearch2Change($event.value)">
+
+      <mat-option
+
+        *ngFor="let currencyName of currencyNames"
+
+        [value]="currencyName">
+
+        {{ currencyName }}
+
+      </mat-option>
+    </mat-select>
+
+  </mat-form-field>
+  <mat-form-field
+  >
+    <input matInput type="text" formControlName="exchangeRateToRuble" (change)="onSearchChange($any($event.target).value)"
+           placeholder="Rate">
+
+    <button *ngIf="exchangeRateToRuble" matSuffix mat-icon-button aria-label="Clear" (click)="exchangeRateToRuble=''">
+      <mat-icon>close</mat-icon>
+    </button>
+
+  </mat-form-field>
   <div formArrayName="filters">
     <div
       *ngFor="let filter of filtersFormArray.controls; let i = index;">
@@ -58,25 +87,6 @@
           >
         </mat-form-field>
 
-        <mat-form-field>
-          <mat-select
-            placeholder="Currency"
-            formControlName="currencyName">
-            <mat-option
-              *ngFor="let currencyName of currencyNames"
-              [value]="currencyName">
-              {{ currencyName }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-
-        <mat-form-field
-        >
-          <input
-            matInput
-            formControlName="exchangeRateToRuble"
-            placeholder="Rate">
-        </mat-form-field>
 
         <mat-icon
           (click)="removeFilterFromFiltersFormArray(i)">

@@ -40,7 +40,7 @@ export class LoginComponent implements OnInit {
         this.isLoggedIn = true;
         this.roles = this.tokenStorage.getUser().roles;
 
-        this.router.navigate(['/record']).then(() => {
+        this.router.navigate(['/recordlist']).then(() => {
                                              window.location.reload(); });
 
       },

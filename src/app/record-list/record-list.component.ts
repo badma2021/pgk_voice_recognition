@@ -4,6 +4,7 @@ import { RecordListService } from '../_services/record-list.service';
 import { TokenStorageService } from '../_services/token-storage.service';
 import { Expense } from "../types/expense";
 
+
 @Component({
   selector: 'app-record-list',
   templateUrl: './record-list.component.html',
@@ -13,26 +14,17 @@ export class RecordListComponent {
 filterTypes ;
 
   expenseTitleIds= [];
-   currencyNames = [
+  currencyNames = [
       'RUB',
       'RSD',
-      'EUR'
+      'EUR',
+      'USD'
     ];
+  currencyName: string="";
     amount: number=0;
     comment: string="";
     exchangeRateToRuble: string="";
 
-  seedData = [
-    { filterType: 'TRANSFER TM', expenseTitleId: 'Less Than', amount: '100' },
-    { filterType: 'TRANSFER TM' },
-    { filterType: 'TRANSFER TM', expenseTitleId: 'Equals', amount: '50' },
-    { filterType: 'TRANSFER TM', expenseTitleId: 'Equals' },
-    { filterType: 'TRANSFER TM', expenseTitleId: 'Greater Than', amount: '150' },
-    { filterType: 'APP', expenseTitleId: 'Less Than', amount: '100' },
-    { filterType: 'APP', expenseTitleId: 'Equals', amount: '50' },
-    { filterType: 'APP' },
-    { filterType: 'APP', expenseTitleId: 'Greater Than' },
-  ];
 
   dynamicForm: FormGroup;
 
@@ -50,29 +42,17 @@ filterTypes ;
       filters: this.fb.array([])
     });
 
-    // Uncomment the line below If you want to seed the Form with some data
-   // this.seedFiltersFormArray();
   }
 
-  seedFiltersFormArray() {
-    this.seedData.forEach(seedDatum => {
-      const formGroup = this.createFilterGroup();
-      if (seedDatum.expenseTitleId) {
-        formGroup.addControl('amount', this.getFormControl());
-      }
-      formGroup.patchValue(seedDatum);
-      this.filtersFormArray.push(formGroup);
-    });
-  }
 
   createFilterGroup() {
     return this.fb.group({
     createdAt: '',
       expenseTitleId: [],
-      currencyName: [],
+      currencyName: this.currencyName,
       amount: '',
       comment: '',
-      exchangeRateToRuble: '',
+      exchangeRateToRuble: this.exchangeRateToRuble,
       userId: this.tokenStorage.getUser().userId
     });
   }
@@ -127,4 +107,13 @@ console.log(expenses);
   selectedAPIChanged(i) {
     this.getFilterGroupAtIndex(i).addControl('amount', this.getFormControl());
   }
+  onSearchChange(searchValue: string): void {
+   console.log('searchValue');
+    this.exchangeRateToRuble= searchValue;
+  }
+   onSearch2Change(searchValue2: string): void {
+     console.log('searchValue2');
+     console.log(searchValue2);
+      this.currencyName= searchValue2;
+    }
 }
