@@ -1,6 +1,7 @@
 <form [formGroup]="dynamicForm">
 
-  <mat-form-field>
+
+  <mat-form-field  [style.width.px]=90>
     <mat-select
       formControlName="currencyName"
       placeholder="Currency"
@@ -15,97 +16,97 @@
         {{ currencyName }}
 
       </mat-option>
+
     </mat-select>
 
   </mat-form-field>
-  <mat-form-field
+  <mat-form-field [style.width.px]=60
   >
-    <input matInput type="text" formControlName="exchangeRateToRuble" (change)="onSearchChange($any($event.target).value)"
+    <input matInput type="text" formControlName="exchangeRateToRuble"
+           (change)="onSearchChange($any($event.target).value)"
            placeholder="Rate">
 
-    <button *ngIf="exchangeRateToRuble" matSuffix mat-icon-button aria-label="Clear" (click)="exchangeRateToRuble=''">
-      <mat-icon>close</mat-icon>
-    </button>
-
   </mat-form-field>
-  <div formArrayName="filters">
-    <div
-      *ngFor="let filter of filtersFormArray.controls; let i = index;">
+  <div>
+    <div formArrayName="filters">
 
       <div
-        [formGroupName]="i"
-        class="container">
+        *ngFor="let filter of filtersFormArray.controls; let i = index;">
+<div>
+        <div
+          [formGroupName]="i"
+          class="container">
 
-        <mat-form-field>
-          <mat-select
-            placeholder="Category"
-            formControlName="filterType"
+          <mat-form-field [style.width.%]="40">
+            <mat-select
+              placeholder="Category"
+              formControlName="filterType"
 
-           (selectionChange)="onChangeCategory($event.value, i)">
+              (selectionChange)="onChangeCategory($event.value, i)">
 
-            <mat-option
+              <mat-option
 
-              *ngFor="let filterType of filterTypes"
-              [value]="filterType.id">
-              {{ filterType.categoryName }}
+                *ngFor="let filterType of filterTypes"
+                [value]="filterType.id">
+                {{ filterType.categoryName }}
 
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
 
-        <mat-form-field>
-          <mat-select
+          <mat-form-field [style.width.%]="40">
+            <mat-select
 
-            (selectionChange)="selectedAPIChanged(i)"
-            placeholder="Expense"
-            #apiField
-            formControlName="expenseTitleId">
-            <mat-option
-              *ngFor="let expenseTitleId of expenseTitleIds[i]"
-              [value]="expenseTitleId.id">
-              {{ expenseTitleId.expenseName }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
+              (selectionChange)="selectedAPIChanged(i)"
+              placeholder="Expense"
+              #apiField
+              formControlName="expenseTitleId" class="myclass">
+              <mat-option
+                *ngFor="let expenseTitleId of expenseTitleIds[i]"
+                [value]="expenseTitleId.id">
+                {{ expenseTitleId.expenseName }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
 
-        <mat-form-field
-        >
-          <input
-            matInput
-            placeholder="Amount"
-            formControlName="amount"
+          <mat-form-field [style.width.%]="20"
+          >
+            <input
+              matInput
+              placeholder="Amount"
+              formControlName="amount" class="myclass"
 
             >
-        </mat-form-field>
-        <mat-form-field
-        >
-          <input
-            matInput
-            placeholder="Comment"
-            formControlName="comment"
-            [value]="comment"
-          >
-        </mat-form-field>
+          </mat-form-field>
+          <mat-icon
+            (click)="removeFilterFromFiltersFormArray(i)">
+            delete
+          </mat-icon>
 
+        </div>
+        <div [formGroupName]="i"
+  class="container">
 
-        <mat-icon
-          (click)="removeFilterFromFiltersFormArray(i)">
-          delete
-        </mat-icon>
+          <mat-form-field [style.width.%]="60">
+            <input matInput placeholder="Comment" formControlName="comment" [value]="comment">
+          </mat-form-field>
 
+        </div>
+      </div>
       </div>
     </div>
 
-    <button
+    <button class="button"
       mat-raised-button
       color="primary"
-      type="button"
+
       (click)="addFilterToFiltersFormArray()">
-      Add Filter
+      Add Record
     </button>
 
     <button
       class="save"
+      type="submit"
       mat-stroked-button
       color="primary"
       [disabled]="dynamicForm.invalid || filtersFormArray.controls.length < 1"

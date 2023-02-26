@@ -39,17 +39,22 @@ export class LoginComponent implements OnInit {
         this.isLoginFailed = false;
         this.isLoggedIn = true;
         this.roles = this.tokenStorage.getUser().roles;
-
         this.router.navigate(['/recordlist']).then(() => {
-                                             window.location.reload(); });
-
+          window.location.reload(); });
       },
       err => {
         this.errorMessage = err.error.message;
         this.isLoginFailed = true;
       }
     );
-  }
+    console.log("isLoginFailed");
+        console.log(this.isLoginFailed);
+console.log("isLoggedIn");
+    console.log(this.isLoggedIn);
+//      if (this.isLoggedIn){this.router.navigate(['/recordlist']).then(() => {
+//                                                       window.location.reload(); });
+//                                                       }
+ }
 
   reloadPage(): void {
     window.location.reload();

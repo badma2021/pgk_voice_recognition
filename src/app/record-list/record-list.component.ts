@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
 import { RecordListService } from '../_services/record-list.service';
 import { TokenStorageService } from '../_services/token-storage.service';
 import { Expense } from "../types/expense";
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -12,7 +13,6 @@ import { Expense } from "../types/expense";
 })
 export class RecordListComponent {
 filterTypes ;
-
   expenseTitleIds= [];
   currencyNames = [
       'RUB',
@@ -21,6 +21,7 @@ filterTypes ;
       'USD'
     ];
   currencyName: string="";
+
     amount: number=0;
     comment: string="";
     exchangeRateToRuble: string="";
@@ -29,7 +30,7 @@ filterTypes ;
   dynamicForm: FormGroup;
 
 
-  constructor(private fb: FormBuilder, private recordListService: RecordListService, private tokenStorage: TokenStorageService) {}
+  constructor(private fb: FormBuilder, private recordListService: RecordListService, private tokenStorage: TokenStorageService, private router: Router) {}
 
   ngOnInit() {
 
@@ -71,14 +72,22 @@ filterTypes ;
   }
 
   save() {
+
 const control = this.dynamicForm.get('filters').value;
 let expenses: Expense[] = control;
+console.log("expenses");
 console.log(expenses);
-        this.recordListService.store(control).subscribe(
+
+expenses.forEach(Expense=> Expense.currencyName = this.currencyName);
+expenses.forEach(Expense=> Expense.exchangeRateToRuble = this.exchangeRateToRuble);
+console.log(this.currencyName);
+console.log(this.exchangeRateToRuble);
+        this.recordListService.store(expenses).subscribe(
         data => {
         console.log(data);
          }
    );
+   this.dynamicForm.reset();
   }
 
   get filtersFormArray() {
@@ -106,6 +115,7 @@ console.log(expenses);
     }
   selectedAPIChanged(i) {
     this.getFilterGroupAtIndex(i).addControl('amount', this.getFormControl());
+
   }
   onSearchChange(searchValue: string): void {
    console.log('searchValue');
@@ -116,4 +126,6 @@ console.log(expenses);
      console.log(searchValue2);
       this.currencyName= searchValue2;
     }
+
+
 }

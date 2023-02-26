@@ -1,20 +1,31 @@
 p {
   font-family: Lato;
+
+
 }
 
 .container {
   display: flex;
   flex-direction: row;
+  padding-left: 0;
 }
 
 .container > * {
-  width: 15%;
+ font-size: 16px;
+
+  width: 25%;
 }
 
 mat-icon {
   text-align: right;
+
   margin-top: 15px;
   cursor: pointer;
+}
+
+.myclass {
+
+    font-size: 12px;
 }
 
 .save {
