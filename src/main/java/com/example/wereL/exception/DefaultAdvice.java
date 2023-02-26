@@ -11,6 +11,6 @@ public class DefaultAdvice {
     @ExceptionHandler(UserNotFoundException.class)
     public ResponseEntity<Response> handleException(UserNotFoundException e) {
         Response response = new Response(e.getMessage());
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
     }
 }

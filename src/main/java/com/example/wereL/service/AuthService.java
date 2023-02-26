@@ -1,6 +1,8 @@
 package com.example.wereL.service;
 
 
+import com.amazonaws.services.simpleemail.AmazonSimpleEmailService;
+import com.amazonaws.services.simpleemail.model.*;
 import com.example.wereL.dao.ConfirmationTokenRepository;
 import com.example.wereL.dao.RoleRepositoryJpql;
 import com.example.wereL.dao.UserRepositoryJpql;
@@ -39,9 +41,10 @@ public class AuthService {
     private final RoleRepositoryJpql roleRepositoryJpql;
     private final ConfirmationTokenRepository confirmationTokenRepository;
     private final EmailSender emailSender;
+    private final AmazonSimpleEmailService amazonSimpleEmailService;
 
     public AuthService(UserRepositoryJpql userRepositoryJpql, PasswordEncoder encoder,
-                       JwtUtils jwtUtils, DtoUtils dtoUtils, RedisRepository redisRepository, RoleRepositoryJpql roleRepositoryJpql, ConfirmationTokenRepository confirmationTokenRepository, EmailSender emailSender) {
+                       JwtUtils jwtUtils, DtoUtils dtoUtils, RedisRepository redisRepository, RoleRepositoryJpql roleRepositoryJpql, ConfirmationTokenRepository confirmationTokenRepository, EmailSender emailSender, AmazonSimpleEmailService amazonSimpleEmailService) {
         this.userRepositoryJpql = userRepositoryJpql;
         this.encoder = encoder;
         this.jwtUtils = jwtUtils;
@@ -50,6 +53,7 @@ public class AuthService {
         this.roleRepositoryJpql = roleRepositoryJpql;
         this.confirmationTokenRepository = confirmationTokenRepository;
         this.emailSender = emailSender;
+        this.amazonSimpleEmailService = amazonSimpleEmailService;
     }
 
     public JwtDTO loginAndValidateUser(final UserDTO userDTO, HttpServletResponse response) {
@@ -109,17 +113,17 @@ public class AuthService {
         throw new IncorrectJwtTokenException();
     }
 
-    public String registerUserAndValid(final UserDTO userDTO) {
+    public void registerUserAndValid(final UserDTO userDTO) {
         if (userDTO == null) {
             throw new NotValidRequestException();
         }
         if (userDTO.getEmail() == null || userDTO.getPassword() == null) {
             throw new NotValidRequestException();
         }
-        return registerUser(userDTO);
+        registerUser(userDTO);
     }
 
-    private String registerUser(final UserDTO userDTO) {
+    private void registerUser(final UserDTO userDTO) {
         final User user = userRepositoryJpql.getUserAndRolesByEmail(userDTO.getEmail());
         if (user != null) {
             throw new UserAlreadyExistRunTimeException();
@@ -146,10 +150,28 @@ public class AuthService {
         );
         confirmationTokenRepository.save(confirmationToken);
         String link = "http://localhost:8888/api/v1/register/confirm/?token=" + token;
-        emailSender.send(
-                userDTO.getEmail(),
-                buildEmail(userDTO.getFirstName(), link));
-        return "User Save";
+        //emailSender.send(userDTO.getEmail(),buildEmail(userDTO.getFirstName(), link));
+
+        String senderEmail = "badma_a1qa@rambler.ru";
+        String receiverEmail = userDTO.getEmail();
+        String emailSubject = "wereL email verification";
+
+        try {
+            SendEmailRequest sendEmailRequest = new SendEmailRequest()
+                    .withDestination(
+                            new Destination().withToAddresses(receiverEmail))
+                    .withMessage(new Message()
+                            .withBody(new Body().withHtml(
+                                    new Content().withCharset("UTF-8").withData(buildEmail(userDTO.getFirstName(), link))))
+                            .withSubject(new Content().withCharset("UTF-8").withData(emailSubject)))
+                    .withSource(senderEmail);
+           amazonSimpleEmailService.sendEmail(sendEmailRequest);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+      //  return "User Save";
     }
 
     @Transactional

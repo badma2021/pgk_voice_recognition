@@ -37,7 +37,8 @@ public class AuthController {
     }
     @PostMapping(value = "/register")
     public ResponseEntity<String> register(@RequestBody UserDTO userDTO){
-        return new ResponseEntity<>(authService.registerUserAndValid(userDTO),HttpStatus.OK);
+        authService.registerUserAndValid(userDTO);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping(path = "register/confirm")
