@@ -40,7 +40,7 @@
           <mat-form-field [style.width.%]="40">
             <mat-select
               placeholder="Category"
-              formControlName="filterType"
+              formControlName="filterType" class="myclass"
 
               (selectionChange)="onChangeCategory($event.value, i)">
 
@@ -69,7 +69,7 @@
             </mat-select>
           </mat-form-field>
 
-          <mat-form-field [style.width.%]="20"
+          <mat-form-field [style.width.%]="22"
           >
             <input
               matInput
