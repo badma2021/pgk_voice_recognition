@@ -5,14 +5,17 @@ import com.example.wereL.dao.ExpenseRepository;
 import com.example.wereL.dao.ExpenseTitleRepository;
 import com.example.wereL.dao.UserRepository;
 import com.example.wereL.model.dto.ExpenseDTO;
+import com.example.wereL.model.dto.ReportDTO;
 import com.example.wereL.model.entity.Category;
 import com.example.wereL.model.entity.Expense;
 import com.example.wereL.model.entity.ExpenseTitle;
+import com.example.wereL.repository.ReportRepositoryImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -29,6 +32,8 @@ public class ExpenseService {
     private CategoryRepository categoryRepository;
     @Resource
     private UserRepository userRepository;
+    @Resource
+    private ReportRepositoryImpl reportRepository;
 
     public String save(ExpenseDTO[] expenseDTO) {
         logger.info("ExpenseService.save starts");
@@ -58,4 +63,10 @@ public class ExpenseService {
         logger.info("ExpenseService.getExpenseTitleByCategory starts");
         return expenseTitleRepository.findExpenseTitleByCategoryId(categoryId);
     }
+
+    public List<ReportDTO> getReportByDate(Long userId, String year, String month) {
+        logger.info("ExpenseService.getReportByDate starts");
+        return reportRepository.findByDateAndUser(userId, year, month);
+    }
+
 }

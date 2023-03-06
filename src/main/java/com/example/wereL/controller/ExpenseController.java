@@ -1,15 +1,18 @@
 package com.example.wereL.controller;
 
 import com.example.wereL.model.dto.ExpenseDTO;
+import com.example.wereL.model.dto.ReportDTO;
 import com.example.wereL.model.entity.Category;
 import com.example.wereL.model.entity.ExpenseTitle;
 import com.example.wereL.service.ExpenseService;
+import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.SQLException;
 import java.util.List;
 
 @RestController
@@ -23,10 +26,11 @@ public class ExpenseController {
     }
 
     @PostMapping(value = "/store")
-    public ResponseEntity<String> store(@RequestBody ExpenseDTO[] expenseDTO){
+    public ResponseEntity<String> store(@RequestBody ExpenseDTO[] expenseDTO) {
         logger.info("ExpenseController.store starts");
         return new ResponseEntity<>(expenseService.save(expenseDTO), HttpStatus.OK);
     }
+
     @GetMapping("/category")
     public ResponseEntity<List<Category>> getCategories() {
         List<Category> categories = expenseService.getCategories();
@@ -41,4 +45,16 @@ public class ExpenseController {
 
         return new ResponseEntity<>(expenseTitles, HttpStatus.OK);
     }
+
+    @PostMapping(value = "/report")
+    public ResponseEntity<List<ReportDTO>> reportByDate(@RequestBody String feedInput) {
+        logger.info("ExpenseController.report starts");
+        JSONObject jsonObject = new JSONObject(feedInput);
+        String year = jsonObject.getString("year");
+        String month = jsonObject.getString("month");
+        Long userId = Long.valueOf(jsonObject.getString("userId"));
+        return new ResponseEntity<>(expenseService.getReportByDate(userId, year, month), HttpStatus.OK);
+    }
+
+
 }
