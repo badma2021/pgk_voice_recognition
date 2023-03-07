@@ -10,6 +10,7 @@ import { BoardModeratorComponent } from './board-moderator/board-moderator.compo
 import { BoardAdminComponent } from './board-admin/board-admin.component';
 import { RecordComponent } from './record/record.component';
 import { RecordListComponent } from './record-list/record-list.component';
+import { ReportComponent } from './report/report.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -21,6 +22,7 @@ const routes: Routes = [
   { path: 'admin', component: BoardAdminComponent },
   { path: 'record', component: RecordComponent },
    { path: 'recordlist', component: RecordListComponent },
+   { path: 'report', component: ReportComponent },
   { path: '', redirectTo: 'home', pathMatch: 'full' }
 ];
 

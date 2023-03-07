@@ -18,6 +18,7 @@ import { RecordComponent } from './record/record.component';
 import { RecordListComponent } from './record-list/record-list.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppMaterialModule } from './app-material.module';
+import { ReportComponent } from './report/report.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { AppMaterialModule } from './app-material.module';
     BoardModeratorComponent,
     BoardUserComponent,
     RecordComponent,
-    RecordListComponent
+    RecordListComponent,
+    ReportComponent
   ],
   imports: [
     BrowserModule,
