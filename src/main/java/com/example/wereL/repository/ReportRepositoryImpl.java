@@ -25,7 +25,7 @@ public class ReportRepositoryImpl {
         String sql = "select date_part('year', e.created_at) AS year, date_part('month', e.created_at) AS month, c.category_name, sum(e.amount) from expense e" +
                 " inner join expense_title t on e.expense_title_id=t.id " +
                 "inner join category c on t.category_id=c.id " +
-                "where e.user_id=? and date_part('year', e.created_at)=?::double precision and date_part('month', e.created_at)=?::double precision " +
+                "where e.user_id=? and date_part('year', e.created_at)=?::integer and date_part('month', e.created_at)=?::integer " +
                 "group by year, month, c.category_name order by year asc, month asc, sum desc";
         List<ReportDTO> list = new ArrayList<ReportDTO>();
         try (
