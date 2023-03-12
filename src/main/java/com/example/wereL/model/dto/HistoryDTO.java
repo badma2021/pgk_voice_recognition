@@ -9,11 +9,10 @@ import lombok.ToString;
 @Setter
 @NoArgsConstructor
 @ToString
-public class ReportDTO {
-
-    private String category;
+public class HistoryDTO {
+    private String date;
+    private String expenseName;
     private Double value;
 
-    public ReportDTO(String category, Double value) {
-    }
+
 }

@@ -1,6 +1,7 @@
 package com.example.wereL.controller;
 
 import com.example.wereL.model.dto.ExpenseDTO;
+import com.example.wereL.model.dto.HistoryDTO;
 import com.example.wereL.model.dto.ReportDTO;
 import com.example.wereL.model.entity.Category;
 import com.example.wereL.model.entity.ExpenseTitle;
@@ -55,6 +56,14 @@ public class ExpenseController {
         Long userId = Long.valueOf(jsonObject.getString("userId"));
         return new ResponseEntity<>(expenseService.getReportByDate(userId, year, month), HttpStatus.OK);
     }
-
+    @PostMapping(value = "/history")
+    public ResponseEntity<List<HistoryDTO>> getHistory(@RequestBody String feedInput) {
+        logger.info("ExpenseController.getHistory starts");
+        JSONObject jsonObject = new JSONObject(feedInput);
+        String startDate = jsonObject.getString("startDate");
+        String endDate = jsonObject.getString("endDate");
+        Long userId = Long.valueOf(jsonObject.getString("userId"));
+        return new ResponseEntity<>(expenseService.getDataByDateRange(userId, startDate, endDate), HttpStatus.OK);
+    }
 
 }

@@ -5,6 +5,7 @@ import com.example.wereL.dao.ExpenseRepository;
 import com.example.wereL.dao.ExpenseTitleRepository;
 import com.example.wereL.dao.UserRepository;
 import com.example.wereL.model.dto.ExpenseDTO;
+import com.example.wereL.model.dto.HistoryDTO;
 import com.example.wereL.model.dto.ReportDTO;
 import com.example.wereL.model.entity.Category;
 import com.example.wereL.model.entity.Expense;
@@ -67,6 +68,11 @@ public class ExpenseService {
     public List<ReportDTO> getReportByDate(Long userId, String year, String month) {
         logger.info("ExpenseService.getReportByDate starts");
         return reportRepository.findByDateAndUser(userId, year, month);
+    }
+
+    public List<HistoryDTO> getDataByDateRange(Long userId, String startDate, String endDate) {
+        logger.info("ExpenseService.getDataByDateRange starts");
+        return reportRepository.findByDateRange(userId, startDate, endDate);
     }
 
 }

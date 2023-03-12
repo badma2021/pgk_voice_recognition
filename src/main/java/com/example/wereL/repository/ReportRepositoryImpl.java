@@ -1,5 +1,6 @@
 package com.example.wereL.repository;
 
+import com.example.wereL.model.dto.HistoryDTO;
 import com.example.wereL.model.dto.ReportDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,11 +23,11 @@ public class ReportRepositoryImpl {
     @Transactional(readOnly = true)
     public List<ReportDTO> findByDateAndUser(Long userId, String year, String month) {
         logger.info(userId + " " + year + " " + month);
-        String sql = "select date_part('year', e.created_at) AS year, date_part('month', e.created_at) AS month, c.category_name, sum(e.amount) from expense e" +
+        String sql = "select c.category_name, sum(e.amount) from expense e" +
                 " inner join expense_title t on e.expense_title_id=t.id " +
                 "inner join category c on t.category_id=c.id " +
-                "where e.user_id=? and date_part('year', e.created_at)=?::integer and date_part('month', e.created_at)=?::integer " +
-                "group by year, month, c.category_name order by year asc, month asc, sum desc";
+                "where e.user_id=? and date_part('year', e.created_at)=?::integer and date_part('month', e.created_at)=?::integer and c.category_name<>'earnings' " +
+                "group by date_part('year', e.created_at), date_part('month', e.created_at), c.category_name order by date_part('year', e.created_at) asc, date_part('month', e.created_at) asc, sum desc";
         List<ReportDTO> list = new ArrayList<ReportDTO>();
         try (
                 PreparedStatement ps = con.prepareStatement(sql)) {
@@ -37,8 +38,6 @@ public class ReportRepositoryImpl {
                 while (rs.next()) {
 
                     ReportDTO record = new ReportDTO();
-                    record.setYear(rs.getString("year"));
-                    record.setMonth(rs.getString("month"));
                     record.setCategory(rs.getString("category_name"));
                     record.setValue(rs.getDouble("sum"));
                     list.add(record);
@@ -51,4 +50,35 @@ public class ReportRepositoryImpl {
         list.forEach(System.out::println);
         return list;
     }
+    @Transactional(readOnly = true)
+    public List<HistoryDTO> findByDateRange(Long userId, String startDate, String endDate) {
+        logger.info(userId + " " + startDate + " " + endDate);
+        String sql = "select date(e.created_at), t.expense_name, e.amount from expense e " +
+                "inner join expense_title t on e.expense_title_id=t.id " +
+                "where e.user_id=? " +
+                "and date(e.created_at) between ?::date and ?::date order by id desc;";
+        List<HistoryDTO> list = new ArrayList<HistoryDTO>();
+        try (
+                PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setLong(1, userId);
+            ps.setString(2, startDate);
+            ps.setString(3, endDate);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+
+                    HistoryDTO record = new HistoryDTO();
+                    record.setDate(rs.getString("date"));
+                    record.setExpenseName(rs.getString("expense_name"));
+                    record.setValue(rs.getDouble("amount"));
+                    list.add(record);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        logger.info("start list PRINT");
+        list.forEach(System.out::println);
+        return list;
+    }
+
 }
