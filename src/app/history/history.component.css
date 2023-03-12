@@ -1,0 +1,36 @@
+table {
+  width: 100%;
+}
+
+.mat-mdc-row .mat-mdc-cell {
+  border-bottom: 1px solid transparent;
+  border-top: 1px solid transparent;
+  cursor: pointer;
+}
+
+.mat-mdc-row:hover .mat-mdc-cell {
+  border-color: currentColor;
+}
+
+.demo-row-is-clicked {
+  font-weight: bold;
+}
+
+.mat-column-table-date {
+  flex: 0 0 28% !important;
+  width: 28% !important;
+}
+
+.mat-column-table-name {
+  flex: 0 0 28% !important;
+  width: 28% !important;
+}
+
+.mat-column-table-value {
+  flex: 0 0 28% !important;
+  width: 28% !important;
+}
+
+.example-form-field {
+  margin: 0 8px 16px 0;
+}
