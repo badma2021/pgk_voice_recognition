@@ -11,6 +11,7 @@ import { BoardAdminComponent } from './board-admin/board-admin.component';
 import { RecordComponent } from './record/record.component';
 import { RecordListComponent } from './record-list/record-list.component';
 import { ReportComponent } from './report/report.component';
+import { HistoryComponent } from './history/history.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -23,6 +24,7 @@ const routes: Routes = [
   { path: 'record', component: RecordComponent },
    { path: 'recordlist', component: RecordListComponent },
    { path: 'report', component: ReportComponent },
+      { path: 'history', component: HistoryComponent },
   { path: '', redirectTo: 'home', pathMatch: 'full' }
 ];
 

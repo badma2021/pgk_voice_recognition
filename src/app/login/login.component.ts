@@ -51,9 +51,6 @@ export class LoginComponent implements OnInit {
         console.log(this.isLoginFailed);
 console.log("isLoggedIn");
     console.log(this.isLoggedIn);
-//      if (this.isLoggedIn){this.router.navigate(['/recordlist']).then(() => {
-//                                                       window.location.reload(); });
-//                                                       }
  }
 
   reloadPage(): void {

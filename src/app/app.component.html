@@ -1,39 +1,52 @@
-<div id="app">
-  <nav class="navbar navbar-expand navbar-dark bg-dark">
-    <a href="#" class="navbar-brand">wereL</a>
-    <ul class="navbar-nav mr-auto" routerLinkActive="active">
+<mat-toolbar  color="primary" fxLayout="row" fxLayoutAlign="space-between center">
+  <span>
+    <button mat-button routerLink="/"><mat-icon>home</mat-icon></button>
+  </span>
+  <div fxLayout="row" fxShow="false" fxShow.gt-sm>
+    <button mat-button [matMenuTriggerFor]="menu" *ngIf="isLoggedIn">Menu</button>
+    <mat-menu #menu="matMenu" >
+      <button routerLink="recordlist" mat-menu-item>New Record</button>
+      <button routerLink="report" mat-menu-item>Sum by Category</button>
+      <button mat-menu-item>Sum by Time</button>
+      <button mat-menu-item>History</button>
+    </mat-menu>
+    <button mat-flat-button color="primary" routerLink="profile" *ngIf="isLoggedIn">
+      {{ email }}
+    </button>
 
-      <li class="nav-item" *ngIf="showAdminBoard">
-        <a href="/admin" class="nav-link" routerLink="admin">Admin Board</a>
-      </li>
-      <li class="nav-item" *ngIf="showModeratorBoard">
-        <a href="/mod" class="nav-link" routerLink="mod">Moderator Board</a>
-      </li>
-      <li class="nav-item">
-        <a href="/record" class="nav-link" *ngIf="isLoggedIn" routerLink="recordlist">New item</a>
-      </li>
-    </ul>
+    <button mat-button routerLink="/register" *ngIf="!isLoggedIn">
+      Sign-up
+    </button>
+    <button mat-button routerLink="/history" *ngIf="!isLoggedIn">
+      History
+    </button>
 
-    <ul class="navbar-nav ml-auto" *ngIf="!isLoggedIn">
-      <li class="nav-item">
-        <a href="/register" class="nav-link" routerLink="register">Sign Up</a>
-      </li>
-      <li class="nav-item">
-        <a href="/login" class="nav-link" routerLink="login">Login</a>
-      </li>
-    </ul>
-
-    <ul class="navbar-nav ml-auto" *ngIf="isLoggedIn">
-      <li class="nav-item">
-        <a href="/profile" class="nav-link" routerLink="profile">{{ email }}</a>
-      </li>
-      <li class="nav-item">
-        <a href class="nav-link" (click)="logout()">LogOut</a>
-      </li>
-    </ul>
-  </nav>
-
-  <div class="container">
-    <router-outlet></router-outlet>
+    <button mat-button routerLink="/login" *ngIf="!isLoggedIn">
+      <mat-icon>power_settings_new</mat-icon>
+      Login
+    </button>
+    <button mat-button *ngIf="isLoggedIn" (click)="logout()">
+      <mat-icon>exit_to_app</mat-icon>
+      Logout
+    </button>
   </div>
-</div>
+
+</mat-toolbar>
+<mat-menu x-position="before" #menu="matMenu">
+  <button mat-menu-item routerLink="/">
+    <mat-icon>home</mat-icon>
+    Home
+  </button>
+
+  <button mat-menu-item routerLink="/login" *ngIf="!isLoggedIn">
+    <mat-icon>power_settings_new</mat-icon>
+    Login
+  </button>
+
+  <button mat-menu-item *ngIf="isLoggedIn" (click)="logout()">
+    <mat-icon>exit_to_app</mat-icon>
+    Logout
+  </button>
+</mat-menu>
+<router-outlet></router-outlet>
+

@@ -19,6 +19,8 @@ import { RecordListComponent } from './record-list/record-list.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppMaterialModule } from './app-material.module';
 import { ReportComponent } from './report/report.component';
+import { GoogleChartsModule } from 'angular-google-charts';
+import { HistoryComponent } from './history/history.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +34,9 @@ import { ReportComponent } from './report/report.component';
     BoardUserComponent,
     RecordComponent,
     RecordListComponent,
-    ReportComponent
+    ReportComponent,
+    HistoryComponent
+
   ],
   imports: [
     BrowserModule,
@@ -41,7 +45,8 @@ import { ReportComponent } from './report/report.component';
     ReactiveFormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    AppMaterialModule
+    AppMaterialModule,
+    GoogleChartsModule
   ],
   providers: [authInterceptorProviders],
   bootstrap: [AppComponent]
