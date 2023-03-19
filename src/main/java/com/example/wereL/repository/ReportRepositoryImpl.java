@@ -4,6 +4,10 @@ import com.example.wereL.model.dto.HistoryDTO;
 import com.example.wereL.model.dto.ReportDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -50,35 +54,44 @@ public class ReportRepositoryImpl {
         list.forEach(System.out::println);
         return list;
     }
-    @Transactional(readOnly = true)
-    public List<HistoryDTO> findByDateRange(Long userId, String startDate, String endDate) {
-        logger.info(userId + " " + startDate + " " + endDate);
-        String sql = "select date(e.created_at), t.expense_name, e.amount from expense e " +
-                "inner join expense_title t on e.expense_title_id=t.id " +
-                "where e.user_id=? " +
-                "and date(e.created_at) between ?::date and ?::date order by id desc;";
-        List<HistoryDTO> list = new ArrayList<HistoryDTO>();
-        try (
-                PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setLong(1, userId);
-            ps.setString(2, startDate);
-            ps.setString(3, endDate);
-            try (ResultSet rs = ps.executeQuery()) {
-                while (rs.next()) {
-
-                    HistoryDTO record = new HistoryDTO();
-                    record.setDate(rs.getString("date"));
-                    record.setExpenseName(rs.getString("expense_name"));
-                    record.setValue(rs.getDouble("amount"));
-                    list.add(record);
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        logger.info("start list PRINT");
-        list.forEach(System.out::println);
-        return list;
+//    @Transactional(readOnly = true)
+//    public Page<List<HistoryDTO>> findByDateRange(Long userId, String startDate, String endDate, Pageable pageable) {
+//
+//        logger.info(userId + " " + startDate + " " + endDate + " " + pageable);
+//
+//        String sql = "select date(e.created_at), t.expense_name, e.amount from expense e " +
+//                "inner join expense_title t on e.expense_title_id=t.id " +
+//                "where e.user_id=? " +
+//                "and date(e.created_at) between ?::date and ?::date order by e.id desc offset "+pageable.getPageNumber()*pageable.getPageSize()+" limit "+pageable.getPageSize()+";";
+//        List<HistoryDTO> list = new ArrayList<HistoryDTO>();
+//        try (
+//
+//
+//                PreparedStatement ps = con.prepareStatement(sql)) {
+//            ps.setLong(1, userId);
+//            ps.setString(2, startDate);
+//            ps.setString(3, endDate);
+//            try (ResultSet rs = ps.executeQuery()) {
+//                while (rs.next()) {
+//
+//                    HistoryDTO record = new HistoryDTO();
+//                    record.setDate(rs.getString("date"));
+//                    record.setExpenseName(rs.getString("expense_name"));
+//                    record.setValue(rs.getDouble("amount"));
+//                    list.add(record);
+//                }
+//            }
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//        logger.info("start list PRINT");
+//        list.forEach(System.out::println);
+//        Page page=new PageImpl<>(list);
+//
+//        return page;
     }
 
-}
+
+         //"and date(e.created_at) between ?::date and ?::date order by e.id desc offset "+pageable.getPageNumber()*pageable.getPageSize()+" limit "+pageable.getPageSize()+";";
+
+

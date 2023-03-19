@@ -1,5 +1,6 @@
 package com.example.wereL.controller;
 
+import com.example.wereL.exception.UserNotFoundException;
 import com.example.wereL.model.dto.ExpenseDTO;
 import com.example.wereL.model.dto.HistoryDTO;
 import com.example.wereL.model.dto.ReportDTO;
@@ -9,6 +10,9 @@ import com.example.wereL.service.ExpenseService;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -57,13 +61,35 @@ public class ExpenseController {
         return new ResponseEntity<>(expenseService.getReportByDate(userId, year, month), HttpStatus.OK);
     }
     @PostMapping(value = "/history")
-    public ResponseEntity<List<HistoryDTO>> getHistory(@RequestBody String feedInput) {
+    public ResponseEntity<Page<List<HistoryDTO>>> getHistory(@RequestBody String feedInput) {
         logger.info("ExpenseController.getHistory starts");
+
         JSONObject jsonObject = new JSONObject(feedInput);
         String startDate = jsonObject.getString("startDate");
         String endDate = jsonObject.getString("endDate");
         Long userId = Long.valueOf(jsonObject.getString("userId"));
-        return new ResponseEntity<>(expenseService.getDataByDateRange(userId, startDate, endDate), HttpStatus.OK);
+        int page = Integer.parseInt(jsonObject.getString("page"));
+        int size = Integer.parseInt(jsonObject.getString("size"));
+        Pageable paging = PageRequest.of(page, size);
+        return new ResponseEntity<>(expenseService.getDataByDateRange(userId, startDate, endDate, paging), HttpStatus.OK);
+    }
+
+    @GetMapping("/history/lastFive")
+    public ResponseEntity<List<HistoryDTO>> getLastFive(@RequestParam(name = "id") Long userId) {
+        logger.info("ExpenseController.getLastFive starts");
+        int page = 0;
+        int size = 5;
+     //   Pageable paging = PageRequest.of(page, size);
+        return new ResponseEntity<>(expenseService.getLastFive(userId), HttpStatus.OK);
+    }
+
+    @DeleteMapping("/history/delete{id}")
+    public ResponseEntity<?> deleteRecord(@PathVariable Long id) {
+        logger.info("ExpenseController.deleteProduct starts");
+        return expenseService.findById(id).map(p -> {
+            expenseService.deleteById(id);
+            return ResponseEntity.ok().body((true));
+        }).orElseThrow(() -> new UserNotFoundException());
     }
 
 }

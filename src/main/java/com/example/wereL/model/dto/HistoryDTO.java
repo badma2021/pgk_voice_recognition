@@ -1,18 +1,16 @@
 package com.example.wereL.model.dto;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
-@Getter
-@Setter
-@NoArgsConstructor
-@ToString
-public class HistoryDTO {
-    private String date;
-    private String expenseName;
-    private Double value;
+import javax.persistence.Entity;
+
+
+
+public interface HistoryDTO {
+    String getId();
+    String getDate();
+    String getExpenseName();
+    Double getValue();
 
 
 }

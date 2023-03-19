@@ -6,6 +6,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Entity
 @Getter
@@ -47,4 +48,5 @@ public class Expense implements Serializable {
         this.currency = currency;
         this.exchangeRateToRuble = exchangeRateToRuble;
     }
+
 }

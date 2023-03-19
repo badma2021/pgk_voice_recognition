@@ -1,9 +1,6 @@
 package com.example.wereL.service;
 
-import com.example.wereL.dao.CategoryRepository;
-import com.example.wereL.dao.ExpenseRepository;
-import com.example.wereL.dao.ExpenseTitleRepository;
-import com.example.wereL.dao.UserRepository;
+import com.example.wereL.dao.*;
 import com.example.wereL.model.dto.ExpenseDTO;
 import com.example.wereL.model.dto.HistoryDTO;
 import com.example.wereL.model.dto.ReportDTO;
@@ -13,12 +10,14 @@ import com.example.wereL.model.entity.ExpenseTitle;
 import com.example.wereL.repository.ReportRepositoryImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -35,6 +34,8 @@ public class ExpenseService {
     private UserRepository userRepository;
     @Resource
     private ReportRepositoryImpl reportRepository;
+
+
 
     public String save(ExpenseDTO[] expenseDTO) {
         logger.info("ExpenseService.save starts");
@@ -69,10 +70,22 @@ public class ExpenseService {
         logger.info("ExpenseService.getReportByDate starts");
         return reportRepository.findByDateAndUser(userId, year, month);
     }
-
-    public List<HistoryDTO> getDataByDateRange(Long userId, String startDate, String endDate) {
+    public Page<List<HistoryDTO>> getDataByDateRange(Long userId, String startDate, String endDate, Pageable pageable) {
         logger.info("ExpenseService.getDataByDateRange starts");
-        return reportRepository.findByDateRange(userId, startDate, endDate);
+        return expenseRepository.findByDateRange(userId, startDate, endDate, pageable);
     }
 
+    public List<HistoryDTO> getLastFive(Long userId) {
+        logger.info("ExpenseService.getlastFive starts");
+        return expenseRepository.findLastFive(userId);
+    }
+
+    public void deleteById(Long id) {
+        logger.info("ExpenseService.deleteById starts");
+        expenseRepository.deleteById(id);
+    }
+
+    public Optional<Expense> findById(Long id) {
+        return expenseRepository.findById(id);
+    }
 }

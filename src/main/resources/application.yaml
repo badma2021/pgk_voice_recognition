@@ -12,6 +12,7 @@ spring:
   jpa:
     show-sql: true
     hibernate:
+      show_sql: true
       ddl-auto: create-drop
       cache.use.query_cache: false
       cache.use_second_level_cache: false
