@@ -1,49 +1,58 @@
 
 
 <mat-form-field class="example-form-field" appearance="fill">
-  <mat-label>First campaign</mat-label>
+  <mat-label>Date period</mat-label>
   <mat-date-range-input
     [formGroup]="campaignOne"
     [rangePicker]="campaignOnePicker"
-    [comparisonStart]="campaignTwo.value.start"
-    [comparisonEnd]="campaignTwo.value.end">
-    <input matStartDate placeholder="Start date" formControlName="start">
-    <input matEndDate placeholder="End date" formControlName="end">
+   >
+    <input matStartDate placeholder="Start date" formControlName="start" [(ngModel)]="start" >
+    <input matEndDate placeholder="End date" formControlName="end" [(ngModel)]="end" >
   </mat-date-range-input>
-  <mat-hint>YYYY/MM/DD– YYYY/MM/DD</mat-hint>
+  <mat-hint>MM/DD/YYYY– MM/DD/YYYY</mat-hint>
   <mat-datepicker-toggle matIconSuffix [for]="campaignOnePicker"></mat-datepicker-toggle>
   <mat-date-range-picker #campaignOnePicker></mat-date-range-picker>
 </mat-form-field>
 
+<button class="button"
+        mat-raised-button
+        color="primary"
 
-<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+        (click)="showHistory()">
+  Show history
+</button>
 
-  <!-- Name Column -->
+<table mat-table  [dataSource]="dataSource" class="mat-elevation-z8">
+
+  <!-- Date Column -->
   <ng-container matColumnDef="date">
     <th mat-header-cell *matHeaderCellDef> Date </th>
     <td mat-cell *matCellDef="let element"> {{element.date}} </td>
   </ng-container>
 
-  <!-- Weight Column -->
-  <ng-container matColumnDef="name">
+  <!-- Name Column -->
+  <ng-container matColumnDef="expenseName">
     <th mat-header-cell *matHeaderCellDef> Name </th>
-    <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+    <td mat-cell *matCellDef="let element"> {{element.expenseName}} </td>
   </ng-container>
 
-  <!-- Symbol Column -->
+  <!-- Value Column -->
   <ng-container matColumnDef="value">
     <th mat-header-cell *matHeaderCellDef> Value </th>
     <td mat-cell *matCellDef="let element"> {{element.value}} </td>
+
+  </ng-container>
+  <ng-container matColumnDef="edit">
+    <th mat-header-cell *matHeaderCellDef> Edit </th>
+    <mat-icon *matCellDef="let element" (click)="deleteRecord(element.id)" mat-stroked-button color="primary">delete</mat-icon>
   </ng-container>
 
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+
 </table>
 
-<mat-paginator [length]="100"
-               [pageSize]="5"
-               [pageSizeOptions]="[5, 10, 25, 100]"
-               aria-label="Select page">
-</mat-paginator>
+<mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" [pageSize]="5" [length]="totalElements" (page)="nextPage($event)"> </mat-paginator>
 
 

@@ -9,6 +9,10 @@ import {   ChartErrorEvent,
            Column,
            GoogleChartComponent } from 'angular-google-charts';
 
+const today = new Date();
+const month0 = today.getMonth()+1;
+const year0 = today.getFullYear()
+
 @Component({
   selector: 'app-report',
   templateUrl: './report.component.html',
@@ -17,13 +21,11 @@ import {   ChartErrorEvent,
 export class ReportComponent implements OnInit {
 
 arr: any[] = [];
-// arr: any[] = [["rental(рентл)", 30000],
-//               ["travelling", 10000],
-//               ["household", 6000],
-//               ["food", 1000],
-//               ["rental(рентл)", 30000],
-//                             ["travelling", 10000],
-//                             ["household", 6000]];
+arr1: any[] = [["food", 0],
+              ["travelling", 0],
+              ["household", 0],
+              ["travelling", 0]
+                      ];
 
 chartColumns=['category', 'value'];
 barChart = ChartType.BarChart;
@@ -60,7 +62,13 @@ content?: string;
   constructor(private reportService: ReportService, private tokenStorage: TokenStorageService) { }
 
   ngOnInit(): void {
+   console.log('ngOnInit report starts');
+this.year=year0.toString();
+console.log('month');
 
+this.month=month0.toString();
+
+this.report();
   }
 
     onSearch2Change(searchValue2: string): void {
@@ -75,19 +83,24 @@ content?: string;
               this.month= searchValue1;
             }
     report() {
+//console.log('report() starts');
 
           this.reportService.getGroupedDataByCategory(this.tokenStorage.getUser().userId,this.year, this.month).subscribe(
           data => {
-          this.arr = [];
+        //   console.log('getGroupedDataByCategory starts');
+          this.arr = [
+          ];
+          if (typeof data !== 'undefined' && data.length > 0){
           for(var i in data)
-              this.arr.push([data[i].category, data[i].value]);
+              this.arr.push([data[i].category, parseInt(data[i].value)]);
 
-          //this.chartData.data = Object.keys(data).map((key) => [key, data[key]]);
           console.log('this arr');
           console.log(this.arr);
-         //  console.log('data');
-        //  console.log(data);
+
            }
+           else this.arr=this.arr1;
+           }
+
      );
     }
 

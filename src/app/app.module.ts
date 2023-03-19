@@ -21,6 +21,7 @@ import { AppMaterialModule } from './app-material.module';
 import { ReportComponent } from './report/report.component';
 import { GoogleChartsModule } from 'angular-google-charts';
 import { HistoryComponent } from './history/history.component';
+import {DatePipe} from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,9 @@ import { HistoryComponent } from './history/history.component';
     AppMaterialModule,
     GoogleChartsModule
   ],
-  providers: [authInterceptorProviders],
+  providers: [authInterceptorProviders,
+  DatePipe,
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

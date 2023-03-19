@@ -24,7 +24,6 @@ import {MatNativeDateModule} from '@angular/material/core';
     MatPaginatorModule,
     MatDatepickerModule,
     MatNativeDateModule
-
   ],
   exports: [
     MatSelectModule,
