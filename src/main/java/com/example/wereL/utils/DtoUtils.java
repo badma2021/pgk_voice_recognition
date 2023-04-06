@@ -118,7 +118,7 @@ public class DtoUtils {
 
             for (int i = 0; i < 12; i++) {
 
-                logger.info("month: {}", i);
+                //logger.info("month: {}", i);
 
                 if (Integer.parseInt(element.getDate().substring(index + 1, length)) == ((i + 1))) {
 
@@ -129,11 +129,11 @@ public class DtoUtils {
                         year1 = year;
                         logger.info("year1 after: {}", year1);
                     }
-                    logger.info("before insert: " + i + " " + j);
+                   // logger.info("before insert: " + i + " " + j);
                     arr[i][j] = element.getValue();
 
-                    logger.info("element: {}", element.getDate() + " " + element.getValue());
-                    logger.info("j: {}", j);
+                    //logger.info("element: {}", element.getDate() + " " + element.getValue());
+                   // logger.info("j: {}", j);
 
                 }
             }
