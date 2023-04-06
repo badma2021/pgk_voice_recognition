@@ -1,0 +1,64 @@
+
+
+<div>
+
+<div class="container">
+
+
+  <mat-form-field [style.width.%]="40">
+    <mat-select [(ngModel)]="categoryId"
+
+
+      (selectionChange)="onChangeCategory($event.value)">
+
+      <mat-option
+
+        *ngFor="let filterType of filterTypes"
+        [value]="filterType.id">
+        {{ filterType.categoryName }}
+
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field [style.width.%]="40">
+    <mat-select [(ngModel)]="expenseId">
+
+
+      <mat-option
+        *ngFor="let expenseTitleId of expenseTitleIds"
+        [value]="expenseTitleId.id">
+        {{ expenseTitleId.expenseName }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+</div>
+  <button
+    class="save"
+    type="submit"
+    mat-stroked-button
+    color="primary"
+    (click)="categoryByTime()">
+    Report
+  </button>
+
+  <google-chart
+    class="chart"
+    [type]="lineChart"
+
+    [data]="arr"
+
+    [columns]="chartColumns"
+
+    [width]="width"
+
+    [height]="height"
+    [options]="columnsChartoptions">
+
+
+  </google-chart>
+
+
+  </div>
+
