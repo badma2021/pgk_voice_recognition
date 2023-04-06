@@ -43,6 +43,7 @@ expenseId : string='0';
 //       ["Oct",  18.3, 14.1, 9.0, 10.3],
 //       ["Nov",  13.9,  8.6, 3.9, 6.6],
 //       ["Dec",  9.6,  2.5,  null, null]
+
 //    ];
      arr = [];
 //   chartColumns = ["Month", "Tokyo", "New York","Berlin", "Paris"];

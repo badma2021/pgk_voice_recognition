@@ -9,7 +9,6 @@ describe('CategoryByTimeService', () => {
     TestBed.configureTestingModule({});
     service = TestBed.inject(CategoryByTimeService);
   });
-
   it('should be created', () => {
     expect(service).toBeTruthy();
   });
