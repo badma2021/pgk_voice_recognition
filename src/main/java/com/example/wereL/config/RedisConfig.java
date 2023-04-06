@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
+import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 
@@ -17,17 +18,22 @@ public class RedisConfig {
     @Bean
     @Primary
     JedisConnectionFactory jedisConnectionFactory() throws Exception {
-        JedisConnectionFactory factory = new JedisConnectionFactory();
-        factory.setHostName(redisHost);
-        System.out.println(redisHost);
-        factory.setPort(redisPort);
-//if (redisPass != null) {
-//factory.setPassword(redisPass);
-        factory.setUsePool(true);
-        return factory;
+//        JedisConnectionFactory factory = new JedisConnectionFactory();
+//        factory.setHostName(redisHost);
+//        System.out.println(redisHost);
+//        factory.setPort(redisPort);
+////if (redisPass != null) {
+////factory.setPassword(redisPass);
+//        factory.setUsePool(true);
+//        return factory;
+
+
+            RedisStandaloneConfiguration config = new RedisStandaloneConfiguration(redisHost, redisPort);
+            return new JedisConnectionFactory(config);
+        }
 
         //return new JedisConnectionFactory();
-    }
+   // }
 
     @Bean
     @Primary

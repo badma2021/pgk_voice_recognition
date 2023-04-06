@@ -12,9 +12,11 @@ services:
 
   redis:
     image: "redis:alpine"
+    restart: always
     hostname: redis
     environment:
       - ALLOW_EMPTY_PASSWORD=yes
+      - REDIS_DISABLE_COMMANDS=FLUSHDB,FLUSHALL
     ports:
       - "6378:6379"
 
