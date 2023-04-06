@@ -22,6 +22,7 @@ import { ReportComponent } from './report/report.component';
 import { GoogleChartsModule } from 'angular-google-charts';
 import { HistoryComponent } from './history/history.component';
 import {DatePipe} from '@angular/common';
+import { CategoryByTimeComponent } from './category-by-time/category-by-time.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import {DatePipe} from '@angular/common';
     RecordComponent,
     RecordListComponent,
     ReportComponent,
-    HistoryComponent
+    HistoryComponent,
+    CategoryByTimeComponent
 
   ],
   imports: [

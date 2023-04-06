@@ -7,7 +7,7 @@
     <mat-menu #menu="matMenu" >
       <button routerLink="recordlist" mat-menu-item>New Record</button>
       <button routerLink="report" mat-menu-item>Sum by Category</button>
-      <button mat-menu-item>Sum by Time</button>
+      <button routerLink="categoryByTime" mat-menu-item>Sum by Time</button>
       <button routerLink="history" mat-menu-item>History</button>
     </mat-menu>
     <button mat-flat-button color="primary" routerLink="profile" *ngIf="isLoggedIn">

@@ -12,6 +12,7 @@ import { RecordComponent } from './record/record.component';
 import { RecordListComponent } from './record-list/record-list.component';
 import { ReportComponent } from './report/report.component';
 import { HistoryComponent } from './history/history.component';
+import { CategoryByTimeComponent } from './category-by-time/category-by-time.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -24,6 +25,7 @@ const routes: Routes = [
   { path: 'record', component: RecordComponent },
    { path: 'recordlist', component: RecordListComponent },
    { path: 'report', component: ReportComponent },
+     { path: 'categoryByTime', component: CategoryByTimeComponent },
       { path: 'history', component: HistoryComponent },
   { path: '', redirectTo: 'home', pathMatch: 'full' }
 ];

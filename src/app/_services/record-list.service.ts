@@ -24,13 +24,13 @@ export class RecordListService {
 
   }
 
-   getCategories() {
+   getCategories(): Observable<any>{
       return this.http.get(AUTH_API + 'category').pipe(
                   catchError(this.handleError)
       );
     }
 
-      getExpenseTitle(categoryId: number) {
+      getExpenseTitle(categoryId: number): Observable<any>{
         return this.http.get(AUTH_API + 'selected_expensetitle?id=' + categoryId).pipe(
           catchError(this.handleError)
         );
