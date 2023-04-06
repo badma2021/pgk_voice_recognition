@@ -4,7 +4,7 @@ import { Expense } from "../types/expense";
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
-const AUTH_API = 'http://localhost:8888/api/v1/';
+const AUTH_API = 'http://18.195.42.80:8888/api/v1/';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })

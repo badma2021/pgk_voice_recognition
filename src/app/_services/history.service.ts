@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 //const API_URL = '';
-const API_URL = 'http://localhost:8888/api/v1/';
+const API_URL = 'http://18.195.42.80:8888/api/v1/';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
