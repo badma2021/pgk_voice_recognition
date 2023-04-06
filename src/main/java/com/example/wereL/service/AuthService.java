@@ -149,7 +149,7 @@ public class AuthService {
                 user1
         );
         confirmationTokenRepository.save(confirmationToken);
-        String link = "http://localhost:8888/api/v1/register/confirm/?token=" + token;
+        String link = "http://18.195.42.80:8888/api/v1/register/confirm/?token=" + token;
         //emailSender.send(userDTO.getEmail(),buildEmail(userDTO.getFirstName(), link));
 
         String senderEmail = "badma_a1qa@rambler.ru";
