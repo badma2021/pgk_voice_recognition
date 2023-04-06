@@ -1,5 +1,6 @@
 package com.example.wereL.dao;
 
+import com.example.wereL.model.dto.CategoryByTimeDTO;
 import com.example.wereL.model.dto.HistoryDTO;
 import com.example.wereL.model.entity.Expense;
 import org.springframework.data.domain.Page;
@@ -25,4 +26,23 @@ public interface ExpenseRepository extends JpaRepository<Expense, Long > {
             " inner join expense_title t on e.expense_title_id=t.id where e.user_id= :userId order by e.id desc limit 5",
             nativeQuery=true)
     public List<HistoryDTO> findLastFive(@Param("userId")Long userId);
+
+    @Query(value="select to_char(e.created_at,'YYYY/FMMM')" +
+            " AS date, sum(e.amount) as value from expense e" +
+            " inner join expense_title t on e.expense_title_id=t.id " +
+            "inner join category c on c.id=t.category_id where e.user_id= :userId " +
+            "and c.id= :categoryId and (:expenseId is null or t.id = :expenseId) " +
+            "group by date " +
+            "order by date asc",
+            nativeQuery=true)
+    public List<CategoryByTimeDTO> findCategoryByTime(@Param("userId")Long userId,@Param("categoryId")Long categoryId,
+                                                      @Param("expenseId")Long expenseId);
+
+//    select date_trunc('year', created_at) AS year, date_part('month',e.created_at) AS month,
+//    c.category_name,t.expense_name, sum(amount) from expense e
+//    inner join expense_title t on t.id=e.expense_title_id
+//    inner join category c on c.id=t.category_id where e.user_id=1
+//    and t.category_id=2 and t.id=3 group by year,month, category_name, t.expense_name
+//    order by year asc, month asc;
+
 }

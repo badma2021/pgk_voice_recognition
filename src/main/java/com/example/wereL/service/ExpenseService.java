@@ -1,6 +1,7 @@
 package com.example.wereL.service;
 
 import com.example.wereL.dao.*;
+import com.example.wereL.model.dto.CategoryByTimeDTO;
 import com.example.wereL.model.dto.ExpenseDTO;
 import com.example.wereL.model.dto.HistoryDTO;
 import com.example.wereL.model.dto.ReportDTO;
@@ -8,6 +9,7 @@ import com.example.wereL.model.entity.Category;
 import com.example.wereL.model.entity.Expense;
 import com.example.wereL.model.entity.ExpenseTitle;
 import com.example.wereL.repository.ReportRepositoryImpl;
+import com.example.wereL.utils.DtoUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -17,6 +19,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -35,7 +38,7 @@ public class ExpenseService {
     @Resource
     private ReportRepositoryImpl reportRepository;
 
-
+DtoUtils dtoUtils=new DtoUtils();
 
     public String save(ExpenseDTO[] expenseDTO) {
         logger.info("ExpenseService.save starts");
@@ -87,5 +90,12 @@ public class ExpenseService {
 
     public Optional<Expense> findById(Long id) {
         return expenseRepository.findById(id);
+    }
+
+    public Map<String, Object> getCategoryByTime(Long userId, Long categoryId, Long expenseId) {
+        logger.info("ExpenseService.getCategoryByTime starts");
+        List<CategoryByTimeDTO> list= expenseRepository.findCategoryByTime(userId, categoryId, expenseId);
+
+        return dtoUtils.convertToCategoryReport(list);
     }
 }

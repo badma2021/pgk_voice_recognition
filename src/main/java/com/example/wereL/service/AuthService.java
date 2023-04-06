@@ -145,7 +145,7 @@ public class AuthService {
         ConfirmationToken confirmationToken = new ConfirmationToken(
                 token,
                 LocalDateTime.now(),
-                LocalDateTime.now().plusMinutes(15),
+                LocalDateTime.now().plusMinutes(10080),
                 user1
         );
         confirmationTokenRepository.save(confirmationToken);

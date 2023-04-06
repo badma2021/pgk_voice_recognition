@@ -1,6 +1,7 @@
 package com.example.wereL.controller;
 
 import com.example.wereL.exception.UserNotFoundException;
+import com.example.wereL.model.dto.CategoryByTimeDTO;
 import com.example.wereL.model.dto.ExpenseDTO;
 import com.example.wereL.model.dto.HistoryDTO;
 import com.example.wereL.model.dto.ReportDTO;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1")
@@ -90,6 +92,21 @@ public class ExpenseController {
             expenseService.deleteById(id);
             return ResponseEntity.ok().body((true));
         }).orElseThrow(() -> new UserNotFoundException());
+    }
+
+    @PostMapping(value = "/categoryByTime")
+    public ResponseEntity<Map<String, Object>> categoryByTime(@RequestBody String feedInput) {
+        logger.info("ExpenseController.categoryByTime starts");
+        JSONObject jsonObject = new JSONObject(feedInput);
+        Long categoryId = jsonObject.getLong("categoryId");
+        Long expenseId= jsonObject.getLong("expenseId");
+        if (expenseId==0L){
+            expenseId=null;
+        }
+
+        Long userId = Long.valueOf(jsonObject.getString("userId"));
+
+        return new ResponseEntity<>(expenseService.getCategoryByTime(userId, categoryId, expenseId), HttpStatus.OK);
     }
 
 }
