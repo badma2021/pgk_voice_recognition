@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 //const API_URL = '';
@@ -51,4 +51,11 @@ export class HistoryService {
   delete(id:number){
   		return this.http.delete(API_URL + 'history/delete' + id)
   	}
+
+   download(userId: string, startDate: string, endDate: string): Observable<HttpResponse<Blob>>{
+
+       return this.http.post(API_URL + 'export', {userId,startDate,endDate}, {responseType: 'blob',observe: 'response'});
+     }
+
+
 }

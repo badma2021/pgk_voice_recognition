@@ -4,6 +4,8 @@ import { TokenStorageService } from '../_services/token-storage.service';
 import { HistoryService } from '../_services/history.service';
 import { PageEvent } from '@angular/material/paginator';
 import { DatePipe } from '@angular/common';
+ import { saveAs } from 'file-saver';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 
 export interface PeriodicElement {
   date: string;
@@ -79,7 +81,7 @@ this.historyService.getLastFive(this.tokenStorage.getUser().userId).subscribe(
 
           this.historyService.getHistory(this.tokenStorage.getUser().userId,this.start, this.end, this.page, this.size).subscribe(
           data => {
-           console.log('data');
+           console.log('data_');
                     console.log(data);
          this.dataSource = [];
       this.dataSource = data['content'];
@@ -88,6 +90,7 @@ this.historyService.getLastFive(this.tokenStorage.getUser().userId).subscribe(
                                  console.log(this.totalElements );
 //          for(var i in data)
 //              this.dataSource.push([data[i].date, data[i].expenseName, data[i].value]);
+
           console.log('this dataSource');
           console.log(this.dataSource);
            }
@@ -114,5 +117,17 @@ this.historyService.getLastFive(this.tokenStorage.getUser().userId).subscribe(
   		);
   		}
   	}
+
+exportToExcel() {
+
+  this.start=this.datePipe.transform(this.start,"yyyy-MM-dd");
+    this.end=this.datePipe.transform(this.end,"yyyy-MM-dd");
+console.log('Response');
+    this.historyService.download(this.tokenStorage.getUser().userId,this.start, this.end).subscribe(
+(data:HttpResponse<Blob>) => {
+let blob = new Blob([data.body], {type: 'application/vnd.ms-excel'});
+  saveAs(blob,"file.xls");
+    });
+}
 
 }

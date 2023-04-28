@@ -41,3 +41,6 @@ mat-icon {
   margin-top: 15px;
   cursor: pointer;
 }
+.button {
+ margin-right: 4px;
+}

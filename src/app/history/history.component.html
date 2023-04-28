@@ -22,6 +22,17 @@
   Show history
 </button>
 
+
+<button class="button"
+        mat-raised-button
+        color="primary"
+
+        (click)="exportToExcel()">
+  Export
+</button>
+
+
+
 <table mat-table  [dataSource]="dataSource" class="mat-elevation-z8">
 
   <!-- Date Column -->
