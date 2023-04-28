@@ -1,10 +1,7 @@
 package com.example.wereL.service;
 
 import com.example.wereL.dao.*;
-import com.example.wereL.model.dto.CategoryByTimeDTO;
-import com.example.wereL.model.dto.ExpenseDTO;
-import com.example.wereL.model.dto.HistoryDTO;
-import com.example.wereL.model.dto.ReportDTO;
+import com.example.wereL.model.dto.*;
 import com.example.wereL.model.entity.Category;
 import com.example.wereL.model.entity.Expense;
 import com.example.wereL.model.entity.ExpenseTitle;
@@ -38,7 +35,7 @@ public class ExpenseService {
     @Resource
     private ReportRepositoryImpl reportRepository;
 
-DtoUtils dtoUtils=new DtoUtils();
+    DtoUtils dtoUtils = new DtoUtils();
 
     public String save(ExpenseDTO[] expenseDTO) {
         logger.info("ExpenseService.save starts");
@@ -73,6 +70,7 @@ DtoUtils dtoUtils=new DtoUtils();
         logger.info("ExpenseService.getReportByDate starts");
         return reportRepository.findByDateAndUser(userId, year, month);
     }
+
     public Page<List<HistoryDTO>> getDataByDateRange(Long userId, String startDate, String endDate, Pageable pageable) {
         logger.info("ExpenseService.getDataByDateRange starts");
         return expenseRepository.findByDateRange(userId, startDate, endDate, pageable);
@@ -94,8 +92,16 @@ DtoUtils dtoUtils=new DtoUtils();
 
     public Map<String, Object> getCategoryByTime(Long userId, Long categoryId, Long expenseId) {
         logger.info("ExpenseService.getCategoryByTime starts");
-        List<CategoryByTimeDTO> list= expenseRepository.findCategoryByTime(userId, categoryId, expenseId);
+        List<CategoryByTimeDTO> list = expenseRepository.findCategoryByTime(userId, categoryId, expenseId);
 
         return dtoUtils.convertToCategoryReport(list);
+    }
+
+    public List<ExcelDTO> getExcel(Long userId, String startDate, String endDate) {
+        logger.info("ExpenseService.getExcel starts");
+        List<ExcelDTO> list = expenseRepository.exportToExcel(userId, startDate, endDate);
+        logger.info("ExpenseService.getExcel before print");
+        //list.forEach(System.out::println);
+        return list;
     }
 }

@@ -114,7 +114,7 @@ public class DtoUtils {
             int index = element.getDate().lastIndexOf('/');
             int year = Integer.parseInt(element.getDate().substring(0, 4));
             int length = element.getDate().length();
-            logger.info("element: {}", element.getDate().substring(index + 1, length));
+           // logger.info("element: {}", element.getDate().substring(index + 1, length));
 
             for (int i = 0; i < 12; i++) {
 
@@ -140,7 +140,7 @@ public class DtoUtils {
         }
         map.put("chartColumns", chartColumns);
         map.put("arr", arr);
-        System.out.println(map.toString());
+        //System.out.println(map.toString());
         return map;
     }
 
