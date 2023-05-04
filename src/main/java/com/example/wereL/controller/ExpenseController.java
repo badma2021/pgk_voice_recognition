@@ -13,6 +13,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -21,6 +22,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestClientException;
+import org.springframework.web.client.RestTemplate;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
@@ -37,10 +40,12 @@ public class ExpenseController {
     private static final Logger logger = LoggerFactory.getLogger(ExpenseController.class);
     private final ExpenseService expenseService;
     private final ExcelUtil excelUtil;
+    private static final String CURRENCY_URL = "https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/latest/currencies/rsd/rub.json";
 
     public ExpenseController(ExpenseService expenseService, ExcelUtil excelUtil) {
         this.expenseService = expenseService;
         this.excelUtil = excelUtil;
+
     }
 
     @PostMapping(value = "/store")
@@ -169,5 +174,17 @@ public class ExpenseController {
 //        }
 //    }
 
+    @GetMapping("/rates/{cur}")
+    public String getRateToRub(@PathVariable String cur) {
+        RestTemplate restTemplate = new RestTemplate();
+        try {
+            String response = restTemplate.getForObject("https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/latest/currencies/" + cur + "/rub.json", String.class);
+
+            return response;
+        } catch (RestClientException e) {
+            e.printStackTrace();
+        }
+        return cur;
+    }
 
 }
