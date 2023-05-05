@@ -20,11 +20,17 @@
     </mat-select>
 
   </mat-form-field>
-  <mat-form-field [style.width.px]=60
+  <mat-form-field [style.width.px]=90
   >
-    <input matInput type="text" formControlName="exchangeRateToRuble"
+
+    <input matInput type="text"  formControlName="exchangeRateToRuble"
            (change)="onSearchChange($any($event.target).value)"
-           placeholder="Rate">
+           [value]="exchangeRateToRuble"
+           placeholder="Rate"
+          >
+
+
+
 
   </mat-form-field>
   <div>
@@ -69,7 +75,7 @@
             </mat-select>
           </mat-form-field>
 
-          <mat-form-field [style.width.%]="22"
+          <mat-form-field [style.width.%]="32"
           >
             <input
               matInput

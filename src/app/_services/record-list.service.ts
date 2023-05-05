@@ -5,6 +5,7 @@ import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
 const AUTH_API = 'http://18.195.42.80:8888/api/v1/';
+//const AUTH_API = 'http://127.0.0.1:8888/api/v1/';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -48,4 +49,12 @@ export class RecordListService {
     // return an observable with a user-facing error message
     return throwError('Something bad happened. Please try again later.');
   }
+
+   getFawaZahmedRates(cur: string): Observable<any>{
+          return this.http.get(AUTH_API + 'rates/' + cur).pipe(
+            catchError(this.handleError)
+          );
+        }
+
+
 }

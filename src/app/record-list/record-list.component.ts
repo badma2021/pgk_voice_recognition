@@ -15,10 +15,13 @@ export class RecordListComponent {
 filterTypes ;
   expenseTitleIds= [];
   currencyNames = [
-      'RUB',
-      'RSD',
-      'EUR',
-      'USD'
+      'rub',
+      'rsd',
+      'eur',
+      'usd',
+      'try',
+      'kzt',
+      'uzs'
     ];
   currencyName: string="";
 
@@ -125,6 +128,14 @@ console.log(this.exchangeRateToRuble);
      console.log('searchValue2');
      console.log(searchValue2);
       this.currencyName= searchValue2;
+
+      this.recordListService.getFawaZahmedRates(searchValue2).subscribe(
+              data => {
+              console.log(data);
+              this.exchangeRateToRuble=data['rub'];
+               }
+               );
+
     }
 
 
