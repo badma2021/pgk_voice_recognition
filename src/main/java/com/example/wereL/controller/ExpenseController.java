@@ -178,7 +178,7 @@ public class ExpenseController {
     public String getRateToRub(@PathVariable String cur) {
         RestTemplate restTemplate = new RestTemplate();
         try {
-            String response = restTemplate.getForObject("https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/latest/currencies/" + cur + "/rub.json", String.class);
+            String response = restTemplate.getForObject("https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/latest/currencies/" + cur.toLowerCase() + "/rub.json", String.class);
 
             return response;
         } catch (RestClientException e) {
