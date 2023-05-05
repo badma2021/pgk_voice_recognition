@@ -15,13 +15,13 @@ export class RecordListComponent {
 filterTypes ;
   expenseTitleIds= [];
   currencyNames = [
-      'rub',
-      'rsd',
-      'eur',
-      'usd',
-      'try',
-      'kzt',
-      'uzs'
+      'RUB',
+      'RSD',
+      'EUR',
+      'USD',
+      'TRY',
+      'KZT',
+      'UZS'
     ];
   currencyName: string="";
 
