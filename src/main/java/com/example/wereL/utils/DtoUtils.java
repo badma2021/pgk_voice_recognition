@@ -1,14 +1,11 @@
 package com.example.wereL.utils;
 
 import com.example.wereL.exception.NotValidRequestException;
-import com.example.wereL.model.dto.CategoryByTimeDTO;
-import com.example.wereL.model.dto.PartDTO;
-import com.example.wereL.model.dto.RoleDTO;
-import com.example.wereL.model.dto.UserDTO;
+import com.example.wereL.model.dto.*;
+import com.example.wereL.model.entity.ExpenseTitle;
 import com.example.wereL.model.entity.Role;
 import com.example.wereL.model.entity.Part;
 import com.example.wereL.model.entity.User;
-import com.example.wereL.service.ExpenseService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -169,6 +166,13 @@ public class DtoUtils {
 
         map1.put("chartColumns", chartColumns1);
         return map1;
+    }
+
+    public ExpenseTitleDTO expenseTitleToExpenseTitleDTO(final ExpenseTitle expenseTitle) {
+        final ExpenseTitleDTO expenseTitleDTO = new ExpenseTitleDTO(Long.parseLong(String.valueOf(expenseTitle.getId())),
+                expenseTitle.getExpenseName(),String.valueOf(expenseTitle.getCategory().getId()),
+                expenseTitle.getCategory().getCategoryName());
+        return expenseTitleDTO;
     }
 
 }

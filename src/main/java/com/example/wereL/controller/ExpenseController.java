@@ -3,34 +3,25 @@ package com.example.wereL.controller;
 import com.example.wereL.exception.UserNotFoundException;
 import com.example.wereL.model.dto.*;
 import com.example.wereL.model.entity.Category;
-import com.example.wereL.model.entity.ExpenseTitle;
+
 import com.example.wereL.service.ExpenseService;
 import com.example.wereL.utils.ExcelUtil;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
-import javax.servlet.ServletOutputStream;
+
 import javax.servlet.http.HttpServletResponse;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.ObjectOutputStream;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -63,8 +54,8 @@ public class ExpenseController {
 
     //http://127.0.0.1:8888/api/v1/selected_expensetitle?id=2
     @GetMapping("/selected_expensetitle")
-    public ResponseEntity<List<ExpenseTitle>> getExpenseTitleByCategory(@RequestParam(name = "id") Long categoryId) {
-        List<ExpenseTitle> expenseTitles = expenseService.getExpenseTitleByCategory(categoryId);
+    public ResponseEntity <ExpenseTitleDTO[]> getExpenseTitleByCategory(@RequestParam(name = "id") Long categoryId) {
+        ExpenseTitleDTO[] expenseTitles = expenseService.getExpenseTitleByCategory(categoryId);
 
         return new ResponseEntity<>(expenseTitles, HttpStatus.OK);
     }

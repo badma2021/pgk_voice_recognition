@@ -61,9 +61,13 @@ public class ExpenseService {
         return categoryRepository.findAll();
     }
 
-    public List<ExpenseTitle> getExpenseTitleByCategory(Long categoryId) {
+    public ExpenseTitleDTO[] getExpenseTitleByCategory(Long categoryId) {
         logger.info("ExpenseService.getExpenseTitleByCategory starts");
-        return expenseTitleRepository.findExpenseTitleByCategoryId(categoryId);
+        List<ExpenseTitle> expenseTitles = expenseTitleRepository.findExpenseTitleByCategoryId(categoryId);
+        return expenseTitles.stream().map(e -> {
+            final ExpenseTitleDTO expenseTitleDTO = dtoUtils.expenseTitleToExpenseTitleDTO(e);
+            return expenseTitleDTO;
+        }).toArray(ExpenseTitleDTO[]::new);
     }
 
     public List<ReportDTO> getReportByDate(Long userId, String year, String month) {
@@ -73,7 +77,7 @@ public class ExpenseService {
 
     public Page<List<HistoryDTO>> getDataByDateRange(Long userId, String startDate, String endDate, Pageable pageable) {
         logger.info("ExpenseService.getDataByDateRange starts");
-        return expenseRepository.findByDateRange(userId, startDate, endDate, pageable);
+        return expenseRepository.findByDateRange(userId, startDate.toUpperCase(), endDate, pageable);
     }
 
     public List<HistoryDTO> getLastFive(Long userId) {
@@ -102,6 +106,7 @@ public class ExpenseService {
         List<ExcelDTO> list = expenseRepository.exportToExcel(userId, startDate, endDate);
         logger.info("ExpenseService.getExcel before print");
         //list.forEach(System.out::println);
+
         return list;
     }
 }
