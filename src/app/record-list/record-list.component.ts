@@ -1,9 +1,14 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
+import { FormControl } from '@angular/forms';
 import { RecordListService } from '../_services/record-list.service';
 import { TokenStorageService } from '../_services/token-storage.service';
 import { Expense } from "../types/expense";
+import { ExpenseTitle } from "../types/expenseTitle";
 import { Router } from '@angular/router';
+import {Observable} from 'rxjs';
+import {map, startWith} from 'rxjs/operators';
+
 
 
 @Component({
@@ -12,7 +17,9 @@ import { Router } from '@angular/router';
   styleUrls: [ './record-list.component.css' ]
 })
 export class RecordListComponent {
+
 filterTypes ;
+filterExpenses: Observable<any[]>[]=[];
   expenseTitleIds= [];
   currencyNames = [
       'RUB',
@@ -29,9 +36,7 @@ filterTypes ;
     comment: string="";
     exchangeRateToRuble: string="";
 
-
   dynamicForm: FormGroup;
-
 
   constructor(private fb: FormBuilder, private recordListService: RecordListService, private tokenStorage: TokenStorageService, private router: Router) {}
 
@@ -49,7 +54,55 @@ filterTypes ;
   }
 
 
+    onChangeCategory(categoryId: number, index: number) {
+     console.log("hi from onChangeCategory");
+        if (categoryId) {
+          this.recordListService.getExpenseTitle(categoryId).subscribe(
+            data => {
+              this.expenseTitleIds[index] = data;
+              console.log("this.expenseTitleIds[index]");
+    console.log(this.expenseTitleIds[index]);
+    console.log("index");
+    console.log(index);
+    console.log("this.expenseTitleIds");
+    console.log(this.expenseTitleIds);
+
+this.ManageNameControl(index);
+            }
+          );
+        } else {
+        console.log("hi from onChangeCategory else");
+          this.expenseTitleIds[index] = null;
+        }
+      }
+
+ManageNameControl(index: number) {
+  this.filterExpenses[index] = this.filtersFormArray.at(index).get('expenseTitleId').valueChanges.pipe(startWith(''),
+                 map(value => this._filter2(value || '', index)),
+               );
+}
+
+        private _filter2(value: string, index: number): string[] {
+          const filterValue = value.toLowerCase();
+                console.log("_filter2 this.expenseTitleIds[index]");
+                console.log(index);
+  console.log(this.expenseTitleIds[index]);
+          return this.expenseTitleIds[index].filter(option => option.expenseName.toLowerCase().includes(filterValue));
+        }
+
+
+displayFn(id: number,i: number) {
+    console.log("displayFn(id)_this.expenseTitleIds[index].expenseName");
+
+    var events=this.expenseTitleIds[id];
+    for (var j = 0; j < events.length; j++) {
+        if (events[j].id == i) {
+            return events[j].expenseName;
+        }}
+  }
+
   createFilterGroup() {
+
     return this.fb.group({
     createdAt: '',
       expenseTitleId: [],
@@ -62,13 +115,14 @@ filterTypes ;
   }
 
   addFilterToFiltersFormArray() {
+//  const controls = <FormArray>this.dynamicForm.get('filters');
     this.filtersFormArray.push(this.createFilterGroup());
+   //  this.ManageNameControl(controls.length - 1);
   }
 
   removeFilterFromFiltersFormArray(index) {
     this.filtersFormArray.removeAt(index);
   }
-
 
   getFormControl() {
     return this.fb.control(null);
@@ -101,21 +155,7 @@ console.log(this.exchangeRateToRuble);
     return (<FormGroup>this.filtersFormArray.at(index));
   }
 
-   onChangeCategory(categoryId: number, index: number) {
-   console.log("hi from onChangeCategory");
-      if (categoryId) {
-        this.recordListService.getExpenseTitle(categoryId).subscribe(
-          data => {
-            this.expenseTitleIds[index] = data;
-  console.log(data);
-          }
-        );
-      } else {
-      console.log("hi from onChangeCategory else");
-        this.expenseTitleIds[index] = null;
 
-      }
-    }
   selectedAPIChanged(i) {
     this.getFilterGroupAtIndex(i).addControl('amount', this.getFormControl());
 
@@ -135,8 +175,5 @@ console.log(this.exchangeRateToRuble);
               this.exchangeRateToRuble=data['rub'];
                }
                );
-
     }
-
-
 }

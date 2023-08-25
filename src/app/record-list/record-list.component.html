@@ -27,9 +27,7 @@
            (change)="onSearchChange($any($event.target).value)"
            [value]="exchangeRateToRuble"
            placeholder="Rate"
-          >
-
-
+    >
 
 
   </mat-form-field>
@@ -38,75 +36,90 @@
 
       <div
         *ngFor="let filter of filtersFormArray.controls; let i = index;">
-<div>
-        <div
-          [formGroupName]="i"
-          class="container">
+        <div>
+          <div
+            [formGroupName]="i"
+            class="container">
 
-          <mat-form-field [style.width.%]="40">
-            <mat-select
-              placeholder="Category"
-              formControlName="filterType" class="myclass"
+            <mat-form-field [style.width.%]="40">
+              <mat-select
+                placeholder="Category"
+                formControlName="filterType" class="myclass"
 
-              (selectionChange)="onChangeCategory($event.value, i)">
+                (selectionChange)="onChangeCategory($event.value, i)">
 
-              <mat-option
+                <mat-option
 
-                *ngFor="let filterType of filterTypes"
-                [value]="filterType.id">
-                {{ filterType.categoryName }}
+                  *ngFor="let filterType of filterTypes"
+                  [value]="filterType.id">
+                  {{ filterType.categoryName }}
 
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
 
-          <mat-form-field [style.width.%]="40">
-            <mat-select
+            <mat-form-field >
+              <input type="text"
 
-              (selectionChange)="selectedAPIChanged(i)"
-              placeholder="Expense"
-              #apiField
-              formControlName="expenseTitleId" class="myclass">
-              <mat-option
-                *ngFor="let expenseTitleId of expenseTitleIds[i]"
-                [value]="expenseTitleId.id">
-                {{ expenseTitleId.expenseName }}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
+                     matInput
+                     #apiField
+                     formControlName="expenseTitleId" class="myclass"
 
-          <mat-form-field [style.width.%]="32"
-          >
-            <input
-              matInput
-              placeholder="Amount"
-              formControlName="amount" class="myclass"
+                     [matAutocomplete]="auto">
+              <mat-autocomplete  #auto="matAutocomplete" [displayWith]="displayFn.bind(this, i)">
+                <mat-option *ngFor="let option of filterExpenses[i] | async; let i = index;"
+                            [value]="option.id">
+                  {{ option.expenseName }}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
 
+<!--            <mat-form-field [style.width.%]="40">-->
+<!--              <mat-select-->
+<!--                (selectionChange)="selectedAPIChanged(i)"-->
+<!--                placeholder="Expense"-->
+<!--                #apiField-->
+<!--                formControlName="expenseTitleId" class="myclass">-->
+<!--                <mat-option-->
+<!--                  *ngFor="let expenseTitleId of expenseTitleIds[i]"-->
+<!--                  [value]="expenseTitleId.id">-->
+<!--                  {{ expenseTitleId.expenseName }}-->
+<!--                </mat-option>-->
+<!--              </mat-select>-->
+<!--            </mat-form-field>-->
+
+            <mat-form-field [style.width.%]="32"
             >
-          </mat-form-field>
-          <mat-icon
-            (click)="removeFilterFromFiltersFormArray(i)">
-            delete
-          </mat-icon>
+              <input
+                matInput
+                placeholder="Amount"
+                formControlName="amount" class="myclass"
 
+              >
+            </mat-form-field>
+
+            <mat-icon
+              (click)="removeFilterFromFiltersFormArray(i)">
+              delete
+            </mat-icon>
+          </div>
+          <div [formGroupName]="i"
+               class="container">
+
+            <mat-form-field [style.width.%]="60">
+              <input matInput placeholder="Comment" formControlName="comment" [value]="comment">
+            </mat-form-field>
+
+          </div>
         </div>
-        <div [formGroupName]="i"
-  class="container">
-
-          <mat-form-field [style.width.%]="60">
-            <input matInput placeholder="Comment" formControlName="comment" [value]="comment">
-          </mat-form-field>
-
-        </div>
-      </div>
       </div>
     </div>
 
     <button class="button"
-      mat-raised-button
-      color="primary"
+            mat-raised-button
+            color="primary"
 
-      (click)="addFilterToFiltersFormArray()">
+            (click)="addFilterToFiltersFormArray()">
       Add Record
     </button>
 
