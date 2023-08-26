@@ -135,6 +135,16 @@ displayFn(id: number,i: number) {
     this.filtersFormArray.removeAt(index);
   }
 
+removeAllExpFirstForm(){
+console.log("removeAllExpFirstForm()");
+const controls = <FormArray>this.dynamicForm.get('filters');
+console.log("controls.length - 1");
+console.log(controls.length - 1);
+ for (var j = controls.length - 1; j >= 0; j--) {
+        this.removeFilterFromFiltersFormArray(j) ;
+         }
+}
+
   getFormControl() {
     return this.fb.control(null);
   }
@@ -155,7 +165,11 @@ console.log(this.exchangeRateToRuble);
         console.log(data);
          }
    );
-   this.dynamicForm.reset();
+   //this.dynamicForm.reset();
+   this.removeAllExpFirstForm();
+  // this.dynamicForm.controls['filters'].reset();
+//       this.dynamicForm.controls.amount.reset();
+//          this.dynamicForm.controls['comment'].reset();
   }
 
   get filtersFormArray() {
