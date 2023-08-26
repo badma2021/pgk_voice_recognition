@@ -65,7 +65,7 @@
                      #apiField
                      formControlName="expenseTitleId" class="myclass"
 
-                     [matAutocomplete]="auto">
+                     [matAutocomplete]="auto" (change)="handleEmptyInput($event, i)">
               <mat-autocomplete  #auto="matAutocomplete" [displayWith]="displayFn.bind(this, i)">
                 <mat-option *ngFor="let option of filterExpenses[i] | async; let i = index;"
                             [value]="option.id">

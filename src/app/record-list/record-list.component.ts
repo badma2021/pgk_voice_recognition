@@ -90,6 +90,17 @@ ManageNameControl(index: number) {
           return this.expenseTitleIds[index].filter(option => option.expenseName.toLowerCase().includes(filterValue));
         }
 
+handleEmptyInput(event: any, index: number){
+  if(event.target.value === '') {
+ this.ManageNameControl(index);
+  }
+}
+
+// typeAheadChange(event: any, index: number){
+//    if(event.target.value === '') {
+//    this.ManageNameControl(index);
+//     }
+//  }
 
 displayFn(id: number,i: number) {
     console.log("displayFn(id)_this.expenseTitleIds[index].expenseName");
@@ -115,9 +126,9 @@ displayFn(id: number,i: number) {
   }
 
   addFilterToFiltersFormArray() {
-//  const controls = <FormArray>this.dynamicForm.get('filters');
+//const controls = <FormArray>this.dynamicForm.get('filters');
     this.filtersFormArray.push(this.createFilterGroup());
-   //  this.ManageNameControl(controls.length - 1);
+//this.ManageNameControl(controls.length - 1);
   }
 
   removeFilterFromFiltersFormArray(index) {
