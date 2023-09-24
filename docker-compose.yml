@@ -3,14 +3,15 @@ services:
   postgres_db:
     image: "postgres:12"
     restart: always
-    volumes:
-      - /var/lib/postgres/db:/var/lib/postgresql/data
     ports:
       - "5431:5432"
     environment:
       POSTGRES_DB: "wereL"
       POSTGRES_USER: "root"
       POSTGRES_PASSWORD: "root"
+      PGDATA: /var/lib/pg_data
+    volumes:
+      - ./postgres/data:/var/lib/postgresql/data
 
   redis:
     image: "redis:alpine"
