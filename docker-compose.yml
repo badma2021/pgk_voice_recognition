@@ -3,6 +3,8 @@ services:
   postgres_db:
     image: "postgres:12"
     restart: always
+    volumes:
+      - /var/lib/postgres/data:/var/lib/postgresql/data
     ports:
       - "5431:5432"
     environment:
