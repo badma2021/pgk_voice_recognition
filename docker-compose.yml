@@ -12,6 +12,7 @@ services:
       PGDATA: /var/lib/pg_data
     volumes:
       - ./postgres/data:/var/lib/pg_data
+      - ./home/ubuntu/opt/import.sql:/docker-entrypoint-initdb.d/import.sql
 
   redis:
     image: "redis:alpine"
