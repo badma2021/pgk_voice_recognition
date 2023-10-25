@@ -105,6 +105,7 @@ public class ExpenseController {
     @PostMapping(value = "/categoryByTime")
     public ResponseEntity<Map<String, Object>> categoryByTime(@RequestBody String feedInput) {
         logger.info("ExpenseController.categoryByTime starts");
+        long startTime = System.currentTimeMillis();
         JSONObject jsonObject = new JSONObject(feedInput);
         Long categoryId = jsonObject.getLong("categoryId");
         Long expenseId = jsonObject.getLong("expenseId");
@@ -113,8 +114,10 @@ public class ExpenseController {
         }
 
         Long userId = Long.valueOf(jsonObject.getString("userId"));
-
-        return new ResponseEntity<>(expenseService.getCategoryByTime(userId, categoryId, expenseId), HttpStatus.OK);
+        Map<String, Object> map = expenseService.getCategoryByTime(userId, categoryId, expenseId);
+        long endTime = System.currentTimeMillis() - startTime;
+        logger.info("Duration = {}", endTime);
+        return new ResponseEntity<>(map, HttpStatus.OK);
     }
 
     @PostMapping(value = "/export")

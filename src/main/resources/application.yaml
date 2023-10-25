@@ -29,6 +29,11 @@ spring:
   redis:
     host: redis
     port: 6379
+    timeout: 2000
+  cache:
+    redis:
+      time-to-live: 600000
+
 jwt:
   accessToken: "qBTmv4oXFFR2GwjexDJ4t6fsIUIUhhXqlktXjXdkcyygs8nPVEwMfo29VDRRepYDVV5IkIxBMzr7OEHXEHd37w=="
   refreshToken: "qBTmv4oXFFR2GwjexDJ4t6fsIUIUhhXqlktXjXdkcyygs8nPVEwMfo29VDRRepYDVV5IkIxBMzr7OEHXEHd37w=="

@@ -9,6 +9,9 @@ import com.example.wereL.repository.ReportRepositoryImpl;
 import com.example.wereL.utils.DtoUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -22,6 +25,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 @Service
+@CacheConfig(cacheNames = "es")
 public class ExpenseService {
     private static final Logger logger = LoggerFactory.getLogger(ExpenseService.class);
     @Resource
@@ -85,6 +89,7 @@ public class ExpenseService {
         return expenseRepository.findLastFive(userId);
     }
 
+    @CacheEvict(key = "#id")
     public void deleteById(Long id) {
         logger.info("ExpenseService.deleteById starts");
         expenseRepository.deleteById(id);
@@ -94,12 +99,14 @@ public class ExpenseService {
         return expenseRepository.findById(id);
     }
 
+    @Cacheable(value="categoryByTime")
     public Map<String, Object> getCategoryByTime(Long userId, Long categoryId, Long expenseId) {
         logger.info("ExpenseService.getCategoryByTime starts");
         List<CategoryByTimeDTO> list = expenseRepository.findCategoryByTime(userId, categoryId, expenseId);
 
         return dtoUtils.convertToCategoryReport(list);
     }
+
 
     public List<ExcelDTO> getExcel(Long userId, String startDate, String endDate) {
         logger.info("ExpenseService.getExcel starts");
