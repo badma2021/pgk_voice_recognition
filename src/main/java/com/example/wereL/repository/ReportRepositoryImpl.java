@@ -19,12 +19,12 @@ import java.util.List;
 public class ReportRepositoryImpl {
     private static final Logger logger = LoggerFactory.getLogger(ReportRepositoryImpl.class);
     String connectionURL = "jdbc:postgresql://postgres_db:5432/wereL";
-    Connection con = DriverManager.getConnection(connectionURL, "root", "root");
+
 
     public ReportRepositoryImpl() throws SQLException {
     }
 
-    @Transactional(readOnly = true)
+  //  @Transactional(readOnly = true)
     public List<ReportDTO> findByDateAndUser(Long userId, String year, String month) {
         logger.info(userId + " " + year + " " + month);
         String sql = "select c.category_name, sum(e.amount) from expense e" +
@@ -33,7 +33,7 @@ public class ReportRepositoryImpl {
                 "where e.user_id=? and date_part('year', e.created_at)=?::integer and date_part('month', e.created_at)=?::integer and c.category_name<>'earnings' " +
                 "group by date_part('year', e.created_at), date_part('month', e.created_at), c.category_name order by date_part('year', e.created_at) asc, date_part('month', e.created_at) asc, sum desc";
         List<ReportDTO> list = new ArrayList<ReportDTO>();
-        try (
+        try (Connection con = DriverManager.getConnection(connectionURL, "root", "root");
                 PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setLong(1, userId);
             ps.setString(2, year);
