@@ -92,7 +92,7 @@ public class JwtUtils {
     private boolean validateToken(final String typeToken,final Key key){
         try {
             if(typeToken == null || typeToken.equals("")){
-                System.out.println("falsee");
+                System.out.println("false");
                 return false;
             }
             Jwts.parserBuilder()

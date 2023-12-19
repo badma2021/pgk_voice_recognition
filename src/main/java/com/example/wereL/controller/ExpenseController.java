@@ -7,6 +7,9 @@ import com.example.wereL.model.entity.Category;
 import com.example.wereL.service.ExpenseService;
 import com.example.wereL.utils.ExcelUtil;
 
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,10 +21,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.multipart.MultipartFile;
 
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -42,7 +47,7 @@ public class ExpenseController {
     @PostMapping(value = "/store")
     public ResponseEntity<String> store(@RequestBody ExpenseDTO[] expenseDTO) {
         logger.info("ExpenseController.store starts");
-        return new ResponseEntity<>(expenseService.save(expenseDTO), HttpStatus.OK);
+        return new ResponseEntity<>(expenseService.saveArray(expenseDTO), HttpStatus.OK);
     }
 
     @GetMapping("/category")
@@ -180,5 +185,15 @@ public class ExpenseController {
         }
         return cur;
     }
+
+
+    @PostMapping("/upload-excel")
+    public ResponseEntity importExcelFile(@RequestParam("file") MultipartFile file, @RequestPart(name = "userId") String userId) throws IOException {
+
+        expenseService.saveArrayOldDate(excelUtil.excelToExcelDTO(file,userId));
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
 
 }

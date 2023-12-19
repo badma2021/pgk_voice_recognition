@@ -41,8 +41,8 @@ public class ExpenseService {
 
     DtoUtils dtoUtils = new DtoUtils();
 
-    public String save(ExpenseDTO[] expenseDTO) {
-        logger.info("ExpenseService.save starts");
+    public String saveArray(ExpenseDTO[] expenseDTO) {
+        logger.info("saveArray starts");
         List<Expense> exps = IntStream
                 .rangeClosed(0, expenseDTO.length - 1)
                 .mapToObj(j -> new Expense(
@@ -107,7 +107,6 @@ public class ExpenseService {
         return dtoUtils.convertToCategoryReport(list);
     }
 
-
     public List<ExcelDTO> getExcel(Long userId, String startDate, String endDate) {
         logger.info("ExpenseService.getExcel starts");
         List<ExcelDTO> list = expenseRepository.exportToExcel(userId, startDate, endDate);
@@ -115,5 +114,23 @@ public class ExpenseService {
         //list.forEach(System.out::println);
 
         return list;
+    }
+    public String saveArrayOldDate(ExpenseDTO[] expenseDTO) {
+        logger.info("saveArrayOldDate starts");
+        List<Expense> exps = IntStream
+                .rangeClosed(0, expenseDTO.length - 1)
+                .mapToObj(j -> new Expense(
+                        expenseDTO[j].getCreatedAt(),
+                        expenseTitleRepository.getById(Long.valueOf(expenseDTO[j].getExpenseTitleId())),
+                        expenseDTO[j].getAmount().multiply(expenseDTO[j].getExchangeRateToRuble()),
+                        expenseDTO[j].getComment(),
+                        userRepository.getById(Long.valueOf(expenseDTO[j].getUserId())),
+                        expenseDTO[j].getCurrencyName(),
+                        expenseDTO[j].getExchangeRateToRuble()
+                ))
+                .collect(Collectors.toList());
+        logger.info("before saveAll");
+        expenseRepository.saveAllAndFlush(exps);
+        return "запись учтена";
     }
 }
