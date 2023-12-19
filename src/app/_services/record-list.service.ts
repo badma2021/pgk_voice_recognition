@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpErrorResponse, HttpRequest,HttpEvent } from '@angular/common/http';
 import { Expense } from "../types/expense";
 import { ExpenseTitle } from "../types/expenseTitle";
 import { Observable, throwError } from 'rxjs';
@@ -56,6 +56,14 @@ export class RecordListService {
             catchError(this.handleError)
           );
         }
+
+
+   upload(file: File, userId: string): Observable<any> {
+      const formData: FormData = new FormData();
+      formData.append('file', file);
+      formData.append('userId', userId);
+      return this.http.post(AUTH_API + 'upload-excel', formData);
+    }
 
 
 }

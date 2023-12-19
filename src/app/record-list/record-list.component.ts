@@ -8,6 +8,7 @@ import { ExpenseTitle } from "../types/expenseTitle";
 import { Router } from '@angular/router';
 import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
+import { HttpEventType, HttpResponse } from '@angular/common/http';
 
 
 
@@ -17,6 +18,13 @@ import {map, startWith} from 'rxjs/operators';
   styleUrls: [ './record-list.component.css' ]
 })
 export class RecordListComponent {
+
+currentFile?: File;
+  message = '';
+
+  fileName = 'Add by file';
+
+
 
 filterTypes ;
 filterExpenses: Observable<any[]>[]=[];
@@ -201,4 +209,43 @@ console.log(this.exchangeRateToRuble);
                }
                );
     }
+
+
+ selectFile(event: any): void {
+
+      const file: File = event.target.files[0];
+      this.currentFile = file;
+
+
+  }
+
+//     selectFile(event: any) {
+//       this.file = event.target.files.item(0);
+//     }
+
+  upload(): void {
+    this.message = "";
+
+    if (this.currentFile) {
+      this.recordListService.upload(this.currentFile,this.tokenStorage.getUser().userId).subscribe(
+        (event: any) => {
+         if (event instanceof HttpResponse) {
+            this.message = event.body.message;
+
+          }
+        },
+        (err: any) => {
+          console.log(err);
+          if (err.error && err.error.message) {
+            this.message = err.error.message;
+          } else {
+            this.message = 'Could not upload the file!';
+          }
+          this.currentFile = undefined;
+        });
+    }
+      this.fileName = "File Uploaded Successfully!";
+  }
+
+
 }

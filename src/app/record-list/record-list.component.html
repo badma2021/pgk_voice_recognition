@@ -20,6 +20,8 @@
     </mat-select>
 
   </mat-form-field>
+
+
   <mat-form-field [style.width.px]=90
   >
 
@@ -28,9 +30,9 @@
            [value]="exchangeRateToRuble"
            placeholder="Rate"
     >
-
-
   </mat-form-field>
+
+
   <div>
     <div formArrayName="filters">
 
@@ -58,7 +60,7 @@
               </mat-select>
             </mat-form-field>
 
-            <mat-form-field >
+            <mat-form-field [style.width.%]="35">
               <input type="text"
 
                      matInput
@@ -134,4 +136,39 @@
     </button>
 
   </div>
+
+  <div class="box">
+    <mat-form-field [style.width.px]=240>
+
+
+        <input matInput [value]="fileName" />
+
+        <button
+          mat-flat-button
+          color="primary"
+          [disabled]="!currentFile"
+          (click)="upload()"
+        >
+          Upload
+        </button>
+
+
+      <div>
+
+        <input type="file"
+               id="fileInput"
+               (change)="selectFile($event)"
+               name="fileInput"
+        />
+      </div>
+
+    </mat-form-field>
+  </div>
+
+  <div *ngIf="message" class="message">
+    {{ message }}
+  </div>
+
+
+
 </form>
