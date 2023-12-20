@@ -4,7 +4,7 @@ WORKDIR /app
 COPY package.json /app
 
 #RUN npm install -g npm@9.4.1
-RUN npm install --force
+RUN npm install --legacy-peer-deps
 COPY . /app
 RUN npm run build --prod
 #RUN npm run build
