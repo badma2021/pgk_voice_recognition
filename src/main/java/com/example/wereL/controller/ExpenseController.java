@@ -175,6 +175,7 @@ public class ExpenseController {
 
     @GetMapping("/rates/{cur}")
     public String getRateToRub(@PathVariable String cur) {
+        logger.info("ExpenseController.getRateToRub starts");
         RestTemplate restTemplate = new RestTemplate();
         try {
             String response = restTemplate.getForObject("https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/latest/currencies/" + cur.toLowerCase() + "/rub.json", String.class);
@@ -183,6 +184,7 @@ public class ExpenseController {
         } catch (RestClientException e) {
             e.printStackTrace();
         }
+        logger.info("ExpenseController.getRateToRub ends");
         return cur;
     }
 
