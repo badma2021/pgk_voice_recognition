@@ -6,7 +6,7 @@ COPY package.json /app
 #RUN npm install -g npm@9.4.1
 RUN npm install --force
 COPY . /app
-RUN npm run build --prod
+RUN node --max_old_space_size=8192 ./node_modules/@angular/cli/bin/ng build --prod
 #RUN npm run build
 
 FROM nginx:alpine
