@@ -7,6 +7,7 @@ import com.example.wereL.model.entity.Category;
 import com.example.wereL.service.ExpenseService;
 import com.example.wereL.utils.ExcelUtil;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -59,7 +60,7 @@ public class ExpenseController {
 
     //http://127.0.0.1:8888/api/v1/selected_expensetitle?id=2
     @GetMapping("/selected_expensetitle")
-    public ResponseEntity <ExpenseTitleDTO[]> getExpenseTitleByCategory(@RequestParam(name = "id") Long categoryId) {
+    public ResponseEntity<ExpenseTitleDTO[]> getExpenseTitleByCategory(@RequestParam(name = "id") Long categoryId) {
         ExpenseTitleDTO[] expenseTitles = expenseService.getExpenseTitleByCategory(categoryId);
 
         return new ResponseEntity<>(expenseTitles, HttpStatus.OK);
@@ -178,9 +179,10 @@ public class ExpenseController {
         logger.info("ExpenseController.getRateToRub starts");
         RestTemplate restTemplate = new RestTemplate();
         try {
-            String response = restTemplate.getForObject("https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/latest/currencies/" + cur.toLowerCase() + "/rub.json", String.class);
-
-            return response;
+            JsonNode response = restTemplate.getForObject("https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/" + cur.toLowerCase() + ".json", JsonNode.class);
+            JsonNode curJson = response.get(cur.toLowerCase());
+            logger.info("curJson :" + curJson.toString());
+            return curJson.get("rub").asText();
         } catch (RestClientException e) {
             e.printStackTrace();
         }
@@ -192,7 +194,7 @@ public class ExpenseController {
     @PostMapping("/upload-excel")
     public ResponseEntity importExcelFile(@RequestParam("file") MultipartFile file, @RequestPart(name = "userId") String userId) throws IOException {
 
-        expenseService.saveArrayOldDate(excelUtil.excelToExcelDTO(file,userId));
+        expenseService.saveArrayOldDate(excelUtil.excelToExcelDTO(file, userId));
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
