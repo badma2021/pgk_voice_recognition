@@ -205,7 +205,7 @@ console.log(this.exchangeRateToRuble);
       this.recordListService.getFawaZahmedRates(searchValue2).subscribe(
               data => {
               console.log(data);
-              this.exchangeRateToRuble=data['rub'];
+              this.exchangeRateToRuble=data;
                }
                );
     }
