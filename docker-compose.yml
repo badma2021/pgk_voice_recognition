@@ -9,10 +9,6 @@ services:
       POSTGRES_DB: "wereL"
       POSTGRES_USER: "root"
       POSTGRES_PASSWORD: "root"
-      PGDATA: /var/lib/pg_data
-    volumes:
-      - /var/lib/postgres/data:/var/lib/pg_data
-      - /home/ubuntu/opt/import.sql:/docker-entrypoint-initdb.d/import.sql
 
   redis:
     image: "redis:alpine"
@@ -39,7 +35,7 @@ services:
   app-client:
     build:
 #      context: /home/badma/IdeaProjects/pgk_voice_recognition # Use an image built from the specified dockerfile in the `angular-11-social-login` directory.
-      context: /home/ubuntu/front # Use an image built from the specified dockerfile in the `angular-11-social-login` directory.
+      context: /home/front # Use an image built from the specified dockerfile in the `angular-11-social-login` directory.
       dockerfile: Dockerfile
     ports:
       - "4200:80" # Map the exposed port 80 on the container to port 8081 on the host machine

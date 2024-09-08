@@ -105,7 +105,7 @@ public class ExpenseController {
         return expenseService.findById(id).map(p -> {
             expenseService.deleteById(id);
             return ResponseEntity.ok().body((true));
-        }).orElseThrow(() -> new UserNotFoundException());
+        }).orElseThrow(UserNotFoundException::new);
     }
 
     @PostMapping(value = "/categoryByTime")
