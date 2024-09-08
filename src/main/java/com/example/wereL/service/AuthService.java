@@ -3,6 +3,7 @@ package com.example.wereL.service;
 
 //import com.amazonaws.services.simpleemail.AmazonSimpleEmailService;
 //import com.amazonaws.services.simpleemail.model.*;
+import com.amazonaws.services.simpleemail.model.SendEmailRequest;
 import com.example.wereL.dao.ConfirmationTokenRepository;
 import com.example.wereL.dao.RoleRepositoryJpql;
 import com.example.wereL.dao.UserRepositoryJpql;
@@ -155,21 +156,21 @@ public class AuthService {
         String senderEmail = "badma_a1qa@rambler.ru";
         String receiverEmail = userDTO.getEmail();
         String emailSubject = "wereL email verification";
-
-        try {
-            SendEmailRequest sendEmailRequest = new SendEmailRequest()
-                    .withDestination(
-                            new Destination().withToAddresses(receiverEmail))
-                    .withMessage(new Message()
-                            .withBody(new Body().withHtml(
-                                    new Content().withCharset("UTF-8").withData(buildEmail(userDTO.getFirstName(), link))))
-                            .withSubject(new Content().withCharset("UTF-8").withData(emailSubject)))
-                    .withSource(senderEmail);
-          // amazonSimpleEmailService.sendEmail(sendEmailRequest);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//
+//        try {
+//            SendEmailRequest sendEmailRequest = new SendEmailRequest()
+//                    .withDestination(
+//                            new Destination().withToAddresses(receiverEmail))
+//                    .withMessage(new Message()
+//                            .withBody(new Body().withHtml(
+//                                    new Content().withCharset("UTF-8").withData(buildEmail(userDTO.getFirstName(), link))))
+//                            .withSubject(new Content().withCharset("UTF-8").withData(emailSubject)))
+//                    .withSource(senderEmail);
+//          // amazonSimpleEmailService.sendEmail(sendEmailRequest);
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
 
       //  return "User Save";
     }
