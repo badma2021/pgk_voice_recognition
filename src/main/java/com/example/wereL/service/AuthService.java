@@ -1,8 +1,8 @@
 package com.example.wereL.service;
 
 
-import com.amazonaws.services.simpleemail.AmazonSimpleEmailService;
-import com.amazonaws.services.simpleemail.model.*;
+//import com.amazonaws.services.simpleemail.AmazonSimpleEmailService;
+//import com.amazonaws.services.simpleemail.model.*;
 import com.example.wereL.dao.ConfirmationTokenRepository;
 import com.example.wereL.dao.RoleRepositoryJpql;
 import com.example.wereL.dao.UserRepositoryJpql;
@@ -41,10 +41,10 @@ public class AuthService {
     private final RoleRepositoryJpql roleRepositoryJpql;
     private final ConfirmationTokenRepository confirmationTokenRepository;
     private final EmailSender emailSender;
-    private final AmazonSimpleEmailService amazonSimpleEmailService;
+    //private final AmazonSimpleEmailService amazonSimpleEmailService;
 
     public AuthService(UserRepositoryJpql userRepositoryJpql, PasswordEncoder encoder,
-                       JwtUtils jwtUtils, DtoUtils dtoUtils, RedisRepository redisRepository, RoleRepositoryJpql roleRepositoryJpql, ConfirmationTokenRepository confirmationTokenRepository, EmailSender emailSender, AmazonSimpleEmailService amazonSimpleEmailService) {
+                       JwtUtils jwtUtils, DtoUtils dtoUtils, RedisRepository redisRepository, RoleRepositoryJpql roleRepositoryJpql, ConfirmationTokenRepository confirmationTokenRepository, EmailSender emailSender) {
         this.userRepositoryJpql = userRepositoryJpql;
         this.encoder = encoder;
         this.jwtUtils = jwtUtils;
@@ -53,7 +53,7 @@ public class AuthService {
         this.roleRepositoryJpql = roleRepositoryJpql;
         this.confirmationTokenRepository = confirmationTokenRepository;
         this.emailSender = emailSender;
-        this.amazonSimpleEmailService = amazonSimpleEmailService;
+     //   this.amazonSimpleEmailService = amazonSimpleEmailService;
     }
 
     public JwtDTO loginAndValidateUser(final UserDTO userDTO, HttpServletResponse response) {
@@ -165,7 +165,7 @@ public class AuthService {
                                     new Content().withCharset("UTF-8").withData(buildEmail(userDTO.getFirstName(), link))))
                             .withSubject(new Content().withCharset("UTF-8").withData(emailSubject)))
                     .withSource(senderEmail);
-           amazonSimpleEmailService.sendEmail(sendEmailRequest);
+          // amazonSimpleEmailService.sendEmail(sendEmailRequest);
 
         } catch (Exception e) {
             e.printStackTrace();
