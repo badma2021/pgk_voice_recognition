@@ -10398,7 +10398,7 @@ INSERT INTO expense(amount,comment,created_at,currency,exchange_rate_to_ruble,ex
 INSERT INTO expense(amount,comment,created_at,currency,exchange_rate_to_ruble,expense_title_id,user_id) VALUES ('138.45','','2023-09-24 00:00:00','RSD','0.87','3','1');
 INSERT INTO expense(amount,comment,created_at,currency,exchange_rate_to_ruble,expense_title_id,user_id) VALUES ('514','','2023-09-26 00:00:00','RSD','0.85713119','17','1');
 INSERT INTO expense(amount,comment,created_at,currency,exchange_rate_to_ruble,expense_title_id,user_id) VALUES ('343','','2023-09-26 00:00:00','RSD','0.85713119','24','1');
-INSERT INTO expense(amount,comment,created_at,currency,exchange_rate_to_ruble,expense_title_id,user_id) VALUES ('7000','Mom's tests: Gilbert's syndrome','2023-09-26 00:00:00','RUB','1','12','1');
+INSERT INTO expense(amount,comment,created_at,currency,exchange_rate_to_ruble,expense_title_id,user_id) VALUES ('7000','Moms tests: Gilberts syndrome','2023-09-26 00:00:00','RUB','1','12','1');
 INSERT INTO expense(amount,comment,created_at,currency,exchange_rate_to_ruble,expense_title_id,user_id) VALUES ('776','','2023-09-27 00:00:00','RSD','0.86257025','57','1');
 INSERT INTO expense(amount,comment,created_at,currency,exchange_rate_to_ruble,expense_title_id,user_id) VALUES ('173','','2023-09-27 00:00:00','RSD','0.86257025','112','1');
 INSERT INTO expense(amount,comment,created_at,currency,exchange_rate_to_ruble,expense_title_id,user_id) VALUES ('129','','2023-09-27 00:00:00','RSD','0.86257025','3','1');
