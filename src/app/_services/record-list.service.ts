@@ -6,7 +6,7 @@ import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
 //const AUTH_API = 'http://18.195.42.80:8888/api/v1/';
-const AUTH_API = 'http://89.213.52.246:8888/api/v1/';
+const AUTH_API = 'http://77.81.138.182:8888/api/v1/';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
