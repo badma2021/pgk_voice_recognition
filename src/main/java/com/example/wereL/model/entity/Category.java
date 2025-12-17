@@ -21,6 +21,10 @@ public class Category {
     private Long id;
 
     private String categoryName;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id") // new FK column
+    private User user;
+
     public Category() {
 
     }

@@ -1,7 +1,8 @@
 
 CREATE TABLE category(
    id BIGINT GENERATED ALWAYS AS IDENTITY NOT NULL PRIMARY KEY,
-   category_name VARCHAR(255)
+   category_name VARCHAR(255),
+   user_id BIGINT NOT NULL
 );  
 CREATE TABLE role(
    id BIGINT GENERATED ALWAYS AS IDENTITY NOT NULL PRIMARY KEY,
@@ -27,8 +28,12 @@ CREATE TABLE users(
    phone VARCHAR(255),
    username VARCHAR(255),
    CONSTRAINT email_unique UNIQUE (email)
- ); 
-   
+ );
+
+ALTER TABLE category
+ADD CONSTRAINT fk_category_user
+FOREIGN KEY (user_id) REFERENCES users(id);
+
 CREATE TABLE confirmationtoken(
    id BIGINT NOT NULL PRIMARY KEY,
    confirmed_at TIMESTAMP,
@@ -56,25 +61,28 @@ CREATE TABLE expense(
    user_id BIGINT,
    CONSTRAINT fk_expense_title FOREIGN KEY(expense_title_id) REFERENCES expense_title(id)
 );
+INSERT INTO users(birthday,created_at,email,enabled,first_name,last_modified,last_name,password, phone,username) VALUES (null,null,'ivan@mail.ru','t','Ivan',null,'Ivanov    ','$2a$05$qOWwd1NUJi.Zs3zLGhiJUOHzZ.x/lU2czcDHByq.FcPHyAfriDP9i','777','ivan');
+INSERT INTO users(birthday,created_at,email,enabled,first_name,last_modified,last_name,password, phone,username) VALUES (null,null,'roman@mail.ru','t','Roman',null,'Romanov   ','$2a$05$74//KmHbBVt68j7VW5wrnuuua6wypEekRfuEkpFY3o/Ahd9G62qeO','773','roman');
+INSERT INTO users(birthday,created_at,email,enabled,first_name,last_modified,last_name,password, phone,username) VALUES (null,null,'marina@mail.ru','t','Marina',null,'Fedotova  ','$2a$05$jdRuwVSd/3Qlp6qzJQARRuKaDkKJPW8rzE2AJ94hncgR2s1IUSRwq','774','marina');
 
-INSERT INTO category (category_name) VALUES ('business lunch');
-INSERT INTO category (category_name) VALUES ('food');
-INSERT INTO category (category_name) VALUES ('fast&food&restaurant');
-INSERT INTO category (category_name) VALUES ('rental(рентл)');
-INSERT INTO category (category_name) VALUES ('gift for others');
-INSERT INTO category (category_name) VALUES ('mobile bills');
-INSERT INTO category (category_name) VALUES ('transport');
-INSERT INTO category (category_name) VALUES ('earnings');
-INSERT INTO category (category_name) VALUES ('healthcare&fitnes');
-INSERT INTO category (category_name) VALUES ('entertainment');
-INSERT INTO category (category_name) VALUES ('utility bills');
-INSERT INTO category (category_name) VALUES ('clothes');
-INSERT INTO category (category_name) VALUES ('extraodinary');
-INSERT INTO category (category_name) VALUES ('household');
-INSERT INTO category (category_name) VALUES ('travelling');
-INSERT INTO category (category_name) VALUES ('cashback');
-INSERT INTO category (category_name) VALUES ('electronic');
-INSERT INTO category (category_name) VALUES ('human capital');
+INSERT INTO category (category_name, user_id) VALUES ('business lunch',1);
+INSERT INTO category (category_name, user_id) VALUES ('food',1);
+INSERT INTO category (category_name, user_id) VALUES ('fast&food&restaurant',1);
+INSERT INTO category (category_name, user_id) VALUES ('rental(рентл)',1);
+INSERT INTO category (category_name, user_id) VALUES ('gift for others',1);
+INSERT INTO category (category_name, user_id) VALUES ('mobile bills',1);
+INSERT INTO category (category_name, user_id) VALUES ('transport',1);
+INSERT INTO category (category_name, user_id) VALUES ('earnings',1);
+INSERT INTO category (category_name, user_id) VALUES ('healthcare&fitnes',1);
+INSERT INTO category (category_name, user_id) VALUES ('entertainment',1);
+INSERT INTO category (category_name, user_id) VALUES ('utility bills',1);
+INSERT INTO category (category_name, user_id) VALUES ('clothes',1);
+INSERT INTO category (category_name, user_id) VALUES ('extraodinary',1);
+INSERT INTO category (category_name, user_id) VALUES ('household',1);
+INSERT INTO category (category_name, user_id) VALUES ('travelling',1);
+INSERT INTO category (category_name, user_id) VALUES ('cashback',1);
+INSERT INTO category (category_name, user_id) VALUES ('electronic',1);
+INSERT INTO category (category_name, user_id) VALUES ('human capital',1);
 
 INSERT INTO expense_title(expense_name,category_id) VALUES ('seconds_bb','1');
 INSERT INTO expense_title(expense_name,category_id) VALUES ('starters(soup)_bb','1');
@@ -321,9 +329,6 @@ INSERT INTO expense_title(expense_name,category_id) VALUES ('chocolate cream','2
 
 
 
-INSERT INTO users(birthday,created_at,email,enabled,first_name,last_modified,last_name,password, phone,username) VALUES (null,null,'ivan@mail.ru','t','Ivan',null,'Ivanov    ','$2a$05$qOWwd1NUJi.Zs3zLGhiJUOHzZ.x/lU2czcDHByq.FcPHyAfriDP9i','777','ivan');
-INSERT INTO users(birthday,created_at,email,enabled,first_name,last_modified,last_name,password, phone,username) VALUES (null,null,'roman@mail.ru','t','Roman',null,'Romanov   ','$2a$05$74//KmHbBVt68j7VW5wrnuuua6wypEekRfuEkpFY3o/Ahd9G62qeO','773','roman');
-INSERT INTO users(birthday,created_at,email,enabled,first_name,last_modified,last_name,password, phone,username) VALUES (null,null,'marina@mail.ru','t','Marina',null,'Fedotova  ','$2a$05$jdRuwVSd/3Qlp6qzJQARRuKaDkKJPW8rzE2AJ94hncgR2s1IUSRwq','774','marina');
 
 
 INSERT INTO role(date_create, date_update, name) VALUES (CURRENT_TIMESTAMP,CURRENT_TIMESTAMP,'ROLE_USER');

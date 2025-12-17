@@ -30,6 +30,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/v1")
@@ -51,11 +52,14 @@ public class ExpenseController {
         return new ResponseEntity<>(expenseService.saveArray(expenseDTO), HttpStatus.OK);
     }
 
-    @GetMapping("/category")
-    public ResponseEntity<List<Category>> getCategories() {
-        List<Category> categories = expenseService.getCategories();
+    @GetMapping("/category/{userId}")
+    public ResponseEntity<List<CategoryDTO>> getCategories(@PathVariable Long userId) {
+        List<Category> categories = expenseService.getCategories(userId);
+        List<CategoryDTO> cats = categories.stream()
+                .map(c -> new CategoryDTO(c.getId(), c.getCategoryName())).
+                collect(Collectors.toList());
 
-        return new ResponseEntity<>(categories, HttpStatus.OK);
+        return new ResponseEntity<>(cats, HttpStatus.OK);
     }
 
     //http://127.0.0.1:8888/api/v1/selected_expensetitle?id=2

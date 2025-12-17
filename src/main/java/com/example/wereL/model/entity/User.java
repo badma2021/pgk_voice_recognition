@@ -54,6 +54,9 @@ public class User {
     @JoinTable(name = "user_and_role", joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JsonIgnore
+    private Set<Category> categories = new HashSet<>();
     @ToString.Exclude
     private boolean enabled;
 

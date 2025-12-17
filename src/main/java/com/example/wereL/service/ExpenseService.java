@@ -1,6 +1,7 @@
 package com.example.wereL.service;
 
 import com.example.wereL.dao.*;
+import com.example.wereL.exception.CategoryNotFoundException;
 import com.example.wereL.model.dto.*;
 import com.example.wereL.model.entity.Category;
 import com.example.wereL.model.entity.Expense;
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -60,9 +62,9 @@ public class ExpenseService {
         return "запись учтена";
     }
 
-    public List<Category> getCategories() {
-        logger.info("ExpenseService.getCategories starts");
-        return categoryRepository.findAll();
+    public List<Category> getCategories(Long userId) {
+        logger.info("ExpenseService.getCategories starts2");
+        return categoryRepository.findByUserId(userId);
     }
 
     public ExpenseTitleDTO[] getExpenseTitleByCategory(Long categoryId) {
