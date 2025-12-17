@@ -10,22 +10,16 @@ import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 import { HttpEventType, HttpResponse } from '@angular/common/http';
 
-
-
 @Component({
   selector: 'app-record-list',
   templateUrl: './record-list.component.html',
   styleUrls: [ './record-list.component.css' ]
 })
 export class RecordListComponent {
-
+userId: number;
 currentFile?: File;
   message = '';
-
   fileName = 'Add by file';
-
-
-
 filterTypes ;
 filterExpenses: Observable<any[]>[]=[];
   expenseTitleIds= [];
@@ -39,28 +33,24 @@ filterExpenses: Observable<any[]>[]=[];
       'UZS'
     ];
   currencyName: string="";
-
     amount: number=0;
     comment: string="";
     exchangeRateToRuble: string="";
-
   dynamicForm: FormGroup;
 
   constructor(private fb: FormBuilder, private recordListService: RecordListService, private tokenStorage: TokenStorageService, private router: Router) {}
 
   ngOnInit() {
-
-  this.recordListService.getCategories().subscribe(
-
+   // 1. Initialize userId correctly
+  this.userId = this.tokenStorage.getUser().userId;
+  this.recordListService.getCategories(this.userId).subscribe(
         data => this.filterTypes = data
-       // console.log(data);
       );
     this.dynamicForm = this.fb.group({
       filters: this.fb.array([])
     });
 
   }
-
 
     onChangeCategory(categoryId: number, index: number) {
      console.log("hi from onChangeCategory");
@@ -83,13 +73,11 @@ this.ManageNameControl(index);
           this.expenseTitleIds[index] = null;
         }
       }
-
 ManageNameControl(index: number) {
   this.filterExpenses[index] = this.filtersFormArray.at(index).get('expenseTitleId').valueChanges.pipe(startWith(''),
                  map(value => this._filter2(value || '', index)),
                );
 }
-
         private _filter2(value: string, index: number): string[] {
           const filterValue = value.toLowerCase();
                 console.log("_filter2 this.expenseTitleIds[index]");
@@ -97,22 +85,13 @@ ManageNameControl(index: number) {
   console.log(this.expenseTitleIds[index]);
           return this.expenseTitleIds[index].filter(option => option.expenseName.toLowerCase().includes(filterValue));
         }
-
 handleEmptyInput(event: any, index: number){
   if(event.target.value === '') {
  this.ManageNameControl(index);
   }
 }
-
-// typeAheadChange(event: any, index: number){
-//    if(event.target.value === '') {
-//    this.ManageNameControl(index);
-//     }
-//  }
-
 displayFn(id: number,i: number) {
     console.log("displayFn(id)_this.expenseTitleIds[index].expenseName");
-
     var events=this.expenseTitleIds[id];
     for (var j = 0; j < events.length; j++) {
         if (events[j].id == i) {
@@ -121,7 +100,6 @@ displayFn(id: number,i: number) {
   }
 
   createFilterGroup() {
-
     return this.fb.group({
     createdAt: '',
       expenseTitleId: [],
@@ -134,9 +112,7 @@ displayFn(id: number,i: number) {
   }
 
   addFilterToFiltersFormArray() {
-//const controls = <FormArray>this.dynamicForm.get('filters');
     this.filtersFormArray.push(this.createFilterGroup());
-//this.ManageNameControl(controls.length - 1);
   }
 
   removeFilterFromFiltersFormArray(index) {

@@ -5,9 +5,9 @@ import { ExpenseTitle } from "../types/expenseTitle";
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
-//const AUTH_API = 'http://18.195.42.80:8888/api/v1/';
-const AUTH_API = 'http://77.81.138.182:8888/api/v1/';
+import { environment } from '../../environments/environment';
 
+const API_URL = environment.apiUrl;
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
@@ -22,18 +22,18 @@ export class RecordListService {
   store(expenses): Observable<any> {
   console.log('hi from store')
    console.log(expenses)
-  return this.http.post(AUTH_API + 'store', JSON.stringify(expenses), httpOptions);
+  return this.http.post(API_URL + 'store', JSON.stringify(expenses), httpOptions);
 
   }
 
-   getCategories(): Observable<any>{
-      return this.http.get(AUTH_API + 'category').pipe(
+   getCategories(userId: number): Observable<any>{
+      return this.http.get(API_URL + 'category/'+ userId).pipe(
                   catchError(this.handleError)
       );
     }
 
       getExpenseTitle(categoryId: number): Observable<any>{
-        return this.http.get(AUTH_API + 'selected_expensetitle?id=' + categoryId).pipe(
+        return this.http.get(API_URL + 'selected_expensetitle?id=' + categoryId).pipe(
           catchError(this.handleError)
         );
       }
@@ -52,7 +52,7 @@ export class RecordListService {
   }
 
    getFawaZahmedRates(cur: string): Observable<any>{
-          return this.http.get(AUTH_API + 'rates/' + cur).pipe(
+          return this.http.get(API_URL + 'rates/' + cur).pipe(
             catchError(this.handleError)
           );
         }
@@ -62,7 +62,7 @@ export class RecordListService {
       const formData: FormData = new FormData();
       formData.append('file', file);
       formData.append('userId', userId);
-      return this.http.post(AUTH_API + 'upload-excel', formData);
+      return this.http.post(API_URL + 'upload-excel', formData);
     }
 
 

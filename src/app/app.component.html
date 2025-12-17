@@ -10,9 +10,13 @@
       <button routerLink="categoryByTime" mat-menu-item>Sum by Time</button>
       <button routerLink="history" mat-menu-item>History</button>
     </mat-menu>
-    <button mat-flat-button color="primary" routerLink="profile" *ngIf="isLoggedIn">
+    <button mat-button [matMenuTriggerFor]="menu2" *ngIf="isLoggedIn">
       {{ email }}
     </button>
+    <mat-menu #menu2="matMenu" >
+      <button routerLink="categoryEdit" mat-menu-item>Category</button>
+      <button routerLink="subCategoryEdit" mat-menu-item>Sub category</button>
+    </mat-menu>
 
     <button mat-button routerLink="/register" *ngIf="!isLoggedIn">
       Sign-up

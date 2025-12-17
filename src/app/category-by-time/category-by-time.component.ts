@@ -23,10 +23,7 @@ const year0 = today.getFullYear()
 export class CategoryByTimeComponent implements OnInit {
 filterTypes ;
 expenseTitleIds = [];
-// filterType={
-// id: '',
-// categoryName: ''
-// };
+userId: number;
 categoryId : string='0';
 expenseId : string='0';
 
@@ -89,7 +86,8 @@ content?: string;
   constructor(private categoryByTimeService: CategoryByTimeService, private tokenStorage: TokenStorageService, private recordListService: RecordListService) { }
 
   ngOnInit(): void {
-  this.recordListService.getCategories().subscribe(
+    this.userId = this.tokenStorage.getUser().userId;
+  this.recordListService.getCategories(this.userId).subscribe(
 
         data => this.filterTypes = data
       // console.log(data)

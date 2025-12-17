@@ -20,6 +20,8 @@ import { GoogleChartsModule } from 'angular-google-charts';
 import { HistoryComponent } from './history/history.component';
 import {DatePipe} from '@angular/common';
 import { CategoryByTimeComponent } from './category-by-time/category-by-time.component';
+import { CategoryEditComponent } from './category-edit/category-edit.component';
+import { SubCategoryEditComponent } from './sub-category-edit/sub-category-edit.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +33,9 @@ import { CategoryByTimeComponent } from './category-by-time/category-by-time.com
     RecordListComponent,
     ReportComponent,
     HistoryComponent,
-    CategoryByTimeComponent
+    CategoryByTimeComponent,
+    CategoryEditComponent,
+    SubCategoryEditComponent
 
   ],
   imports: [
