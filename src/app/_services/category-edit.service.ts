@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse, HttpRequest,HttpEvent } from '@angular/common/http';
 import { Category } from '../types/category';
+import { CategoryWithUser } from '../types/categoryWithUser';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
@@ -21,7 +22,7 @@ getAll(userId: number) {
   );
 }
 
-create(category: Category) {
+create(category: CategoryWithUser) {
   return this.http.post<Category>(
     API_URL + 'category/create',
     category,
