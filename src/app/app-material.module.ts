@@ -13,6 +13,7 @@ import {MatNativeDateModule} from '@angular/material/core';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { MatListModule } from '@angular/material/list';
 import { MatDividerModule } from '@angular/material/divider';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
   imports: [
@@ -29,6 +30,7 @@ import { MatDividerModule } from '@angular/material/divider';
     MatNativeDateModule,
     MatAutocompleteModule,
     MatListModule,
+    MatProgressSpinnerModule,
     MatDividerModule
   ],
   exports: [
@@ -45,6 +47,7 @@ import { MatDividerModule } from '@angular/material/divider';
     MatNativeDateModule,
     MatAutocompleteModule,
     MatListModule,
+    MatProgressSpinnerModule,
     MatDividerModule
   ]
 })
