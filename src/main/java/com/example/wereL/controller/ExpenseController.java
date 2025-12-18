@@ -52,15 +52,7 @@ public class ExpenseController {
         return new ResponseEntity<>(expenseService.saveArray(expenseDTO), HttpStatus.OK);
     }
 
-    @GetMapping("/category/{userId}")
-    public ResponseEntity<List<CategoryDTO>> getCategories(@PathVariable Long userId) {
-        List<Category> categories = expenseService.getCategories(userId);
-        List<CategoryDTO> cats = categories.stream()
-                .map(c -> new CategoryDTO(c.getId(), c.getCategoryName())).
-                collect(Collectors.toList());
 
-        return new ResponseEntity<>(cats, HttpStatus.OK);
-    }
 
     //http://127.0.0.1:8888/api/v1/selected_expensetitle?id=2
     @GetMapping("/selected_expensetitle")
@@ -149,34 +141,6 @@ public class ExpenseController {
 
         return ResponseEntity.ok().build();
     }
-
-//    @PostMapping(value = "/export")
-//    public byte[] exportToExcel(@RequestBody String feedInput) {
-//        logger.info("ExpenseController.exportToExcel starts");
-//        JSONObject jsonObject = new JSONObject(feedInput);
-//        String startDate = jsonObject.getString("startDate");
-//        String endDate = jsonObject.getString("endDate");
-//        Long userId = Long.valueOf(jsonObject.getString("userId"));
-//        // response.setHeader("Content-Disposition", "attachment; filename=\"myFileName.xlsx\"");
-//
-//      List<ExcelDTO> list = expenseService.getExcel(userId, startDate, endDate);
-//
-//        try {
-//            //byte[] output = excelUtil.getEmptyExcelFileAsBytes(list);
-//            byte[] output = new ObjectMapper().writeValueAsBytes(list);
-//            // byte[] output = new byte[5];
-//            //  excelUtil.getWorkbook(list, response);
-////            HttpHeaders responseHeaders = new HttpHeaders();
-////            responseHeaders.set("charset", "utf-8");
-////            // responseHeaders.setContentType(MediaType.valueOf("text/html"));
-////            responseHeaders.setContentLength(output.length);
-////            responseHeaders.set("Content-disposition", "attachment; filename=\"myFileName.xlsx\"");
-//
-//            return output;
-//        } catch (IOException e) {
-//            throw new RuntimeException(e);
-//        }
-//    }
 
     @GetMapping("/rates/{cur}")
     public String getRateToRub(@PathVariable String cur) {
