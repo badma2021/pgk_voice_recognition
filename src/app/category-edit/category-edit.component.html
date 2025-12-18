@@ -1,0 +1,49 @@
+
+<div class="categories-container">
+  <h2>Category</h2>
+
+  <ng-container *ngIf="categories && categories.length > 0; else noCats">
+    <mat-list>
+      <mat-list-item *ngFor="let cat of categories">
+
+        <span style="font-size:12px; line-height:1.2;">{{ cat.categoryName }}</span>
+
+        <button mat-icon-button matListItemMeta color="primary" (click)="startEdit(cat)">
+          <mat-icon>edit</mat-icon>
+        </button>
+
+        <div *ngIf="editedId === cat.id" class="edit-block">
+          <mat-form-field appearance="outline" class="edit-field">
+            <input matInput [(ngModel)]="editedName">
+          </mat-form-field>
+
+          <button mat-button color="primary"
+                  (click)="saveEdit(cat)"
+                  [disabled]="isSaving">
+            <mat-spinner *ngIf="isSaving" diameter="20"></mat-spinner>
+            <span *ngIf="!isSaving">Save</span>
+          </button>
+
+          <button mat-button color="warn" (click)="cancelEdit()" [disabled]="isSaving">Cancel</button>
+        </div>
+
+      </mat-list-item>
+    </mat-list>
+  </ng-container>
+
+  <ng-template #noCats>
+    <p>There is no categories.</p>
+  </ng-template>
+
+  <mat-divider></mat-divider>
+
+  <div class="add-category">
+    <h3>Add new one</h3>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <input matInput placeholder="new category name" [(ngModel)]="newCategoryName">
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" (click)="addCategory()">Add</button>
+  </div>
+</div>

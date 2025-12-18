@@ -1,0 +1,8 @@
+
+/* component.css */
+::ng-deep mat-list .mat-list-item {
+  min-height: 32px;
+  padding-top: 0;
+  padding-bottom: 0;
+  align-items: center;
+}
