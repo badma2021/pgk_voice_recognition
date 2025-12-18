@@ -42,13 +42,8 @@ public class CategoryController {
     }
 
     @PostMapping("/category/create")
-    public ResponseEntity<List<CategoryDTO>> addCategory(@PathVariable Long userId) {
-        List<Category> categories = categoryService.getCategories(userId);
-        List<CategoryDTO> cats = categories.stream()
-                .map(c -> new CategoryDTO(c.getId(), c.getCategoryName())).
-                collect(Collectors.toList());
+    public ResponseEntity<Void> createCategory(@RequestBody CategoryDTO dto){
+        categoryService.createCategory(dto);
+        return ResponseEntity.ok().build();
 
-        return new ResponseEntity<>(cats, HttpStatus.OK);
-    }
-
-}
+}}

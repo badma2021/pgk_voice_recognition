@@ -13,6 +13,7 @@ public class CategoryDTO {
     private Long id;
 
     private String categoryName;
+    private Long userId;
 
     public CategoryDTO(Long id, String categoryName) {
         this.id = id;
