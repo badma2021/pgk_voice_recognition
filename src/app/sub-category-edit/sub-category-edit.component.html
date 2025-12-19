@@ -1,1 +1,49 @@
-<p>sub-category-edit works!</p>
+
+<div class="sub-categories-container">
+  <h2>SubCategory</h2>
+
+  <ng-container *ngIf="subCategories && subCategories.length > 0; else noCats">
+    <mat-list>
+      <mat-list-item *ngFor="let cat of subCategories">
+
+        <span style="font-size:12px; line-height:1.2;">{{ cat.subCategoryName }}</span>
+
+        <button mat-icon-button matListItemMeta color="primary" (click)="startEdit(cat)">
+          <mat-icon>edit</mat-icon>
+        </button>
+
+        <div *ngIf="editedId === cat.id" class="edit-block">
+          <mat-form-field appearance="outline" class="edit-field">
+            <input matInput [(ngModel)]="editedName">
+          </mat-form-field>
+
+          <button mat-button color="primary"
+                  (click)="saveEdit(cat)"
+                  [disabled]="isSaving">
+            <mat-spinner *ngIf="isSaving" diameter="20"></mat-spinner>
+            <span *ngIf="!isSaving">Save</span>
+          </button>
+
+          <button mat-button color="warn" (click)="cancelEdit()" [disabled]="isSaving">Cancel</button>
+        </div>
+
+      </mat-list-item>
+    </mat-list>
+  </ng-container>
+
+  <ng-template #noCats>
+    <p>There is no subCategories.</p>
+  </ng-template>
+
+  <mat-divider></mat-divider>
+
+  <div class="add-sub-category">
+    <h3>Add new one</h3>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <input matInput placeholder="new subCategory name" [(ngModel)]="newSubCategoryName">
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" (click)="addSubCategory()">Add</button>
+  </div>
+</div>
