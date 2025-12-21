@@ -46,4 +46,6 @@ public class CategoryController {
         categoryService.createCategory(dto);
         return ResponseEntity.ok().build();
 
-}}
+}
+
+}
