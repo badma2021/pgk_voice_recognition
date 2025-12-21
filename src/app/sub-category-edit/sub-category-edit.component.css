@@ -1,0 +1,21 @@
+
+.expense-item { position: relative; padding: 8px 12px; display: flex; align-items: center; }
+.title { flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+.edit-overlay {
+  position: absolute;
+  left: 12px;         /* выровнять под названием */
+  right: 12px;        /* займет ширину внутри item, не расширяя его */
+  top: 100%;          /* покажется прямо под элементом */
+  margin-top: 6px;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  background: white;
+  padding: 6px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+  z-index: 20;
+  border-radius: 4px;
+}
+
+.edit-input { flex: 1 1 auto; min-width: 20px; }

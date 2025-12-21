@@ -81,28 +81,19 @@ curveType: 'function',
            };
 content?: string;
 
-
-
   constructor(private categoryByTimeService: CategoryByTimeService, private tokenStorage: TokenStorageService, private recordListService: RecordListService) { }
-
   ngOnInit(): void {
     this.userId = this.tokenStorage.getUser().userId;
   this.recordListService.getCategories(this.userId).subscribe(
 
         data => this.filterTypes = data
-      // console.log(data)
-      );
-   // this.dynamicForm = this.fb.group({
-     // filters: this.fb.array([])
-   // });
-
+);
 this.categoryId='2';
 this.categoryByTime();
 
   }
   onChangeCategory(categoryId: number) {
    console.log("hi from onChangeCategory");
-
       if (categoryId) {
         this.recordListService.getExpenseTitle(categoryId).subscribe(
           data =>
@@ -121,25 +112,15 @@ this.categoryByTime();
 
            this.categoryByTimeService.getCategoryByTime(this.tokenStorage.getUser().userId,this.categoryId, this.expenseId).subscribe(
            data => {
-         //   console.log('getGroupedDataByCategory starts');
            this.arr = [
            ];
-          // if (typeof data !== 'undefined' && data.length > 0){
-
                 this.arr = data['arr'];
                 this.chartColumns = data['chartColumns'];
-
            console.log('this arr');
            console.log(this.arr);
 console.log('this chartColumns');
            console.log(this.chartColumns);
-
             }
-//             else
-//             this.arr=this.arr1;
-//             this.chartColumns=this.chartColumns1;
-//             }
-
       );
 
      }

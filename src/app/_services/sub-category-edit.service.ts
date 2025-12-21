@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse, HttpRequest,HttpEvent } from '@angular/common/http';
 import { SubCategory } from '../types/subCategory';
-
+import { CreateExpense } from '../types/createExpense';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
@@ -24,17 +24,17 @@ export class SubCategoryEditService {
     );
   }
 
-  create(category: SubCategory) {
-    return this.http.post<SubCategory>(
-      API_URL + 'category/create',
-      category,
+  create(expense: CreateExpense) {
+    return this.http.post<CreateExpense>(
+      API_URL + 'expenseTitle/create',
+      expense,
       httpOptions
     );
   }
 
   update(category: SubCategory) {
     return this.http.put<SubCategory>(
-      API_URL + 'category/update',
+      API_URL + 'expenseTitle/update',
       category,
       httpOptions
     );

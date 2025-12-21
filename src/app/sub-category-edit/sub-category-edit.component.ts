@@ -3,6 +3,8 @@ import { Component } from '@angular/core';
 import { TokenStorageService } from '../_services/token-storage.service';
 import { SubCategoryEditService } from '../_services/sub-category-edit.service';
 import { SubCategory } from '../types/subCategory';
+import { CreateExpense } from '../types/createExpense';
+import { RecordListService } from '../_services/record-list.service';
 
 import { Router } from '@angular/router';
 
@@ -12,20 +14,47 @@ import { Router } from '@angular/router';
   styleUrls: ['./sub-category-edit.component.css']
 })
 export class SubCategoryEditComponent {
+filterTypes ;
   subCategories: SubCategory[] = []
-  editedId: number|null = null
+expenseTitleIds = [];
+  editedId: number | null = null;
   editedName = ''
   newSubCategoryName = ''
-  userId = null
+  userId: number | null = null;
   isSaving = false;
-  constructor(private subCategoryEditService: SubCategoryEditService, private tokenStorage: TokenStorageService, private router: Router) {}
+  isSubmitting = false;
+  categoryId : number | null = null;
+  expenseId : string='0';
+  constructor(private recordListService: RecordListService, private subCategoryEditService: SubCategoryEditService, private tokenStorage: TokenStorageService, private router: Router) {}
 
 
   ngOnInit() {
   this.userId = this.tokenStorage.getUser().userId;
-    this.loadSubCategories(this.userId)
+        this.userId = this.tokenStorage.getUser().userId;
+      this.recordListService.getCategories(this.userId).subscribe(
+
+            data => this.filterTypes = data
+          // console.log(data)
+          );
   }
 
+
+  onChangeCategory(categoryId: number) {
+    console.log("hi from onChangeCategory");
+this.categoryId = categoryId;
+       if (categoryId) {
+         this.recordListService.getExpenseTitle(categoryId).subscribe(
+           data =>
+             this.expenseTitleIds = data
+
+         );
+       } else {
+       console.log("hi from onChangeCategory else");
+         this.expenseTitleIds = null;
+
+       }
+         this.expenseId='0';
+     }
   loadSubCategories(userId: number) {
     this.subCategoryEditService.getAll(this.userId)
       .subscribe(res => this.subCategories = res)
@@ -33,7 +62,7 @@ export class SubCategoryEditComponent {
 
   startEdit(cat: SubCategory) {
     this.editedId = cat.id
-    this.editedName = cat.subCategoryName
+    this.editedName = cat.expenseName
   }
 
 saveEdit(cat: SubCategory) {
@@ -43,7 +72,7 @@ saveEdit(cat: SubCategory) {
   // получить userId заранее
   this.userId = this.tokenStorage.getUser().userId;
 
-  const updated = { id: cat.id, subCategoryName: this.editedName };
+  const updated = { id: cat.id, expenseName: this.editedName };
 
   this.isSaving = true;
   this.subCategoryEditService.update(updated).subscribe({
@@ -67,16 +96,37 @@ cancelEdit() {
   this.editedName = '';
 }
 
-  addSubCategory() {
-    const subCategory = {
-      id: 0,
-      subCategoryName: this.newSubCategoryName,
-      userId: this.userId
-    }
-  this.userId = this.tokenStorage.getUser().userId;
-    this.subCategoryEditService.create(subCategory)
-      .subscribe(() => this.loadSubCategories(this.userId))
 
-    this.newSubCategoryName = ''
+addSubCategory(): void {
+  // простая валидация
+  const name = (this.newSubCategoryName || '').trim();
+  if (!name) {
+    console.warn('Название подкатегории пустое');
+    return;
   }
+  if (this.categoryId == null) {
+    console.warn('ID категории не задан');
+    return;
+  }
+  const createExpense = {
+    expenseName: name,
+    categoryId: this.categoryId
+  };
+  this.isSubmitting = true;
+  this.subCategoryEditService.create(createExpense).subscribe({
+    next: (res) => {
+
+      this.newSubCategoryName = '';
+
+      this.loadSubCategories(this.userId);
+    },
+    error: (err) => {
+      console.error('Ошибка при создании подкатегории', err);
+    },
+    complete: () => {
+      this.isSubmitting = false;
+    }
+  });
+}
+
 }
