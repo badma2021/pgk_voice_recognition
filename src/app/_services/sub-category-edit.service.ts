@@ -39,4 +39,9 @@ export class SubCategoryEditService {
       httpOptions
     );
   }
+
+ deleteExpense(id: number) {
+ const url = API_URL + 'expenseTitle/delete/' + id;
+ return this.http.delete(url, httpOptions);
+ }
 }

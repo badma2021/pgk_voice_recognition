@@ -2,7 +2,6 @@
 <div class="sub-categories-container">
   <h2>SubCategory</h2>
 
-
   <mat-form-field [style.width.%]="20">
     <mat-select [(ngModel)]="categoryId"
                 (selectionChange)="onChangeCategory($event.value)"
@@ -13,23 +12,24 @@
     </mat-select>
   </mat-form-field>
 
-  <!-- Показываем все expenseTitleIds сразу после выбора категории -->
   <div *ngIf="expenseTitleIds?.length">
     <mat-list>
       <mat-list-item *ngFor="let expense of expenseTitleIds">
         <div class="list-item-content" style="width:50%; display:flex; align-items:center; justify-content:space-between;">
           <div class="expense-name">{{ expense.expenseName }}</div>
 
-          <div class="actions" style="display:flex; gap:2px; align-items:start;">
+          <div class="actions" style="display:flex; gap:8px; align-items:center;">
+            <!-- Edit button -->
             <button mat-icon-button color="primary"
                     (click)="startEdit(expense); $event.stopPropagation(); $event.preventDefault()">
               <mat-icon>edit</mat-icon>
             </button>
+            <!-- Внешний Delete удалён -->
           </div>
         </div>
 
         <!-- Блок редактирования для конкретной строки -->
-        <div *ngIf="editedId === expense.id" class="edit-block" style="width:50%; margin-top:1px; display:flex; gap:20px; align-items:start;">
+        <div *ngIf="editedId === expense.id" class="edit-block" style="width:50%; margin-top:6px; display:flex; gap:12px; align-items:start;">
           <mat-form-field appearance="outline" class="edit-field" style="flex:1; margin:0; background:#fff;">
             <input matInput [(ngModel)]="editedName" (click)="$event.stopPropagation();" style="background:#fff; padding:6px 8px; border-radius:4px;" />
           </mat-form-field>
@@ -42,6 +42,12 @@
           </button>
 
           <button mat-button color="warn"
+                  (click)="deleteExpense(expense); $event.stopPropagation()"
+                  [disabled]="isSaving">
+            Delete
+          </button>
+
+          <button mat-button
                   (click)="cancelEdit(); $event.stopPropagation()"
                   [disabled]="isSaving">
             Cancel
@@ -50,6 +56,12 @@
       </mat-list-item>
     </mat-list>
   </div>
+
+  <div *ngIf="!expenseTitleIds || !expenseTitleIds.length" style="margin-top:12px; color:#666;">
+    No subcategories found
+  </div>
+</div>
+
   <div class="add-sub-category">
     <h3>Add new one</h3>
 

@@ -23,7 +23,11 @@
             <mat-spinner *ngIf="isSaving" diameter="20"></mat-spinner>
             <span *ngIf="!isSaving">Save</span>
           </button>
-
+          <button mat-button color="warn"
+                  (click)="deleteCategory(cat); $event.stopPropagation()"
+                  [disabled]="isSaving">
+            Delete
+          </button>
           <button mat-button color="warn" (click)="cancelEdit()" [disabled]="isSaving">Cancel</button>
         </div>
 

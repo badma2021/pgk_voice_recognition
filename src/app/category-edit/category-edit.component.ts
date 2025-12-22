@@ -66,6 +66,26 @@ cancelEdit() {
   this.editedName = '';
 }
 
+deleteCategory(cat: any) {
+  this.isSaving = true;
+  this.categoryEditService.deleteCategory(cat.id).subscribe({
+    next: () => {
+      // удалить из локального массива
+     // this.expenseTitleIds = this.expenseTitleIds.filter(e => e.id !== expense.id);
+      // если редактировали — сбросить форму
+      if (this.editedId === cat.id) {
+        this.cancelEdit();
+      }
+      this.isSaving = false;
+    },
+    error: err => {
+      console.error(err);
+      // показать уведомление пользователю
+      this.isSaving = false;
+    }
+  });
+}
+
   addCategory() {
     const category = {
       id: 0,

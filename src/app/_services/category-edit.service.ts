@@ -37,4 +37,10 @@ update(category: Category) {
     httpOptions
   );
 }
+
+ deleteCategory(id: number) {
+ const url = API_URL + 'category/delete/' + id;
+ return this.http.delete(url, httpOptions);
+ }
+
 }

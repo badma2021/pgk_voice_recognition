@@ -129,4 +129,26 @@ addSubCategory(): void {
   });
 }
 
+
+
+deleteExpense(expense: any) {
+  this.isSaving = true;
+  this.subCategoryEditService.deleteExpense(expense.id).subscribe({
+    next: () => {
+      // удалить из локального массива
+      this.expenseTitleIds = this.expenseTitleIds.filter(e => e.id !== expense.id);
+      // если редактировали — сбросить форму
+      if (this.editedId === expense.id) {
+        this.cancelEdit();
+      }
+      this.isSaving = false;
+    },
+    error: err => {
+      console.error(err);
+      // показать уведомление пользователю
+      this.isSaving = false;
+    }
+  });
+}
+
 }
