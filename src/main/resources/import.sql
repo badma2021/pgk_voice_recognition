@@ -62,8 +62,8 @@ CREATE TABLE expense(
    CONSTRAINT fk_expense_title FOREIGN KEY(expense_title_id) REFERENCES expense_title(id)
 );
 INSERT INTO users(birthday,created_at,email,enabled,first_name,last_modified,last_name,password, phone,username) VALUES (null,null,'ivan@mail.ru','t','Ivan',null,'Ivanov    ','$2a$05$qOWwd1NUJi.Zs3zLGhiJUOHzZ.x/lU2czcDHByq.FcPHyAfriDP9i','777','ivan');
-INSERT INTO users(birthday,created_at,email,enabled,first_name,last_modified,last_name,password, phone,username) VALUES (null,null,'roman@mail.ru','t','Roman',null,'Romanov   ','$2a$05$74//KmHbBVt68j7VW5wrnuuua6wypEekRfuEkpFY3o/Ahd9G62qeO','773','roman');
-INSERT INTO users(birthday,created_at,email,enabled,first_name,last_modified,last_name,password, phone,username) VALUES (null,null,'marina@mail.ru','t','Marina',null,'Fedotova  ','$2a$05$jdRuwVSd/3Qlp6qzJQARRuKaDkKJPW8rzE2AJ94hncgR2s1IUSRwq','774','marina');
+INSERT INTO users(birthday,created_at,email,enabled,first_name,last_modified,last_name,password, phone,username) VALUES (null,null,'roman@mail.ru','t','Roman',null,'Romanov   ','$2a$05$qOWwd1NUJi.Zs3zLGhiJUOHzZ.x/lU2czcDHByq.FcPHyAfriDP9i','773','roman');
+INSERT INTO users(birthday,created_at,email,enabled,first_name,last_modified,last_name,password, phone,username) VALUES (null,null,'marina@mail.ru','t','Marina',null,'Fedotova  ','$2a$05$qOWwd1NUJi.Zs3zLGhiJUOHzZ.x/lU2czcDHByq.FcPHyAfriDP9i','774','marina');
 
 
 ALTER TABLE category ADD CONSTRAINT uq_category_user_category UNIQUE (user_id, category_name);
