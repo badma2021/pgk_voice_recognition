@@ -51,5 +51,9 @@ public class ExpenseTitleService {
 
         }
     }
+
+    public void delete(Long id) {
+        expenseTitleRepository.deleteById(id);
+    }
 }
 

@@ -33,4 +33,11 @@ public class ExpenseTitleController {
 
     }
 
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<Void> deleteExpenseTitle(@PathVariable Long id){
+        expenseTitleService.delete(id);
+        return ResponseEntity.ok().build();
+
+    }
+
 }

@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v1/category")
 public class CategoryController {
     private static final Logger logger = LoggerFactory.getLogger(CategoryController.class);
     private final ExpenseService expenseService;
@@ -25,7 +25,7 @@ public class CategoryController {
     }
 
 
-    @GetMapping("/category/{userId}")
+    @GetMapping("/{userId}")
     public ResponseEntity<List<CategoryDTO>> getCategories(@PathVariable Long userId) {
         List<Category> categories = categoryService.getCategories(userId);
         List<CategoryDTO> cats = categories.stream()
@@ -35,17 +35,23 @@ public class CategoryController {
         return new ResponseEntity<>(cats, HttpStatus.OK);
     }
 
-    @PutMapping("/category/update")
+    @PutMapping("/update")
     public ResponseEntity<Void> updateCategory(@RequestBody CategoryDTO dto){
         categoryService.updateCategory(dto);
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping("/category/create")
+    @PostMapping("/create")
     public ResponseEntity<Void> createCategory(@RequestBody CategoryDTO dto){
         categoryService.createCategory(dto);
         return ResponseEntity.ok().build();
 
 }
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<Void> deleteCategory(@PathVariable Long id){
+        categoryService.delete(id);
+        return ResponseEntity.ok().build();
+
+    }
 
 }
