@@ -13518,7 +13518,7 @@ INSERT INTO expense(amount,comment,created_at,currency,exchange_rate_to_ruble,ex
 INSERT INTO expense(amount,comment,created_at,currency,exchange_rate_to_ruble,expense_title_id,user_id) VALUES ('2726.83','Vesuvius','2025-6-2 00:00:00','EUR','87.96','105','1');
 INSERT INTO expense(amount,comment,created_at,currency,exchange_rate_to_ruble,expense_title_id,user_id) VALUES ('1407.4','Herculaneum','2025-6-2 00:00:00','EUR','87.96','105','1');
 INSERT INTO expense(amount,comment,created_at,currency,exchange_rate_to_ruble,expense_title_id,user_id) VALUES ('60','','2025-6-1 00:00:00','RUB','1','31','1');
-INSERT INTO expense(amount,comment,created_at,currency,exchange_rate_to_ruble,expense_title_id,user_id) VALUES ('40000','Diana's dowry. My and moms part','2025-6-1 00:00:00','RUB','1','12','1');
+INSERT INTO expense(amount,comment,created_at,currency,exchange_rate_to_ruble,expense_title_id,user_id) VALUES ('40000','Dianas dowry. My and moms part','2025-6-1 00:00:00','RUB','1','12','1');
 INSERT INTO expense(amount,comment,created_at,currency,exchange_rate_to_ruble,expense_title_id,user_id) VALUES ('50.52','','2025-8-31 00:00:00','RUB','1','31','1');
 INSERT INTO expense(amount,comment,created_at,currency,exchange_rate_to_ruble,expense_title_id,user_id) VALUES ('57','','2025-8-31 00:00:00','RUB','1','38','1');
 INSERT INTO expense(amount,comment,created_at,currency,exchange_rate_to_ruble,expense_title_id,user_id) VALUES ('50','','2025-8-31 00:00:00','RUB','1','25','1');
