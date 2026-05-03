@@ -113,7 +113,7 @@ public class ExpenseService {
         logger.info("ExpenseService.getExcel starts");
         List<ExcelDTO> list = expenseRepository.exportToExcel(userId, startDate, endDate);
         logger.info("new ExpenseService.getExcel before print");
-        list.forEach(System.out::println);
+       // list.forEach(System.out::println);
 
         return list;
     }
