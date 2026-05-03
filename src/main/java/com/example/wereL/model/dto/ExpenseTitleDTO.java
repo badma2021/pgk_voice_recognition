@@ -5,11 +5,14 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.io.Serializable;
+
 @Getter
 @Setter
 @NoArgsConstructor
 @ToString
-public class ExpenseTitleDTO {
+public class ExpenseTitleDTO implements Serializable {
+    private static final long serialVersionUID = 1L;
     private Long id;
     private String expenseName;
     private String categoryId;

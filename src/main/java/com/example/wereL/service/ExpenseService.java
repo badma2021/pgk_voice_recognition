@@ -1,5 +1,6 @@
 package com.example.wereL.service;
 
+import com.example.wereL.config.cache.CacheNames;
 import com.example.wereL.dao.*;
 import com.example.wereL.exception.CategoryNotFoundException;
 import com.example.wereL.model.dto.*;
@@ -66,7 +67,7 @@ public class ExpenseService {
         logger.info("ExpenseService.getCategories starts2");
         return categoryRepository.findByUserId(userId);
     }
-    @Cacheable("expenseByCategory")
+    @Cacheable(cacheNames = CacheNames.EXPENSE_BY_CATEGORY)
     public ExpenseTitleDTO[] getExpenseTitleByCategory(Long categoryId) {
         logger.info("ExpenseService.getExpenseTitleByCategory starts");
         List<ExpenseTitle> expenseTitles = expenseTitleRepository.findExpenseTitleByCategoryId(categoryId);
@@ -101,7 +102,7 @@ public class ExpenseService {
         return expenseRepository.findById(id);
     }
 
-    @Cacheable(value="categoryByTime")
+    @Cacheable(cacheNames = CacheNames.CATEGORY_BY_TIME)
     public Map<String, Object> getCategoryByTime(Long userId, Long categoryId, Long expenseId) {
         logger.info("ExpenseService.getCategoryByTime starts");
         List<CategoryByTimeDTO> list = expenseRepository.findCategoryByTime(userId, categoryId, expenseId);
