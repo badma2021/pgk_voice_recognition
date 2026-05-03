@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Service
 public class CategoryService {
@@ -32,9 +33,13 @@ public class CategoryService {
     }
 
     @Cacheable(cacheNames = CacheNames.CATEGORY_BY_USERID)
-    public List<Category> getCategories(Long userId) {
+    public List<CategoryDTO> getCategories(Long userId) {
         logger.info("CategoryService.getCategories starts2");
-        return categoryRepository.findByUserId(userId);
+       List<Category> categories= categoryRepository.findByUserId(userId);
+        List<CategoryDTO> cats = categories.stream()
+                .map(c -> new CategoryDTO(c.getId(), c.getCategoryName())).
+                collect(Collectors.toList());
+        return cats;
     }
     @Transactional
     public void updateCategory(CategoryDTO dto) {

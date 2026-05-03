@@ -27,11 +27,7 @@ public class CategoryController {
 
     @GetMapping("/{userId}")
     public ResponseEntity<List<CategoryDTO>> getCategories(@PathVariable Long userId) {
-        List<Category> categories = categoryService.getCategories(userId);
-        List<CategoryDTO> cats = categories.stream()
-                .map(c -> new CategoryDTO(c.getId(), c.getCategoryName())).
-                collect(Collectors.toList());
-
+        List<CategoryDTO> cats = categoryService.getCategories(userId);
         return new ResponseEntity<>(cats, HttpStatus.OK);
     }
 
