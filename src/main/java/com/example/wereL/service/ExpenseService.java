@@ -66,7 +66,7 @@ public class ExpenseService {
         logger.info("ExpenseService.getCategories starts2");
         return categoryRepository.findByUserId(userId);
     }
-
+    @Cacheable("expenseByCategory")
     public ExpenseTitleDTO[] getExpenseTitleByCategory(Long categoryId) {
         logger.info("ExpenseService.getExpenseTitleByCategory starts");
         List<ExpenseTitle> expenseTitles = expenseTitleRepository.findExpenseTitleByCategoryId(categoryId);

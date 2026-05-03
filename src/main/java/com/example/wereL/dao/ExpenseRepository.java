@@ -46,7 +46,7 @@ public interface ExpenseRepository extends JpaRepository<Expense, Long > {
 //    and t.category_id=2 and t.id=3 group by year,month, category_name, t.expense_name
 //    order by year asc, month asc;
 
-    @Query(value="select date(e.created_at), et.expense_name as expenseName, e.amount as value, c.category_name as categoryName," +
+    @Query(value="select date(e.created_at), e.expense_title_id as expenseId, et.expense_name as expenseName, e.amount as value, c.id as categoryId, c.category_name as categoryName," +
             " e.comment, e.currency, e.exchange_rate_to_ruble as exchangeRateToRuble from expense e" +
             " inner join expense_title et on e.expense_title_id=et.id" +
             " inner join category c on c.id=et.category_id" +

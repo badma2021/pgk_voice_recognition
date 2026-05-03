@@ -51,16 +51,20 @@ public class ExcelUtil {
         cell.setCellValue(record.getDate());
 
         cell = row.createCell(1);
-        cell.setCellValue(record.getExpenseName());
+        cell.setCellValue(record.getExpenseId());
         cell = row.createCell(2);
-        cell.setCellValue(record.getValue());
+        cell.setCellValue(record.getExpenseName());
         cell = row.createCell(3);
-        cell.setCellValue(record.getComment());
+        cell.setCellValue(record.getValue());
         cell = row.createCell(4);
-        cell.setCellValue(record.getCategoryName());
+        cell.setCellValue(record.getComment());
         cell = row.createCell(5);
-        cell.setCellValue(record.getCurrency());
+        cell.setCellValue(record.getCategoryId());
         cell = row.createCell(6);
+        cell.setCellValue(record.getCategoryName());
+        cell = row.createCell(7);
+        cell.setCellValue(record.getCurrency());
+        cell = row.createCell(8);
         cell.setCellValue(record.getExchangeRateToRuble());
 
     }
@@ -73,12 +77,14 @@ public class ExcelUtil {
             int rownum = 1;
             Row header = sheet.createRow(0);
             header.createCell(0).setCellValue("Date");
-            header.createCell(1).setCellValue("Expense");
-            header.createCell(2).setCellValue("Value");
-            header.createCell(3).setCellValue("Comment");
-            header.createCell(4).setCellValue("Category");
-            header.createCell(5).setCellValue("Currency");
-            header.createCell(6).setCellValue("Rate");
+            header.createCell(1).setCellValue("ExpenseId");
+            header.createCell(2).setCellValue("Expense");
+            header.createCell(3).setCellValue("Value");
+            header.createCell(4).setCellValue("Comment");
+            header.createCell(5).setCellValue("CategoryId");
+            header.createCell(6).setCellValue("Category");
+            header.createCell(7).setCellValue("Currency");
+            header.createCell(8).setCellValue("Rate");
             for (ExcelDTO record : list) {
                 Row row = sheet.createRow(rownum++);
                 createList(record, row);
@@ -90,17 +96,6 @@ public class ExcelUtil {
         }
     }
 
-    public byte[] getEmptyExcelFileAsBytes(List<ExcelDTO> list) throws IOException {
-
-//        try (Workbook workbook = new XSSFWorkbook()) {
-//
-//            workbook.createSheet("test"); // do some logic
-        try (ByteArrayOutputStream bos = new ByteArrayOutputStream();
-             ObjectOutputStream out = new ObjectOutputStream(bos)) {
-            out.writeObject(list);
-            return bos.toByteArray();
-        }
-    }
 
     public ExpenseDTO[] excelToExcelDTO(MultipartFile file, String userId) throws IOException {
         logger.info("excelToExcelDTO starts");
