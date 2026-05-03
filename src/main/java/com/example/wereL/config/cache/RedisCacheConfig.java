@@ -33,6 +33,11 @@ public class RedisCacheConfig {
                         .serializeValuesWith(valueSerializer)
         );//infinite
         configs.put(
+                CacheNames.CATEGORY_BY_USERID,
+                RedisCacheConfiguration.defaultCacheConfig()
+                        .serializeValuesWith(valueSerializer)
+        );//infinite
+        configs.put(
                 CacheNames.CATEGORY_BY_TIME,
                 RedisCacheConfiguration.defaultCacheConfig().entryTtl(Duration.ofHours(1))
                         .serializeValuesWith(valueSerializer)
