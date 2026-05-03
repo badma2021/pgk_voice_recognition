@@ -149,7 +149,7 @@ public class ExpenseController {
         try {
             JsonNode response = restTemplate.getForObject("https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/" + cur.toLowerCase() + ".json", JsonNode.class);
             JsonNode curJson = response.get(cur.toLowerCase());
-            logger.info("curJson :" + curJson.toString());
+            //logger.info("curJson :" + curJson.toString());
             return curJson.get("rub").asText();
         } catch (RestClientException e) {
             e.printStackTrace();
