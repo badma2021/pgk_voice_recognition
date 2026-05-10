@@ -97,11 +97,9 @@ public class ExpenseController {
 
     @DeleteMapping("/history/delete{id}")
     public ResponseEntity<?> deleteRecord(@PathVariable Long id) {
-        logger.info("ExpenseController.deleteProduct starts");
-        return expenseService.findById(id).map(p -> {
-            expenseService.deleteById(id);
-            return ResponseEntity.ok().body((true));
-        }).orElseThrow(UserNotFoundException::new);
+        logger.info("ExpenseController.deleteRecord starts for id: {}", id);
+        expenseService.deleteById(id);
+        return ResponseEntity.ok(true);
     }
 
     @PostMapping(value = "/categoryByTime")

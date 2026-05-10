@@ -39,13 +39,6 @@ public interface ExpenseRepository extends JpaRepository<Expense, Long > {
     public List<CategoryByTimeDTO> findCategoryByTime(@Param("userId")Long userId,@Param("categoryId")Long categoryId,
                                                       @Param("expenseId")Long expenseId);
 
-//    select date_trunc('year', created_at) AS year, date_part('month',e.created_at) AS month,
-//    c.category_name,t.expense_name, sum(amount) from expense e
-//    inner join expense_title t on t.id=e.expense_title_id
-//    inner join category c on c.id=t.category_id where e.user_id=1
-//    and t.category_id=2 and t.id=3 group by year,month, category_name, t.expense_name
-//    order by year asc, month asc;
-
     @Query(value="select date(e.created_at), e.expense_title_id as expenseId, et.expense_name as expenseName, e.amount as value, c.id as categoryId, c.category_name as categoryName," +
             " e.comment, e.currency, e.exchange_rate_to_ruble as exchangeRateToRuble from expense e" +
             " inner join expense_title et on e.expense_title_id=et.id" +
@@ -54,10 +47,5 @@ public interface ExpenseRepository extends JpaRepository<Expense, Long > {
             " between cast(:startDate AS date) and cast(:endDate AS date) order by e.id desc",
             nativeQuery=true)
     public List<ExcelDTO> exportToExcel(@Param("userId")Long userId, @Param("startDate") String startDate, @Param("endDate") String endDate);
-
-
-//    select date(e.created_at), et.expense_name,e.amount, c.category_name, e.comment, e.currency, e.exchange_rate_to_ruble from expense e
-//    inner join  expense_title et on et.id=e.expense_title_id inner join category c on c.id=et.category_id
-//    where user_id =1 and date(e.created_at) between '2022-12-01' and '2023-01-01' order by e.id desc;
 
 }

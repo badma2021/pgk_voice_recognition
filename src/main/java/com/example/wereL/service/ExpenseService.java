@@ -98,7 +98,6 @@ public class ExpenseService {
         return expenseRepository.findLastFive(userId);
     }
 
-    @CacheEvict(key = "#id")
     public void deleteById(Long id) {
         logger.info("ExpenseService.deleteById starts");
         expenseRepository.deleteById(id);
